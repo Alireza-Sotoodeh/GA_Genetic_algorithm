@@ -1,0 +1,18 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
+# IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+# Start of session at: Tue Aug 19 20:20:34 2025
+# Process ID: 21088
+# Current directory: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent19020 D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.xpr
+# Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/vivado.log
+# Journal file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.xpr
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1

@@ -110,13 +110,17 @@
 
 **Issues to fix:**
 
-- [ ] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned)
+- [ ] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
   
   ```v
   child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
   ```
 
-- [ ]  inccreas the cross over methodes
+- [ ]  inccreas the cross over methodes (single‑point, two‑point, uniform crossover)
+
+- [ ]  if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
+
+- [ ] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
 
 
 
@@ -183,8 +187,26 @@
 **Issues to fix:**
 
 - [ ] Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length.
-- [ ] No seed input → always starts at ‘1’.
+- [ ] choose th right primitive polynomial
+  
+  `x^16 + x^14 + x^13 + x^11 ` 65535 states before repetition
+
+- [ ] No seed input → always starts at ‘1’ : `load_seed`
 - [ ] how can i make it more randomized ?
+  - 2 LSFR and XOR the output : About 2 billion states before iteration
+  
+  - 4 LSFR and XOR the output : 2.88*10^17 states before iteration
+  
+  - Change Seed Periodically
+  
+  - ignore the output Periodically and jump 
+  
+  - Whitening
+  
+  ```v
+  logic [15:0] whitened;
+  assign whitened = random_out ^ (random_out >> 7) ^ (random_out << 3);
+  ```
 
 
 
@@ -330,3 +352,19 @@
 -----------------------------------
 
 # fixing the parts
+
+
+
+## crossover
+
+v1:
+
+![v1.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\crossover\v1.png)
+
+- **error:** crossover_Single_point is not a constant
+
+-  **solution:** use mask
+
+
+
+

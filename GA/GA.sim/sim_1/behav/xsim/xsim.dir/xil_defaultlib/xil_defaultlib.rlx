@@ -1,0 +1,13 @@
+0.6
+2019.2
+Oct 24 2019
+19:01:44
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/glbl.v,1571945291,verilog,,,,glbl,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/GA-testbench/genetic_algorithm_tb.sv,1748190313,systemVerilog,,,,genetic_algorithm_tb,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/crossover.sv,1755633861,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv,,crossover,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv,1755614104,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/genetic_algorithm.sv,,fitness_evaluator,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/genetic_algorithm.sv,1755620738,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv,,genetic_algorithm,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv,1755637768,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv,,lfsr_random,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv,1755618407,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/population_memory.sv,,mutation,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/population_memory.sv,1755620725,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/selection.sv,,population_memory,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/selection.sv,1755620713,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/GA-testbench/genetic_algorithm_tb.sv,,selection,,,,,,,,
