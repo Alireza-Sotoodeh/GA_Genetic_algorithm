@@ -1,55 +1,76 @@
 Vivado Simulator 2019.2
 Time resolution is 1 ps
-[69000] LFSR output = 0x934c
-[73000] LFSR output = 0xe8e6
-[77000] LFSR output = 0x15b3
-[83000] LFSR output = 0x8e87
-[87000] LFSR output = 0xd763
-[91000] LFSR output = 0x6bb1
-[97000] LFSR output = 0x8f58
-[101000] LFSR output = 0xe7ec
-[105000] LFSR output = 0xf3f2
-[109000] LFSR output = 0xe9dd
-[113000] LFSR output = 0xe4ce
-[119000] LFSR output = 0x6954
-[123000] LFSR output = 0x248a
-[127000] LFSR output = 0x1245
-[131000] LFSR output = 0x2966
-[135000] LFSR output = 0x94b3
-[141000] LFSR output = 0xe944
-[145000] LFSR output = 0x54e6
-[149000] LFSR output = 0x1a13
-[153000] LFSR output = 0x1d29
-[159000] LFSR output = 0x3cad
-[163000] LFSR output = 0x3e12
-[169000] LFSR output = 0x3660
-[173000] LFSR output = 0x8b10
-[177000] LFSR output = 0x65c8
-[183000] LFSR output = 0x1526
-[187000] LFSR output = 0x2ad7
-[191000] LFSR output = 0x956f
-[197000] LFSR output = 0x8f51
-[201000] LFSR output = 0xc7ac
-[205000] LFSR output = 0x4392
-[209000] LFSR output = 0xa1cd
-[213000] LFSR output = 0x50e6
-[217000] LFSR output = 0x9813
-[221000] LFSR output = 0x7c69
-[225000] LFSR output = 0x9e74
-[229000] LFSR output = 0x5f1a
-[233000] LFSR output = 0x2f89
-[239000] LFSR output = 0xa538
-[243000] LFSR output = 0xf2d8
-[247000] LFSR output = 0xf96c
-[251000] LFSR output = 0x7cb2
-[257000] LFSR output = 0xe49e
-[261000] LFSR output = 0x626b
-[267000] LFSR output = 0x8a8e
-[271000] LFSR output = 0xc543
-[275000] LFSR output = 0xf281
-[279000] LFSR output = 0x7940
-[283000] LFSR output = 0x8cc4
-[287000] LFSR output = 0x5642
-Test finished. Ran 50 cycles, errors = 0
-$finish called at time : 287 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv" Line 124
-$stop called at time : 287 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv" Line 125
+[                5000] ERROR: Mode=0 Expect=55aa Got=5555
+[                9000] ERROR: Mode=0 Expect=00f0 Got=0ff0
+[               13000] ERROR: Mode=1 Expect=555a Got=5555
+[               21000] ERROR: Mode=2 Expect=5aa5 Got=5555
+[               25000] ERROR: Mode=0 Expect=1b6d Got=1b66
+[               29000] ERROR: Mode=1 Expect=7c82 Got=7c86
+[               37000] ERROR: Mode=1 Expect=62a2 Got=7dbc
+[               41000] ERROR: Mode=0 Expect=be63 Got=862b
+[               45000] ERROR: Mode=1 Expect=0f3a Got=0f3f
+[               49000] ERROR: Mode=1 Expect=c38f Got=c3a0
+[               57000] ERROR: Mode=0 Expect=695a Got=615a
+[               61000] ERROR: Mode=0 Expect=19c4 Got=79c4
+[               65000] ERROR: Mode=0 Expect=acd8 Got=9338
+[               69000] ERROR: Mode=2 Expect=21f1 Got=b1f1
+[               73000] ERROR: Mode=2 Expect=2082 Got=ab42
+[               85000] ERROR: Mode=1 Expect=7e30 Got=7e31
+[               89000] ERROR: Mode=0 Expect=6c74 Got=4ccc
+[               97000] ERROR: Mode=0 Expect=b8fb Got=bcfb
+[              101000] ERROR: Mode=2 Expect=04d3 Got=4c53
+[              105000] ERROR: Mode=2 Expect=aab1 Got=2b33
+[              109000] ERROR: Mode=1 Expect=b56b Got=b1d4
+[              113000] ERROR: Mode=2 Expect=a3d7 Got=235e
+[              117000] ERROR: Mode=0 Expect=44fb Got=44ff
+[              121000] ERROR: Mode=0 Expect=6ba9 Got=6a6d
+[              125000] ERROR: Mode=0 Expect=62f3 Got=62fb
+[              137000] ERROR: Mode=0 Expect=ee80 Got=f2f5
+[              141000] ERROR: Mode=0 Expect=8308 Got=c356
+[              145000] ERROR: Mode=1 Expect=437b Got=46fb
+[              149000] ERROR: Mode=1 Expect=f319 Got=fb91
+[              157000] ERROR: Mode=1 Expect=4442 Got=4e42
+[              161000] ERROR: Mode=2 Expect=185d Got=1474
+[              169000] ERROR: Mode=1 Expect=0ab0 Got=0aa8
+[              173000] ERROR: Mode=1 Expect=c4b3 Got=c493
+[              177000] ERROR: Mode=2 Expect=cd41 Got=9d84
+[              185000] ERROR: Mode=1 Expect=5200 Got=5340
+[              189000] ERROR: Mode=0 Expect=fd86 Got=9d9a
+[              205000] ERROR: Mode=0 Expect=190a Got=1b72
+[              209000] ERROR: Mode=0 Expect=3371 Got=3301
+[              213000] ERROR: Mode=0 Expect=74ea Got=71ea
+[              221000] ERROR: Mode=1 Expect=c531 Got=ed39
+[              229000] ERROR: Mode=0 Expect=4b2f Got=0b2f
+[              237000] ERROR: Mode=0 Expect=fcf5 Got=fc75
+[              241000] ERROR: Mode=0 Expect=e74d Got=e34d
+[              269000] ERROR: Mode=2 Expect=a640 Got=a663
+[              277000] ERROR: Mode=1 Expect=3e04 Got=3ecb
+[              281000] ERROR: Mode=1 Expect=a54c Got=a5cc
+[              285000] ERROR: Mode=0 Expect=eecb Got=dacb
+[              293000] ERROR: Mode=1 Expect=54e0 Got=54a4
+[              301000] ERROR: Mode=0 Expect=f61a Got=f246
+[              309000] ERROR: Mode=0 Expect=70cf Got=72cf
+[              317000] ERROR: Mode=1 Expect=c782 Got=c799
+[              321000] ERROR: Mode=0 Expect=df41 Got=df51
+[              329000] ERROR: Mode=1 Expect=f7c2 Got=f5ba
+[              333000] ERROR: Mode=1 Expect=5962 Got=3962
+[              337000] ERROR: Mode=0 Expect=8db8 Got=8db4
+[              345000] ERROR: Mode=0 Expect=d534 Got=d564
+[              349000] ERROR: Mode=1 Expect=5dc8 Got=59c8
+[              361000] ERROR: Mode=0 Expect=17c0 Got=17a0
+[              369000] ERROR: Mode=1 Expect=bf83 Got=ff83
+[              377000] ERROR: Mode=1 Expect=ee0f Got=be0f
+[              381000] ERROR: Mode=2 Expect=5d4a Got=556a
+[              385000] ERROR: Mode=1 Expect=c550 Got=c9f0
+[              389000] ERROR: Mode=0 Expect=f215 Got=f895
+[              393000] ERROR: Mode=0 Expect=e36e Got=c1ae
+[              397000] ERROR: Mode=1 Expect=6fcb Got=6fc8
+[              401000] ERROR: Mode=1 Expect=2479 Got=3c79
+[              405000] ERROR: Mode=1 Expect=db9d Got=d99d
+[              409000] ERROR: Mode=0 Expect=1d27 Got=1ca7
+[              413000] ERROR: Mode=2 Expect=7a52 Got=7e4a
+[              417000] ERROR: Mode=0 Expect=0f9f Got=0fdf
+[              421000] ERROR: Mode=2 Expect=332d Got=2029
+Test finished. Ran 105 tests, errors = 71
+TEST FAILED
+$finish called at time : 421 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/crossover_TB.sv" Line 201

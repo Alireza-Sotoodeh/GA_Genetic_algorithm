@@ -507,35 +507,42 @@ endmodule
 
 - **solution:** use mask
 
+```txt
+///////////////////////////////////////////////////////////////////////////////////////
+// due to error crossover_Single_point (and others) is not a constant -> define mask1&2
+// mask1: Used for single-point crossover 
+// mask2: Used for double-point crossover (middle segment from parent1) 
+// parent2 == 0 & parent1 =1
+///////////////////////////////////////////////////////////////////////////////////////
+```
+
 ### Issues to fix:
 
-- [ ] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
+- [x] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
   
   ```v
   child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
   ```
 
-- [ ] inccreas the cross over methodes (single‑point, two‑point, uniform crossover)
-
 - [ ] if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
 
-- [ ] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
+- [x] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
 
-- [ ] Add fixed 
+- [x] Add fixed 
   
-  - [ ] single
+  - [x] single
   
-  - [ ] double
+  - [x] double
 
-- [ ] Add float
+- [x] Add float
   
-  - [ ] fix LSFR before it for random float point
+  - [x] fix LSFR before it for random float point
   
-  - [ ] single
+  - [x] single
   
-  - [ ] double
+  - [x] double
 
-- [ ] add uniform crossover
+- [x] add uniform crossover
   
   - [ ] mask using input 
   

@@ -40,4 +40,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log lfsr_random.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source lfsr_random.tcl
+EAStep vivado -log lfsr_SudoRandom.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source lfsr_SudoRandom.tcl
