@@ -1,4 +1,7 @@
-module crossover #(parameter CHROMOSOME_WIDTH = 16)(
+module crossover #(
+	parameter CHROMOSOME_WIDTH = 16,
+	parameter LSFR_WIDTH = 16,
+	)(
     //inputs
     input  logic clk,
     input  logic rst_n,
@@ -11,11 +14,11 @@ module crossover #(parameter CHROMOSOME_WIDTH = 16)(
     input  logic [$clog2(CHROMOSOME_WIDTH):0] crossover_double_R_FirstPoint,
     input  logic [$clog2(CHROMOSOME_WIDTH):0] crossover_double_R_SecondPoint,
     input  logic [CHROMOSOME_WIDTH-1:0] mask_uniform, // for uniform crossover
+	input  logic [LSFR_WIDTH-1:0] LSFR_input;
     // outputs
     output logic [CHROMOSOME_WIDTH-1:0] child,
     output logic crossover_done
 );
-
 ///////////////////////////////////////////////////////////////////////////////////////
 // due to error crossover_Single_point (and others) is not a constant -> define mask1&2
 // mask1: Used for single-point crossover 
@@ -24,10 +27,13 @@ module crossover #(parameter CHROMOSOME_WIDTH = 16)(
 ///////////////////////////////////////////////////////////////////////////////////////
 
 	// mask (no flip_flop and need to be updated ASAP) for Fixed crossover
+	//
     logic [CHROMOSOME_WIDTH-1:0] mask1, mask2;
+	logic [$clog2(CHROMOSOME_WIDTH):0] num_random_1, num_random_2;
     always_comb begin
         mask1 = '0;
         mask2 = '0;
+		num_random_1 = LSFR_input[]
         if (crossover_Single_point > 0)
             mask1 = (1 << crossover_Single_point) - 1;
         if (crossover_double_R_SecondPoint > crossover_double_R_FirstPoint)
@@ -53,7 +59,17 @@ module crossover #(parameter CHROMOSOME_WIDTH = 16)(
                         end
                         crossover_done <= 1'b1;
                     end
-
+				//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+                    // Float
+                    2'b01: begin
+                        if (!crossover_single_double) begin //single point
+                            child <= (parent2 & ~mask1) | (parent1 & mask1);
+                        end else begin // Double-point with mask2 in 
+                            child <= (parent1 & mask2) | (parent2 & ~mask2); //mask 1 in middle
+                        end
+                        crossover_done <= 1'b1;
+                    end
+			//'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
                     // Uniform
                     2'b10: begin
                         for (int i = 0; i < CHROMOSOME_WIDTH; i++)

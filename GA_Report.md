@@ -116,13 +116,11 @@
   child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
   ```
 
-- [ ]  inccreas the cross over methodes (single‑point, two‑point, uniform crossover)
+- [ ] inccreas the cross over methodes (single‑point, two‑point, uniform crossover)
 
-- [ ]  if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
+- [ ] if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
 
 - [ ] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
-
-
 
 ## fitness_evaluator
 
@@ -138,8 +136,8 @@
   - `start_evaluation`
   - `chromosome` (8 bits)
 - **Outputs:**
-  -  `fitness` (10 bits)
-  -  `evaluation_done` (1 bit)
+  - `fitness` (10 bits)
+  - `evaluation_done` (1 bit)
 
 **behavior:**
 
@@ -151,8 +149,6 @@
 
 - [ ] The `for` loop updates `fitness <= fitness + 1'b1;` inside same always_ff → in synthesis on FPGAs, this cumulative assignment inside loop generally works because it’s rolled combinatorially by synthesis, but it’s cleaner to store count in a temp variable.
 - [ ] Fitness max possible = 8, FIT_WIDTH=10 → fine, but over-allocates bits a bit.
-
-
 
 ## lfsr_random
 
@@ -173,7 +169,9 @@
 **behavior:**
 
 - Standard LFSR feedback — on enable, shifts right, MSB fed by XOR of certain taps.
+
 - For better undrstanding here is an example:
+  
   1. (e.g.)`lfsr_reg` = `1111 1111`
   
   2. `feedback` = `1 (bit7)` XOR `1 (bit5)` XOR `1 (bit4)` XOR `1 (bit3)` = 0  or we can simply say `XOR 1 XOR 1 XOR 1 XOR 1= 0`
@@ -187,12 +185,15 @@
 **Issues to fix:**
 
 - [ ] Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length.
+
 - [ ] choose th right primitive polynomial
   
   `x^16 + x^14 + x^13 + x^11 ` 65535 states before repetition
 
 - [ ] No seed input → always starts at ‘1’ : `load_seed`
+
 - [ ] how can i make it more randomized ?
+  
   - 2 LSFR and XOR the output : About 2 billion states before iteration
   
   - 4 LSFR and XOR the output : 2.88*10^17 states before iteration
@@ -207,8 +208,6 @@
   logic [15:0] whitened;
   assign whitened = random_out ^ (random_out >> 7) ^ (random_out << 3);
   ```
-
-
 
 ## mutation
 
@@ -239,8 +238,6 @@
 
 - [ ] Logic is incorrect and needs to be fixed (For each bit, apply mutation if random value < mutation_rate) refer to `how???`
 
-
-
 ## selection
 
 **Purpose:** Roulette‑wheel selection for parent index. (higher fitness == higher chance to be chosen as parent!)
@@ -252,6 +249,7 @@
   `ADDR_WIDTH` = $clog2(POPULATION_SIZE)→ `clog2 == Ceiling Logarithm base 2` used for **"Calculate the minimum number of bits needed to uniquely address every member of the population."**
   
   `POPULATION_SIZE` = 16, addresses → 4 bits
+
 - `FITNESS_WIDTH` = 10 bits
 
 **Key Signals:**
@@ -279,8 +277,6 @@
 
 - [ ] Doesn’t protect against total_fitness=0 → division trivial, selection may pick index 0 always.
 
-
-
 ## population_memory
 
 **Purpose:** Stores chromosomes in block RAM (distributed reg array).
@@ -293,8 +289,6 @@
 
 - [ ] No initialization from file → initial state undefined until explicitly written.
 - [ ] Read is combinational, write is synchronous — fine for Vivado inference.
-
-
 
 ## genetic_algorithm (Top)
 
@@ -332,13 +326,9 @@
 - [ ] Crossover module currently fixed‑point.
 - [ ] No random seed control for LFSR → repeatability limited.
 
-
-
 ## Diagram
 
 ![diagram.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\diagram.png)
-
-
 
 ## Main Observed Weaknesses & Suggestions
 
@@ -353,8 +343,6 @@
 
 # fixing the parts
 
-
-
 ## crossover
 
 v1:
@@ -363,8 +351,4 @@ v1:
 
 - **error:** crossover_Single_point is not a constant
 
--  **solution:** use mask
-
-
-
-
+- **solution:** use mask

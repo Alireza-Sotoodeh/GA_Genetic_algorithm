@@ -26,11 +26,11 @@ module lfsr_random #(
     // Feedback wires
     logic fb1, fb2, fb3, fb4;
 
-    // Primitive polynomials for maximum period
-    assign fb1 = lfsr1[15] ^ lfsr1[13] ^ lfsr1[12] ^ lfsr1[10];     // x^16 + x^14 + x^13 + x^11 
-    assign fb2 = lfsr2[14] ^ lfsr2[13] ^ lfsr2[11] ^ lfsr2[9];      // x^15 + x^14 + x^12 + x^10  
-    assign fb3 = lfsr3[13] ^ lfsr3[11] ^ lfsr3[9] ^ lfsr3[8];       // x^14 + x^12 + x^10 + x^9 
-    assign fb4 = lfsr4[12] ^ lfsr4[11] ^ lfsr4[9] ^ lfsr4[8];       // x^13 + x^12 + x^10 + x^9 
+    // Primitive polynomials for maximum period (width_independency_space)
+    assign fb1 = lfsr1[WIDTH1-1] ^ lfsr1[WIDTH1-3] ^ lfsr1[WIDTH1-4] ^ lfsr1[WIDTH1-6];     // x^16 + x^14 + x^13 + x^11 
+    assign fb2 = lfsr2[WIDTH2-1] ^ lfsr2[WIDTH2-2] ^ lfsr2[WIDTH2-4] ^ lfsr2[WIDTH2-5];      // x^15 + x^14 + x^12 + x^10  
+    assign fb3 = lfsr3[WIDTH3-1] ^ lfsr3[WIDTH3-3] ^ lfsr3[WIDTH3-5] ^ lfsr3[WIDTH3-7];       // x^14 + x^12 + x^10 + x^8
+    assign fb4 = lfsr4[WIDTH4-1] ^ lfsr4[WIDTH4-2] ^ lfsr4[WIDTH4-4] ^ lfsr4[WIDTH4-5];       // x^13 + x^12 + x^10 + x^9 
 
     // Shift registers update
     always_ff @(posedge clk or negedge rst_n) begin

@@ -2,33 +2,21 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
 # IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
-# Start of session at: Tue Aug 19 20:20:34 2025
-# Process ID: 21088
+# Start of session at: Wed Aug 20 09:55:09 2025
+# Process ID: 14668
 # Current directory: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent19020 D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent8 D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.xpr
 # Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/vivado.log
 # Journal file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.xpr
-INFO: [Project 1-313] Project file moved from 'D:/university/studies/FPGA/PJ_FPGA/GA' since last save.
 Scanning sources...
 Finished scanning sources
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.2/data/ip'.
-open_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:06 . Memory (MB): peak = 906.340 ; gain = 242.281
+open_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:11 . Memory (MB): peak = 878.488 ; gain = 243.637
 update_compile_order -fileset sources_1
-update_compile_order -fileset sources_1
-update_compile_order -fileset sources_1
-launch_runs synth_1 -jobs 4
-[Tue Aug 19 22:33:24 2025] Launched synth_1...
-Run output will be captured here: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_1/runme.log
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\crossover.sv:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\selection.sv:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\lfsr_random.sv:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\crossover.sv:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\selection.sv:]
-WARNING: [filemgmt 56-199] Attempt to get parsing info during refresh. "On-the-fly" syntax checking information may be incorrect. [D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\GA\GA.srcs\sources_1\imports\GA\lfsr_random.sv:]
 exit
-INFO: [Common 17-206] Exiting Vivado at Tue Aug 19 22:42:35 2025...
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 20 09:56:27 2025...
