@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s6cpga196-2" LaunchTime="1755637854">
+<GenRun Id="synth_1" LaunchPart="xc7s6cpga196-2" LaunchTime="1755710029">
   <File Type="PA-TCL" Name="lfsr_random.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="lfsr_random_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="lfsr_random_reports.tcl"/>

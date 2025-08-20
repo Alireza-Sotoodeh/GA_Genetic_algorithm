@@ -1,2 +1,55 @@
 Vivado Simulator 2019.2
 Time resolution is 1 ps
+[69000] LFSR output = 0x934c
+[73000] LFSR output = 0xe8e6
+[77000] LFSR output = 0x15b3
+[83000] LFSR output = 0x8e87
+[87000] LFSR output = 0xd763
+[91000] LFSR output = 0x6bb1
+[97000] LFSR output = 0x8f58
+[101000] LFSR output = 0xe7ec
+[105000] LFSR output = 0xf3f2
+[109000] LFSR output = 0xe9dd
+[113000] LFSR output = 0xe4ce
+[119000] LFSR output = 0x6954
+[123000] LFSR output = 0x248a
+[127000] LFSR output = 0x1245
+[131000] LFSR output = 0x2966
+[135000] LFSR output = 0x94b3
+[141000] LFSR output = 0xe944
+[145000] LFSR output = 0x54e6
+[149000] LFSR output = 0x1a13
+[153000] LFSR output = 0x1d29
+[159000] LFSR output = 0x3cad
+[163000] LFSR output = 0x3e12
+[169000] LFSR output = 0x3660
+[173000] LFSR output = 0x8b10
+[177000] LFSR output = 0x65c8
+[183000] LFSR output = 0x1526
+[187000] LFSR output = 0x2ad7
+[191000] LFSR output = 0x956f
+[197000] LFSR output = 0x8f51
+[201000] LFSR output = 0xc7ac
+[205000] LFSR output = 0x4392
+[209000] LFSR output = 0xa1cd
+[213000] LFSR output = 0x50e6
+[217000] LFSR output = 0x9813
+[221000] LFSR output = 0x7c69
+[225000] LFSR output = 0x9e74
+[229000] LFSR output = 0x5f1a
+[233000] LFSR output = 0x2f89
+[239000] LFSR output = 0xa538
+[243000] LFSR output = 0xf2d8
+[247000] LFSR output = 0xf96c
+[251000] LFSR output = 0x7cb2
+[257000] LFSR output = 0xe49e
+[261000] LFSR output = 0x626b
+[267000] LFSR output = 0x8a8e
+[271000] LFSR output = 0xc543
+[275000] LFSR output = 0xf281
+[279000] LFSR output = 0x7940
+[283000] LFSR output = 0x8cc4
+[287000] LFSR output = 0x5642
+Test finished. Ran 50 cycles, errors = 0
+$finish called at time : 287 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv" Line 124
+$stop called at time : 287 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv" Line 125

@@ -1,6 +1,6 @@
 module crossover #(
 	parameter CHROMOSOME_WIDTH = 16,
-	parameter LSFR_WIDTH = 16,
+	parameter LSFR_WIDTH = 16
 	)(
     //inputs
     input  logic clk,

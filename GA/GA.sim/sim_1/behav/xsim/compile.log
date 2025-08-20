@@ -1,2 +1,4 @@
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module lfsr_random
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lsfr_SudoRandom_TB

@@ -1,0 +1,17 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
+# IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+# Start of session at: Wed Aug 20 20:41:06 2025
+# Process ID: 17788
+# Current directory: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim
+# Command line: vivado.exe -mode batch -notrace -nojournal -log vivado_wc_pre.log -source vivado_wc_pre.tcl
+# Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/vivado_wc_pre.log
+# Journal file: 
+#-----------------------------------------------------------
+source vivado_wc_pre.tcl -notrace
+Scanning sources...
+Finished scanning sources
+couldn't read file "C:/Users/Alireza/AppData/Roaming/Xilinx/Vivado/ource add_all_waves.tcl": no such file or directory
+ERROR: Script failed:"C:/Users/Alireza/AppData/Roaming/Xilinx/Vivado/ource add_all_waves.tcl"
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 20 20:41:11 2025...
