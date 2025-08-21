@@ -1,4 +1,4 @@
-Running: xsim.dir/crossover_tb_behav/xsimk.exe -simmode gui -wdb crossover_tb_behav.wdb -simrunnum 0 -socket 6326
+Running: xsim.dir/crossover_tb_behav/xsimk.exe -simmode gui -wdb crossover_tb_behav.wdb -simrunnum 0 -socket 13045
 Design successfully loaded
-Design Loading Memory Usage: 7892 KB (Peak: 7892 KB)
-Design Loading CPU Usage: 15 ms
+Design Loading Memory Usage: 7900 KB (Peak: 7900 KB)
+Design Loading CPU Usage: 30 ms
