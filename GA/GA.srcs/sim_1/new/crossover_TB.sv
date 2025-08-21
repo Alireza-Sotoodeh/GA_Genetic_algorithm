@@ -1,24 +1,23 @@
 `timescale 1ns / 1ps
-
 // -----------------------------------------------------------
 // 1. Interface - bundles DUT I/O signals
 // -----------------------------------------------------------
 interface crossover_if #(parameter CHROMOSOME_WIDTH = 16, parameter LSFR_WIDTH = 16)(input logic clk, rst);
     // Inputs
-    logic start_crossover;
-    logic [CHROMOSOME_WIDTH-1:0] parent1;
-    logic [CHROMOSOME_WIDTH-1:0] parent2;
-    logic [1:0] crossover_mode; // 0=fixed, 1=float, 2=uniform
-    logic crossover_single_double;
-    logic [$clog2(CHROMOSOME_WIDTH):0] crossover_Single_point;
-    logic [$clog2(CHROMOSOME_WIDTH):0] crossover_double_R_FirstPoint;
-    logic [$clog2(CHROMOSOME_WIDTH):0] crossover_double_R_SecondPoint;
-    logic [CHROMOSOME_WIDTH-1:0] mask_uniform;
-    logic uniform_random_enable;
-    logic [LSFR_WIDTH-1:0] LSFR_input;
+    logic 								start_crossover;
+    logic [CHROMOSOME_WIDTH-1:0] 		parent1;
+    logic [CHROMOSOME_WIDTH-1:0] 		parent2;
+    logic [1:0] 						crossover_mode;				// 0=fixed, 1=float, 2=uniform
+    logic 								crossover_single_double;	// 0: single, 1: double
+    logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_Single_point;
+    logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_double_R_FirstPoint;
+    logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_double_R_SecondPoint;
+    logic [CHROMOSOME_WIDTH-1:0] 		mask_uniform;
+    logic								uniform_random_enable;		// 1 to enable
+    logic [LSFR_WIDTH-1:0] 				LSFR_input;
     // Outputs
-    logic [CHROMOSOME_WIDTH-1:0] child;
-    logic crossover_done;
+    logic [CHROMOSOME_WIDTH-1:0] 		child;
+    logic 								crossover_done;
 endinterface
 
 // -----------------------------------------------------------
@@ -27,7 +26,7 @@ endinterface
 module crossover_tb;
     // Clock
     logic CLK = 0;
-    always #1 CLK = ~CLK; // 500 MHz
+    always #1 CLK = ~CLK; // 500 MHz: 2ns for each clk
 
     // Reset
     logic RST;
@@ -42,9 +41,12 @@ module crossover_tb;
     // Test counters
     int error_count = 0;
     int test_count  = 0;
+	// Expected value 
+	logic [15:0] expected_child;
+
 
     // -------------------------------------------------------
-    // 3. DUT instantiation
+    // 3. DUT instantiation + LFSR Instantiation
     // -------------------------------------------------------
     crossover #(.CHROMOSOME_WIDTH(16), .LSFR_WIDTH(16)) DUT (
         .clk       (intf.clk),
@@ -63,128 +65,439 @@ module crossover_tb;
         .child(intf.child),
         .crossover_done(intf.crossover_done)
     );
-
+	
+	// LSFR
+	    lfsr_SudoRandom #(
+        .WIDTH1(16),
+        .WIDTH2(15),
+        .WIDTH3(14),
+        .WIDTH4(13),
+        .defualtSeed1(16'hACE1),
+        .defualtSeed2(15'h3BEE),
+        .defualtSeed3(14'h2BAD),
+        .defualtSeed4(13'h1DAD)
+    ) lfsr_inst (
+        .clk(CLK),
+        .rst(RST),
+        .start_lfsr(1),
+        .seed_in(0),
+        .load_seed(0),
+        .random_out(intf.LSFR_input)
+    );
+	
     // -------------------------------------------------------
     // 3.1 Signals for waveform view (assign style)
     // -------------------------------------------------------
-    logic Start, Done;
+    logic Start, Done, crossover_single_double, MaskRandom, Single0_Double1;
     logic [15:0] P1, P2, Mask, LfsrInp, ChildOut;
+	logic [3:0] SinglePoint, DoublePoint1R, DoublePoint2R;
     logic [1:0] Mode;
-    assign Start    = DUT.start_crossover;
-    assign Mode     = DUT.crossover_mode;
-    assign P1       = DUT.parent1;
-    assign P2       = DUT.parent2;
-    assign Mask     = DUT.mask_uniform;
-    assign LfsrInp  = DUT.LSFR_input;
-    assign ChildOut = DUT.child;
-    assign Done     = DUT.crossover_done;
+    assign Start    		= intf.start_crossover;
+    assign P1       		= intf.parent1;
+    assign P2       		= intf.parent2;
+	assign Mode     		= intf.crossover_mode;
+	assign Single0_Double1 	= intf.crossover_single_double;
+	assign SinglePoint		= intf.crossover_Single_point;
+	assign DoublePoint1R	= intf.crossover_double_R_FirstPoint;
+	assign DoublePoint2R	= intf.crossover_double_R_SecondPoint;
+    assign Mask     		= intf.mask_uniform;
+	assign MaskRandom		= intf.uniform_random_enable;
+    assign LfsrInp  		= intf.LSFR_input;
+    assign ChildOut 		= intf.child;
+    assign Done     		= intf.crossover_done;
 
     // -------------------------------------------------------
-    // 4. Golden Models (fixing declaration style)
+    // 4. Generator (manual + random)
     // -------------------------------------------------------
-    function automatic [15:0] golden_fixed(
-        input bit dbl,
-        input int point1, point2,
-        input [15:0] p1, p2
-    );
-        logic [15:0] mask1, mask2;
-        mask1 = (point1 > 0) ? ((1 << point1) - 1) : 0;
-        mask2 = (point2 > point1) ? (((1 << point2) - 1) ^ ((1 << point1) - 1)) : 0;
-        if (!dbl)
-            return (p2 & ~mask1) | (p1 & mask1);
-        else
-            return (p1 & mask2) | (p2 & ~mask2);
-    endfunction
-
-    function automatic [15:0] golden_uniform(
-        input [15:0] mask,
-        input [15:0] p1, p2
-    );
-        for (int i = 0; i < 16; i++)
-            golden_uniform[i] = mask[i] ? p1[i] : p2[i];
-    endfunction
-
-    // -------------------------------------------------------
-    // 5. Driver + Checker
-    // -------------------------------------------------------
-    logic [15:0] exp, sel_mask;
-    int fl_point1, fl_point2; // fixed declaration style
-
-    task drive_and_check(
-        input [1:0] mode,
-        input bit dbl,
-        input int p1_point,
-        input int p2_point,
-        input [15:0] mask_val,
-        input bit rand_mask_en,
-        input [15:0] lsfr_val,
-        input [15:0] par1,
-        input [15:0] par2
-    );
-        @(posedge CLK);
-        intf.crossover_mode = mode;
-        intf.crossover_single_double = dbl;
-        intf.crossover_Single_point = p1_point;
-        intf.crossover_double_R_FirstPoint = p1_point;
-        intf.crossover_double_R_SecondPoint = p2_point;
-        intf.uniform_random_enable = rand_mask_en;
-        intf.mask_uniform = mask_val;
-        intf.LSFR_input = lsfr_val;
-        intf.parent1 = par1;
-        intf.parent2 = par2;
-        intf.start_crossover = 1'b1;
-        @(posedge CLK);
-        intf.start_crossover = 1'b0;
-        wait(intf.crossover_done);
-
-        case (mode)
-            2'b00: exp = golden_fixed(dbl, p1_point, p2_point, par1, par2);
-            2'b01: begin
-                fl_point1 = lsfr_val[$clog2(16)-1:0];
-                fl_point2 = lsfr_val[$clog2(16)+7:8];
-                exp = golden_fixed(dbl, fl_point1, fl_point2, par1, par2);
-            end
-            2'b10: begin
-                sel_mask = rand_mask_en ? lsfr_val : mask_val;
-                exp = golden_uniform(sel_mask, par1, par2);
-            end
-        endcase
-
-        test_count++;
-        if (intf.child !== exp) begin
-            $display("[%t] ERROR: Mode=%0d Expect=%h Got=%h", $time, mode, exp, intf.child);
-            error_count++;
-        end
-    endtask
-
-    // -------------------------------------------------------
-    // 6. Stimulus Generator
-    // -------------------------------------------------------
-    int p1_point, p2_point;
-    int mode;
-    int rand_mask_en;
-    bit dbl;
     task generator(input int num_tests);
-        drive_and_check(2'b00, 0, 8, 0, 0, 0, 0, 16'hAAAA, 16'h5555);
-        drive_and_check(2'b00, 1, 4, 12, 0, 0, 0, 16'hF0F0, 16'h0FF0);
-        drive_and_check(2'b01, 0, 0, 0, 0, 0, 16'h1234, 16'hAAAA, 16'h5555);
-        drive_and_check(2'b10, 0, 0, 0, 16'hF0F0, 0, 0, 16'hAAAA, 16'h5555);
-        drive_and_check(2'b10, 0, 0, 0, 0, 1, 16'h0FF0, 16'hAAAA, 16'h5555);
+	
 
-        for (int i = 0; i < num_tests; i++) begin
-            dbl = $urandom_range(0,1);
-            rand_mask_en = $urandom_range(0,1);
-            mode = $urandom_range(0,2);
-            p1_point = $urandom_range(0,15);
-            p2_point = $urandom_range(0,15);
-            drive_and_check(mode, dbl, p1_point, p2_point,
-                            $urandom, rand_mask_en, $urandom,
-                            $urandom, $urandom);
-        end
+    // MODE 0: FIXED CROSSOVER - SINGLE POINT
+		// Test 1: Single point at 0 (edge case)
+		intf.parent1                     = 16'b0000000000000000;
+		intf.parent2                     = 16'b1111111111111111;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b0;
+		intf.crossover_Single_point      = 4'b0000;  // Point 0 - should take all from parent2
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 2: Single point at 16 (edge case - max)
+		intf.parent1                     = 16'b1010101010101010;
+		intf.parent2                     = 16'b0101010101010101;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b0;
+		intf.crossover_Single_point      = 4'b1111;  // Point 15 - should take all from parent1
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 3: Single point at middle
+		intf.parent1                     = 16'b1111000011110000;
+		intf.parent2                     = 16'b0000111100001111;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b0;
+		intf.crossover_Single_point      = 4'b1000;  // Point 8
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+    // MODE 0: FIXED CROSSOVER - DOUBLE POINT
+		// Test 4: Double point with points 0 and 16
+		intf.parent1                     = 16'b1010101010101010;
+		intf.parent2                     = 16'b0101010101010101;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b1;
+		intf.crossover_double_R_FirstPoint  = 4'b0000;  // Point 0
+		intf.crossover_double_R_SecondPoint = 4'b1111;  // Point 15
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 5: Double point with adjacent points
+		intf.parent1                     = 16'b1111111111111111;
+		intf.parent2                     = 16'b0000000000000000;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b1;
+		intf.crossover_double_R_FirstPoint  = 4'b0111;  // Point 7
+		intf.crossover_double_R_SecondPoint = 4'b1000;  // Point 8
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+	 
+
+		// Test 6: Double point with invalid order (second < first)
+		intf.parent1                     = 16'b1111000011110000;
+		intf.parent2                     = 16'b0000111100001111;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b1;
+		intf.crossover_double_R_FirstPoint  = 4'b1000;  // Point 8
+		intf.crossover_double_R_SecondPoint = 4'b0100;  // Point 4 (invalid: 4 < 8)
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+    // MODE 1: FLOAT CROSSOVER (using LFSR input)
+		// Test 7: Float single point with LFSR = 0
+		intf.parent1                     = 16'b0000000000000000;
+		intf.parent2                     = 16'b1111111111111111;
+		intf.crossover_mode              = 2'b01;
+		intf.crossover_single_double     = 1'b0;
+		intf.LSFR_input                  = 16'h0000;  // Point 0
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 8: Float double point with LFSR values
+		intf.parent1                     = 16'b1111000011110000;
+		intf.parent2                     = 16'b0000111100001111;
+		intf.crossover_mode              = 2'b01;
+		intf.crossover_single_double     = 1'b1;
+		intf.LSFR_input                  = 16'h3478;  // Points: 8 (0x8) and 7 (0x7) - invalid order
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+
+    // MODE 2: UNIFORM CROSSOVER
+		// Test 9: Uniform with all 1s mask
+		intf.parent1                     = 16'b1010101010101010;
+		intf.parent2                     = 16'b0101010101010101;
+		intf.crossover_mode              = 2'b10;
+		intf.mask_uniform                = 16'b1111111111111111;  // All from parent1
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 10: Uniform with all 0s mask;
+		intf.parent1                     = 16'b1010101010101010;
+		intf.parent2                     = 16'b0101010101010101;
+		intf.crossover_mode              = 2'b10;
+		intf.mask_uniform                = 16'b0000000000000000;  // All from parent2
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 11: Uniform with alternating mask
+		intf.parent1                     = 16'b1111000011110000;
+		intf.parent2                     = 16'b0000111100001111;
+		intf.crossover_mode              = 2'b10;
+		intf.mask_uniform                = 16'b1010101010101010;  // Alternating
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+
+		// Test 12: Uniform with random enable (using LFSR)
+		intf.parent1                     = 16'b1111111111111111;
+		intf.parent2                     = 16'b0000000000000000;
+		intf.crossover_mode              = 2'b10;
+		intf.mask_uniform                = 16'b0000000000000000;  // Ignored when random enabled
+		intf.uniform_random_enable       = 1'b1;
+		intf.LSFR_input                  = 16'b1010101010101010;  // Will be used as mask
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+
+    // BOUNDARY AND ERROR CASES
+		// Test 13: Invalid mode (should default)
+		intf.parent1                     = 16'b1111111111111111;
+		intf.parent2                     = 16'b0000000000000000;
+		intf.crossover_mode              = 2'b11;  // Invalid mode
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+		// Should be 0 (default)
+
+		// Test 14: Same parents
+		intf.parent1                     = 16'b1100110011001100;
+		intf.parent2                     = 16'b1100110011001100;
+		intf.crossover_mode              = 2'b00;
+		intf.crossover_single_double     = 1'b0;
+		intf.crossover_Single_point      = 4'b1000;
+		intf.mask_uniform                = 16'b0000000000000000;
+		intf.uniform_random_enable       = 1'b0;
+		@(posedge CLK);
+		intf.start_crossover = 1'b1;
+		@(posedge CLK);
+		intf.start_crossover = 1'b0;
+		check_result();
+		@(posedge CLK);
+		// Should be same as parents
+		
+		intf.start_crossover 				= 1'b1;
+	//randomized
+		for (int i = 0; i < num_tests; i++) begin
+			// Apply randomized inputs
+			intf.parent1                       = $urandom();                
+			intf.parent2                       = $urandom();                
+			intf.crossover_mode                = $urandom_range(0, 3);
+			intf.crossover_single_double       = $urandom_range(0, 1);
+			intf.crossover_Single_point        = $urandom_range(0, 15);
+			intf.crossover_double_R_FirstPoint = $urandom_range(0, 15);
+			intf.crossover_double_R_SecondPoint= $urandom_range(0, 15);
+			intf.mask_uniform                  = $urandom();
+			intf.uniform_random_enable         = $urandom_range(0, 1);
+			// Wait until crossover completes
+			check_result();
+		@(posedge CLK);
+		end
+
     endtask
-
     // -------------------------------------------------------
-    // 7. Main Test Flow
+    // 5. Driver 
+    // -------------------------------------------------------
+    /*task drive();
+		@(posedge CLK);
+		#1;
+		monitor();
+    endtask
+    */
+    // -------------------------------------------------------
+    // 6. monitor
+    // -------------------------------------------------------
+	/*task monitor();
+		//check_result();
+	endtask*/
+	// -------------------------------------------------------
+    // 7. check_result (this part is done by AI)
+    // -------------------------------------------------------
+task automatic check_result();
+    logic [15:0] mask_calc;
+    logic [3:0] single_pt, first_pt, second_pt; // from LFSR
+    int sp_int, fp_int, sp2_int;
+
+    // Match DUT's extraction for CHROMOSOME_WIDTH=16
+    single_pt = intf.LSFR_input[3:0];
+    first_pt  = intf.LSFR_input[7:4];
+    second_pt = intf.LSFR_input[11:8];
+
+    sp_int  = single_pt;
+    fp_int  = first_pt;
+    sp2_int = second_pt;
+
+    case (intf.crossover_mode)
+       
+        // 00: FIXED CROSSOVER
+        
+        2'b00: begin
+            if (!intf.crossover_single_double) begin
+                // Single point
+                if (intf.crossover_Single_point >= 16)
+                    mask_calc = 16'hFFFF;
+                else if (intf.crossover_Single_point > 0)
+                    mask_calc = (16'(1) << intf.crossover_Single_point) - 1;
+                else
+                    mask_calc = '0;
+                expected_child = (intf.parent2 & ~mask_calc) | (intf.parent1 & mask_calc);
+            end
+            else begin
+                // Double point
+                if (intf.crossover_double_R_SecondPoint > intf.crossover_double_R_FirstPoint &&
+                    intf.crossover_double_R_SecondPoint <= 16) begin
+                    mask_calc = ((16'(1) << intf.crossover_double_R_SecondPoint) - 1) ^
+                                 ((16'(1) << intf.crossover_double_R_FirstPoint) - 1);
+                end
+                else begin
+                    // Invalid order → treat as single point at first point
+                    if (intf.crossover_double_R_FirstPoint >= 16)
+                        mask_calc = 16'hFFFF;
+                    else if (intf.crossover_double_R_FirstPoint > 0)
+                        mask_calc = (16'(1) << intf.crossover_double_R_FirstPoint) - 1;
+                    else
+                        mask_calc = '0;
+                end
+                expected_child = (intf.parent1 & mask_calc) | (intf.parent2 & ~mask_calc);
+            end
+        end
+
+        
+        // 01: FLOAT CROSSOVER
+        
+        2'b01: begin
+            if (!intf.crossover_single_double) begin
+                // Single point from LFSR
+                if (sp_int >= 16)
+                    mask_calc = 16'hFFFF;
+                else if (sp_int > 0)
+                    mask_calc = (16'(1) << sp_int) - 1;
+                else
+                    mask_calc = '0;
+                expected_child = (intf.parent2 & ~mask_calc) | (intf.parent1 & mask_calc);
+            end
+            else begin
+                // Double point from LFSR
+                if (sp2_int > fp_int && sp2_int <= 16) begin
+                    mask_calc = ((16'(1) << sp2_int) - 1) ^ ((16'(1) << fp_int) - 1);
+                end
+                else begin
+                    // Invalid order → treat as single point at first_pt
+                    if (fp_int >= 16)
+                        mask_calc = 16'hFFFF;
+                    else if (fp_int > 0)
+                        mask_calc = (16'(1) << fp_int) - 1;
+                    else
+                        mask_calc = '0;
+                end
+                expected_child = (intf.parent1 & mask_calc) | (intf.parent2 & ~mask_calc);
+            end
+        end
+
+        
+        // 10: UNIFORM CROSSOVER
+        
+        2'b10: begin
+            logic [15:0] active_mask;
+            active_mask = (intf.uniform_random_enable) ? intf.LSFR_input[15:0] : intf.mask_uniform;
+            for (int i = 0; i < 16; i++)
+                expected_child[i] = active_mask[i] ? intf.parent1[i] : intf.parent2[i];
+        end
+
+        
+        // Default: invalid mode
+        
+        default: expected_child = '0;
+    endcase
+
+    // Compare with DUT output
+    test_count++;
+	if (expected_child !== intf.child) begin
+		error_count++;
+		$display("------------------------------------------------------------");
+		$display("ERROR @Time=%0t: Test %0d", $time, test_count);
+		$display("  Mode                    = %b", intf.crossover_mode);
+		$display("  Expected Child          = %h", expected_child);
+		$display("  DUT Child               = %h", intf.child);
+		$display("  Parent1                 = %h", intf.parent1);
+		$display("  Parent2                 = %h", intf.parent2);
+		$display("  crossover_Single_point  = %h", intf.crossover_Single_point);
+		$display("  crossover_double_R_FirstPoint  = %h", intf.crossover_double_R_FirstPoint);
+		$display("  crossover_double_R_SecondPoint = %h", intf.crossover_double_R_SecondPoint);
+		$display("  LSFR_input              = %h", intf.LSFR_input);
+
+		// Extra per‑mode context
+		if (intf.crossover_mode <= 2'b01) begin
+			$display("  crossover_single_double = %b", intf.crossover_single_double);
+			$display("  mask_calc               = %h", mask_calc);
+		end
+		if (intf.crossover_mode == 2'b10) begin
+			$display("  UniformRandomEnable     = %b", intf.uniform_random_enable);
+			$display("  mask_uniform            = %h", intf.mask_uniform);
+		end
+		$display("------------------------------------------------------------");
+	end
+endtask
+    // -------------------------------------------------------
+    // . Main Test Flow
     // -------------------------------------------------------
     initial begin
         intf.start_crossover = 0;
@@ -199,5 +512,6 @@ module crossover_tb;
         if (error_count==0) $display("TEST PASSED");
         else $display("TEST FAILED");
         $finish;
+        $stop;
     end
 endmodule

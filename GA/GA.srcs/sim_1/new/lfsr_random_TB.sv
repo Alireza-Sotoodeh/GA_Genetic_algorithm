@@ -55,7 +55,7 @@ module lsfr_SudoRandom_TB;
     assign LoadSeed    = DUT.load_seed;
     assign Output_lsfr = DUT.random_out;
     // -------------------------------------------------------
-    // 4. Stimulus Generator Task (manual + random)
+    // 4. Generator Task (manual + random)
     // -------------------------------------------------------
     task generator(input int num_tests);
         // ***** Phase 1: Manual fixed inputs *****
