@@ -499,11 +499,11 @@ endmodule
 
 ## crossover
 
-### v1
+### ⚠️error (v1)
 
 ![v1.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\crossover\v1.png)
 
-- **error:** crossover_Single_point is not a constant
+- **error:** `crossover_Single_point is not a constant`
 
 - **solution:** use mask
 
@@ -516,37 +516,162 @@ endmodule
 ///////////////////////////////////////////////////////////////////////////////////////
 ```
 
+### ⚠️error
+
+asimple typo caused 6 hour debuging :))
+
+errors:
+
+```v
+------------------------------------------------------------
+ERROR @Time=35000: Test 6
+  Mode                    = 00
+  Expected Child          = 0ff0
+  DUT Child               = 0f0f
+  Parent1                 = f0f0
+  Parent2                 = 0f0f
+  crossover_Single_point  = 08
+  crossover_double_R_FirstPoint  = 08
+  crossover_double_R_SecondPoint = 04
+  LSFR_input              = 8375
+  crossover_single_double = 1
+  mask_calc               = 00ff
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=41000: Test 7
+  Mode                    = 01
+  Expected Child          = fffc
+  DUT Child               = ffff
+  Parent1                 = 0000
+  Parent2                 = ffff
+  crossover_Single_point  = 08
+  crossover_double_R_FirstPoint  = 08
+  crossover_double_R_SecondPoint = 04
+  LSFR_input              = fc32
+  crossover_single_double = 0
+  mask_calc               = 0003
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=47000: Test 8
+  Mode                    = 01
+  Expected Child          = 0f70
+  DUT Child               = 0ef3
+  Parent1                 = f0f0
+  Parent2                 = 0f0f
+  crossover_Single_point  = 08
+  crossover_double_R_FirstPoint  = 08
+  crossover_double_R_SecondPoint = 04
+  LSFR_input              = 0675
+  crossover_single_double = 1
+  mask_calc               = 007f
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=71000: Test 12
+  Mode                    = 10
+  Expected Child          = 8785
+  DUT Child               = 0000
+  Parent1                 = ffff
+  Parent2                 = 0000
+  crossover_Single_point  = 08
+  crossover_double_R_FirstPoint  = 08
+  crossover_double_R_SecondPoint = 04
+  LSFR_input              = 8785
+  UniformRandomEnable     = 1
+  mask_uniform            = 0000
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=85000: Test 15
+  Mode                    = 00
+  Expected Child          = 6210
+  DUT Child               = cccc
+  Parent1                 = a210
+  Parent2                 = 5c6a
+  crossover_Single_point  = 0f
+  crossover_double_R_FirstPoint  = 01
+  crossover_double_R_SecondPoint = 0e
+  LSFR_input              = 4b37
+  crossover_single_double = 1
+  mask_calc               = 3ffe
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=87000: Test 16
+  Mode                    = 11
+  Expected Child          = 0000
+  DUT Child               = 5c6a
+  Parent1                 = a926
+  Parent2                 = 1dfb
+  crossover_Single_point  = 09
+  crossover_double_R_FirstPoint  = 0a
+  crossover_double_R_SecondPoint = 03
+  LSFR_input              = e51b
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=89000: Test 17
+  Mode                    = 10
+  Expected Child          = a5ee
+  DUT Child               = 0000
+  Parent1                 = 249e
+  Parent2                 = 9567
+  crossover_Single_point  = 0b
+  crossover_double_R_FirstPoint  = 0e
+  crossover_double_R_SecondPoint = 0e
+  LSFR_input              = 7289
+  UniformRandomEnable     = 1
+  mask_uniform            = eed9
+------------------------------------------------------------
+```
+
 ### Issues to fix:
 
-- [x] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
-  
-  ```v
-  child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
-  ```
+> - [x] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
+>   
+>   ```v
+>   child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
+>   ```
+> 
+> - [x] if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
+> 
+> - [x] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
+> 
+> - [x] Add fixed
+>   
+>   - [x] single
+>   
+>   - [x] double
+> 
+> - [x] Add float
+>   
+>   - [x] fix LSFR before it for random float point
+>   
+>   - [x] single
+>   
+>   - [x] double
+> 
+> - [x] add uniform crossover
+>   
+>   - [x] mask using input
+>   
+>   - [x] mask using random input (using LSFR)
 
-- [ ] if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
+### LSFR synthesis
 
-- [x] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
+#### before:
 
-- [x] Add fixed 
-  
-  - [x] single
-  
-  - [x] double
+clk 5ns 
 
-- [x] Add float
-  
-  - [x] fix LSFR before it for random float point
-  
-  - [x] single
-  
-  - [x] double
+![Screenshot 2025-08-21 220735.png](C:\Users\Alireza\AppData\Roaming\marktext\images\226c07a5b5237ddaa3c52db7895c3830707437f4.png)
 
-- [x] add uniform crossover
-  
-  - [ ] mask using input 
-  
-  - [ ] mask using random input (using LSFR)
+![Screenshot 2025-08-21 220750.png](C:\Users\Alireza\AppData\Roaming\marktext\images\50bd5b73eebe59023012567bf24fb63c8ec718fa.png)
+
+![Screenshot 2025-08-21 220830.png](C:\Users\Alireza\AppData\Roaming\marktext\images\245dbd98d315f2837a21fb281897b6aeb7be4318.png)
+
+<img title="" src="file:///C:/Users/Alireza/AppData/Roaming/marktext/images/fb59e8298524e680082760050b0cf97c3560e36e.png" alt="Screenshot 2025-08-21 220849.png" data-align="center" width="334">
+
+#### after:
+
+    no change :)
+
+
 
 ## LSFR
 
@@ -593,24 +718,140 @@ as you see no 0 output and rst is active low
     end
 ```
 
+
+
 ### Issues to fix:
 
-- [x] Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length. (making it independent from WIDTH)
+> - [x] Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length. (making it independent from WIDTH)
+> 
+> - [x] choose th right primitive polynomial
+>   
+>   `x^16 + x^14 + x^13 + x^11` 65535 states before repetition
+> 
+> - [x] No seed input → always starts at ‘1’ : `load_seed`
+> 
+> - [x] how can i make it more randomized ?
+>   
+>   - [x] 4 LSFR and XOR the output : 2.88*10^17 states before iteration
+>   
+>   - [x] Whitening
+> 
+> - [x] rst_n sould be rst and turn to active high because its confiusing for me!!
+> 
+> - [x] output should be 0 when its rst !
+> 
+> - [x] Test bench (**f<u>inal step</u>**)
 
-- [x] choose th right primitive polynomial
-  
-  `x^16 + x^14 + x^13 + x^11` 65535 states before repetition
+### LSFR synthesis
 
-- [x] No seed input → always starts at ‘1’ : `load_seed`
+#### ⚠️error
 
-- [x] how can i make it more randomized ?
-  
-  - [x] 4 LSFR and XOR the output : 2.88*10^17 states before iteration
-  
-  - [x] Whitening
+as you see below the optimazation is removing all internal signals !! so we get these
 
-- [x] rst_n sould be rst and turn to active high because its confiusing for me!!
+![util.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\LSFR\errors\util.png)
 
-- [x] output should be 0 when its rst !
+![timing.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\LSFR\errors\timing.png)
 
-- [x] Test bench (**f<u>inal step</u>**)
+so we have no internal signal and the whole 
+
+this is due to Vivado's aggressive optimization removing your LFSR logic because the outputs aren't being used or there are constant inputs.
+
+> sulotion:
+> 
+> ```v
+> (* keep = "true" *) 
+> ```
+> 
+> ```v
+>         // State registers for each LFSR
+>         logic [WIDTH1-1:0] lfsr1;
+>         logic [WIDTH2-1:0] lfsr2;
+>         logic [WIDTH3-1:0] lfsr3;
+>         logic [WIDTH4-1:0] lfsr4;
+>         // Feedback wires
+>         logic fb1, fb2, fb3, fb4;
+> 
+>         //should turn into:
+>         // State registers for each LFSR
+>         (* keep = "true" *) logic [WIDTH1-1:0] lfsr1;
+>         (* keep = "true" *) logic [WIDTH2-1:0] lfsr2;
+>         (* keep = "true" *) logic [WIDTH3-1:0] lfsr3;
+>         (* keep = "true" *) logic [WIDTH4-1:0] lfsr4;
+>         // Feedback wires
+>         (* keep = "true" *) logic fb1, fb2, fb3, fb4;        
+> ```
+
+#### before:
+
+clk = 5ns
+
+![RTL.png](C:\Users\Alireza\AppData\Roaming\marktext\images\30fd68875dc6fdd9b9d05c6adde6e29424e14a83.png)
+
+![Screenshot 2025-08-21 124951.png](C:\Users\Alireza\AppData\Roaming\marktext\images\52e2ce0e55553994dbbfc914347a04c4fb7614b9.png)
+
+![Screenshot 2025-08-21 125007.png](C:\Users\Alireza\AppData\Roaming\marktext\images\244e5e3a99b9b1c752ed5ac1d0a311a0808e042f.png)
+
+the critical path:
+
+![Screenshot 2025-08-21 125148.png](C:\Users\Alireza\AppData\Roaming\marktext\images\351b6a5cd31ce8c800706cf2bf59b138d21a4049.png)
+
+- **62 LUTs** - This is reasonable for 4 LFSRs
+
+- **58 Registers** - Good (close to theoretical minimum of 16+15+14+13 = 58)
+
+- **78 IOBs** - This seems high (likely due to the wide seed_in port)
+
+#### after:
+
+![Screenshot 2025-08-21 144627.png](C:\Users\Alireza\AppData\Roaming\marktext\images\502f2c4fa0e0392bbb4434e83694655e778118e4.png)
+
+![Screenshot 2025-08-21 144719.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a7a677927f34edf83d704bbc69a5702ed9fdd13c.png)
+
+![Screenshot 2025-08-21 144824.png](C:\Users\Alireza\AppData\Roaming\marktext\images\22648f4b9edd42ab91f857beb3dcf56ce1286512.png)
+
+
+
+## fitness evaluator
+
+⚠️**error testbench**
+
+```v
+Test 1: All zeros chromosome
+Test 2: All ones chromosome
+Test 3: Single bit set
+Test 4: Half ones
+Test 5: Alternating bits
+Test 6: Near-max ones (15 ones)
+Test 7: Start held high
+Test 8: Back-to-back evaluations
+Test 9: Reset during evaluation
+ERROR: Reset did not clear outputs! Fitness: 16, Done: 1
+Test 10: Idle (no start)
+ERROR: evaluation_done high in idle!
+Starting random tests...
+ERROR @ time = 193000: Test 23 - evaluation_done not asserted! Actual: 0 | Chromosome: b889 | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
+ERROR @ time = 275000: Test 33 - evaluation_done not asserted! Actual: 0 | Chromosome: ea70 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+ERROR @ time = 365000: Test 44 - evaluation_done not asserted! Actual: 0 | Chromosome: a09b | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
+ERROR @ time = 447000: Test 54 - evaluation_done not asserted! Actual: 0 | Chromosome: fb82 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+ERROR @ time = 537000: Test 65 - evaluation_done not asserted! Actual: 0 | Chromosome: 2480 | Start_Evaluation: 0 | Fitness: 3 | Expected_Fitness: 3 | Reset: 0
+ERROR @ time = 619000: Test 75 - evaluation_done not asserted! Actual: 0 | Chromosome: b42b | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+ERROR @ time = 709000: Test 86 - evaluation_done not asserted! Actual: 0 | Chromosome: 2c3e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+ERROR @ time = 791000: Test 96 - evaluation_done not asserted! Actual: 0 | Chromosome: 865e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+ERROR @ time = 881000: Test 107 - evaluation_done not asserted! Actual: 0 | Chromosome: cc3a | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Test finished. Ran 116 tests, errors = 11
+TEST FAILED
+```
+
+adding wait for done signal in checker might help!
+
+### Issues to fix:
+
+> - [x] **Bug1**: The for-loop uses non-blocking assignments (`<=`) inside an `always_ff` block.
+> 
+> - [x] **Single-Cycle Loop Assumption**: For large `CHROMOSOME_WIDTH` (e.g., >32), the loop could cause high usage of utiazation and high timing 
+> 
+> - [ ] **No Edge Case Handling**: Doesn’t handle cases like all-zero chromosome (fitness=0), maximum fitness, or invalid inputs.
+> 
+> - [ ] **Done Signal Behavior**: `evaluation_done` is set to 1 immediately on `start_evaluation`, but the calculation happens in the same cycle.
+> 
+> - [ ] **Synthesis/Optimization**

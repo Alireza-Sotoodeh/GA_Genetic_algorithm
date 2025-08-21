@@ -1,6 +1,4 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/crossover.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module crossover
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/crossover_TB.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module crossover_tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fitness_evaluator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fitness_evaluator_tb

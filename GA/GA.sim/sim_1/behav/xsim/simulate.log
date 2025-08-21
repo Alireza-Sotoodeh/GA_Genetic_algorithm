@@ -1,0 +1,219 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+Test 1: All zeros chromosome
+Test 2: All ones chromosome
+Test 3: Single bit set
+Test 4: Half ones
+Test 5: Alternating bits
+Test 6: Near-max ones (15 ones)
+Test 7: Start held high
+Test 8: Back-to-back evaluations
+Test 9: Reset during evaluation
+ERROR: Reset did not clear outputs! Fitness: 16, Done: 1
+Test 10: Idle (no start)
+ERROR: evaluation_done high in idle!
+Starting random tests...
+Random Test 12
+ERROR @ time = 139000: Test 12 - evaluation_done never asserted! Actual: 0 | Chromosome: 31db | Start_Evaluation: 0 | Fitness: 16 | Expected_Fitness: 9 | Reset: 0
+Adding back-to-back random eval
+Random Test 14
+ERROR @ time = 175000: Test 14 - evaluation_done never asserted! Actual: 0 | Chromosome: ca8e | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 15
+ERROR @ time = 201000: Test 15 - evaluation_done never asserted! Actual: 0 | Chromosome: f4f0 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 9 | Reset: 0
+Random Test 16
+ERROR @ time = 227000: Test 16 - evaluation_done never asserted! Actual: 0 | Chromosome: 9edd | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 11 | Reset: 0
+Random Test 17
+ERROR @ time = 253000: Test 17 - evaluation_done never asserted! Actual: 0 | Chromosome: ff1e | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 12 | Reset: 0
+Random Test 18
+ERROR @ time = 279000: Test 18 - evaluation_done never asserted! Actual: 0 | Chromosome: 26cb | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 19
+ERROR @ time = 305000: Test 19 - evaluation_done never asserted! Actual: 0 | Chromosome: c399 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 20
+ERROR @ time = 331000: Test 20 - evaluation_done never asserted! Actual: 0 | Chromosome: f01b | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 21
+ERROR @ time = 357000: Test 21 - evaluation_done never asserted! Actual: 0 | Chromosome: f159 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 9 | Reset: 0
+Random Test 22
+ERROR @ time = 383000: Test 22 - evaluation_done never asserted! Actual: 0 | Chromosome: b889 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 7 | Reset: 0
+Random Test 23
+ERROR @ time = 413000: Test 23 - evaluation_done never asserted! Actual: 0 | Chromosome: 8ef8 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+Random Test 24
+ERROR @ time = 439000: Test 24 - evaluation_done never asserted! Actual: 0 | Chromosome: df54 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 10 | Reset: 0
+Random Test 25
+ERROR @ time = 465000: Test 25 - evaluation_done never asserted! Actual: 0 | Chromosome: 5292 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 6 | Reset: 0
+Random Test 26
+ERROR @ time = 491000: Test 26 - evaluation_done never asserted! Actual: 0 | Chromosome: e093 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 27
+ERROR @ time = 517000: Test 27 - evaluation_done never asserted! Actual: 0 | Chromosome: d0ae | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 8 | Reset: 0
+Random Test 28
+ERROR @ time = 543000: Test 28 - evaluation_done never asserted! Actual: 0 | Chromosome: 0b1b | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 29
+ERROR @ time = 569000: Test 29 - evaluation_done never asserted! Actual: 0 | Chromosome: 6f8b | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 10 | Reset: 0
+Random Test 30
+ERROR @ time = 595000: Test 30 - evaluation_done never asserted! Actual: 0 | Chromosome: c126 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 6 | Reset: 0
+Random Test 31
+ERROR @ time = 621000: Test 31 - evaluation_done never asserted! Actual: 0 | Chromosome: ea70 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 8 | Reset: 0
+Random Test 32
+ERROR @ time = 647000: Test 32 - evaluation_done never asserted! Actual: 0 | Chromosome: c21d | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 33
+Adding back-to-back random eval
+Random Test 35
+ERROR @ time = 697000: Test 35 - evaluation_done never asserted! Actual: 0 | Chromosome: 1144 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 4 | Reset: 0
+Random Test 36
+ERROR @ time = 723000: Test 36 - evaluation_done never asserted! Actual: 0 | Chromosome: 7c44 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 37
+ERROR @ time = 749000: Test 37 - evaluation_done never asserted! Actual: 0 | Chromosome: b7a9 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 10 | Reset: 0
+Random Test 38
+ERROR @ time = 775000: Test 38 - evaluation_done never asserted! Actual: 0 | Chromosome: d362 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 8 | Reset: 0
+Random Test 39
+ERROR @ time = 801000: Test 39 - evaluation_done never asserted! Actual: 0 | Chromosome: 1dfd | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 11 | Reset: 0
+Random Test 40
+ERROR @ time = 827000: Test 40 - evaluation_done never asserted! Actual: 0 | Chromosome: 72c7 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+Random Test 41
+ERROR @ time = 853000: Test 41 - evaluation_done never asserted! Actual: 0 | Chromosome: a09b | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 42
+ERROR @ time = 879000: Test 42 - evaluation_done never asserted! Actual: 0 | Chromosome: 2f41 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 43
+ERROR @ time = 905000: Test 43 - evaluation_done never asserted! Actual: 0 | Chromosome: ef0b | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 10 | Reset: 0
+Random Test 44
+Random Test 45
+ERROR @ time = 945000: Test 45 - evaluation_done never asserted! Actual: 0 | Chromosome: 0d08 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 4 | Reset: 0
+Random Test 46
+ERROR @ time = 971000: Test 46 - evaluation_done never asserted! Actual: 0 | Chromosome: cb0b | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 8 | Reset: 0
+Random Test 47
+ERROR @ time = 997000: Test 47 - evaluation_done never asserted! Actual: 0 | Chromosome: a33e | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 9 | Reset: 0
+Random Test 48
+ERROR @ time = 1023000: Test 48 - evaluation_done never asserted! Actual: 0 | Chromosome: 3c49 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 7 | Reset: 0
+Random Test 49
+ERROR @ time = 1049000: Test 49 - evaluation_done never asserted! Actual: 0 | Chromosome: ba16 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 8 | Reset: 0
+Random Test 50
+ERROR @ time = 1075000: Test 50 - evaluation_done never asserted! Actual: 0 | Chromosome: fb82 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 9 | Reset: 0
+Random Test 51
+ERROR @ time = 1101000: Test 51 - evaluation_done never asserted! Actual: 0 | Chromosome: 3eed | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 11 | Reset: 0
+Random Test 52
+ERROR @ time = 1127000: Test 52 - evaluation_done never asserted! Actual: 0 | Chromosome: c71e | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 9 | Reset: 0
+Random Test 53
+ERROR @ time = 1153000: Test 53 - evaluation_done never asserted! Actual: 0 | Chromosome: c68d | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 8 | Reset: 0
+Random Test 54
+ERROR @ time = 1183000: Test 54 - evaluation_done never asserted! Actual: 0 | Chromosome: e22b | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Adding back-to-back random eval
+Random Test 56
+ERROR @ time = 1219000: Test 56 - evaluation_done never asserted! Actual: 0 | Chromosome: ddae | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 11 | Reset: 0
+Random Test 57
+ERROR @ time = 1245000: Test 57 - evaluation_done never asserted! Actual: 0 | Chromosome: 4254 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 5 | Reset: 0
+Random Test 58
+ERROR @ time = 1271000: Test 58 - evaluation_done never asserted! Actual: 0 | Chromosome: 47c1 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 7 | Reset: 0
+Random Test 59
+ERROR @ time = 1297000: Test 59 - evaluation_done never asserted! Actual: 0 | Chromosome: a43b | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 8 | Reset: 0
+Random Test 60
+ERROR @ time = 1323000: Test 60 - evaluation_done never asserted! Actual: 0 | Chromosome: 2480 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 3 | Reset: 0
+Random Test 61
+ERROR @ time = 1349000: Test 61 - evaluation_done never asserted! Actual: 0 | Chromosome: 4b29 | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 7 | Reset: 0
+Random Test 62
+ERROR @ time = 1375000: Test 62 - evaluation_done never asserted! Actual: 0 | Chromosome: 24df | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 9 | Reset: 0
+Random Test 63
+ERROR @ time = 1401000: Test 63 - evaluation_done never asserted! Actual: 0 | Chromosome: 022e | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 5 | Reset: 0
+Random Test 64
+ERROR @ time = 1427000: Test 64 - evaluation_done never asserted! Actual: 0 | Chromosome: 8d7d | Start_Evaluation: 0 | Fitness: 5 | Expected_Fitness: 10 | Reset: 0
+Random Test 65
+ERROR @ time = 1457000: Test 65 - evaluation_done never asserted! Actual: 0 | Chromosome: 6ca0 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 6 | Reset: 0
+Random Test 66
+ERROR @ time = 1483000: Test 66 - evaluation_done never asserted! Actual: 0 | Chromosome: b1fd | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 11 | Reset: 0
+Random Test 67
+ERROR @ time = 1509000: Test 67 - evaluation_done never asserted! Actual: 0 | Chromosome: b7c9 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 10 | Reset: 0
+Random Test 68
+ERROR @ time = 1535000: Test 68 - evaluation_done never asserted! Actual: 0 | Chromosome: cb48 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 7 | Reset: 0
+Random Test 69
+ERROR @ time = 1561000: Test 69 - evaluation_done never asserted! Actual: 0 | Chromosome: b42b | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 8 | Reset: 0
+Random Test 70
+ERROR @ time = 1587000: Test 70 - evaluation_done never asserted! Actual: 0 | Chromosome: 4547 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 7 | Reset: 0
+Random Test 71
+ERROR @ time = 1613000: Test 71 - evaluation_done never asserted! Actual: 0 | Chromosome: 37e9 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 10 | Reset: 0
+Random Test 72
+ERROR @ time = 1639000: Test 72 - evaluation_done never asserted! Actual: 0 | Chromosome: 5a95 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 8 | Reset: 0
+Random Test 73
+ERROR @ time = 1665000: Test 73 - evaluation_done never asserted! Actual: 0 | Chromosome: f744 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 9 | Reset: 0
+Random Test 74
+ERROR @ time = 1691000: Test 74 - evaluation_done never asserted! Actual: 0 | Chromosome: efb2 | Start_Evaluation: 0 | Fitness: 6 | Expected_Fitness: 11 | Reset: 0
+Random Test 75
+Adding back-to-back random eval
+Random Test 77
+ERROR @ time = 1737000: Test 77 - evaluation_done never asserted! Actual: 0 | Chromosome: 5dc6 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+Random Test 78
+ERROR @ time = 1763000: Test 78 - evaluation_done never asserted! Actual: 0 | Chromosome: 0605 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 4 | Reset: 0
+Random Test 79
+ERROR @ time = 1789000: Test 79 - evaluation_done never asserted! Actual: 0 | Chromosome: 2c3e | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 8 | Reset: 0
+Random Test 80
+ERROR @ time = 1815000: Test 80 - evaluation_done never asserted! Actual: 0 | Chromosome: 4d79 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+Random Test 81
+ERROR @ time = 1841000: Test 81 - evaluation_done never asserted! Actual: 0 | Chromosome: 2be2 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 8 | Reset: 0
+Random Test 82
+ERROR @ time = 1867000: Test 82 - evaluation_done never asserted! Actual: 0 | Chromosome: d7ae | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 11 | Reset: 0
+Random Test 83
+ERROR @ time = 1893000: Test 83 - evaluation_done never asserted! Actual: 0 | Chromosome: 8272 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 6 | Reset: 0
+Random Test 84
+ERROR @ time = 1919000: Test 84 - evaluation_done never asserted! Actual: 0 | Chromosome: 89a9 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 7 | Reset: 0
+Random Test 85
+ERROR @ time = 1945000: Test 85 - evaluation_done never asserted! Actual: 0 | Chromosome: ddb3 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 11 | Reset: 0
+Random Test 86
+ERROR @ time = 1975000: Test 86 - evaluation_done never asserted! Actual: 0 | Chromosome: aeb0 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Random Test 87
+ERROR @ time = 2001000: Test 87 - evaluation_done never asserted! Actual: 0 | Chromosome: 0995 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 6 | Reset: 0
+Random Test 88
+ERROR @ time = 2027000: Test 88 - evaluation_done never asserted! Actual: 0 | Chromosome: 865e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Random Test 89
+ERROR @ time = 2053000: Test 89 - evaluation_done never asserted! Actual: 0 | Chromosome: 5994 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 7 | Reset: 0
+Random Test 90
+ERROR @ time = 2079000: Test 90 - evaluation_done never asserted! Actual: 0 | Chromosome: 933e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 9 | Reset: 0
+Random Test 91
+ERROR @ time = 2105000: Test 91 - evaluation_done never asserted! Actual: 0 | Chromosome: 6411 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 5 | Reset: 0
+Random Test 92
+ERROR @ time = 2131000: Test 92 - evaluation_done never asserted! Actual: 0 | Chromosome: 0845 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 4 | Reset: 0
+Random Test 93
+ERROR @ time = 2157000: Test 93 - evaluation_done never asserted! Actual: 0 | Chromosome: 6a60 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 6 | Reset: 0
+Random Test 94
+ERROR @ time = 2183000: Test 94 - evaluation_done never asserted! Actual: 0 | Chromosome: 6da7 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 10 | Reset: 0
+Random Test 95
+ERROR @ time = 2209000: Test 95 - evaluation_done never asserted! Actual: 0 | Chromosome: 8ea3 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Random Test 96
+ERROR @ time = 2239000: Test 96 - evaluation_done never asserted! Actual: 0 | Chromosome: c3f5 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 10 | Reset: 0
+Adding back-to-back random eval
+Random Test 98
+ERROR @ time = 2275000: Test 98 - evaluation_done never asserted! Actual: 0 | Chromosome: cc3a | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 99
+ERROR @ time = 2301000: Test 99 - evaluation_done never asserted! Actual: 0 | Chromosome: 6b46 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 100
+ERROR @ time = 2327000: Test 100 - evaluation_done never asserted! Actual: 0 | Chromosome: 605c | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 6 | Reset: 0
+Random Test 101
+ERROR @ time = 2353000: Test 101 - evaluation_done never asserted! Actual: 0 | Chromosome: 5add | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 10 | Reset: 0
+Random Test 102
+ERROR @ time = 2379000: Test 102 - evaluation_done never asserted! Actual: 0 | Chromosome: 2f3b | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 10 | Reset: 0
+Random Test 103
+ERROR @ time = 2405000: Test 103 - evaluation_done never asserted! Actual: 0 | Chromosome: 6141 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 5 | Reset: 0
+Random Test 104
+ERROR @ time = 2431000: Test 104 - evaluation_done never asserted! Actual: 0 | Chromosome: 4d92 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 7 | Reset: 0
+Random Test 105
+ERROR @ time = 2457000: Test 105 - evaluation_done never asserted! Actual: 0 | Chromosome: fb75 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 12 | Reset: 0
+Random Test 106
+ERROR @ time = 2483000: Test 106 - evaluation_done never asserted! Actual: 0 | Chromosome: cc87 | Start_Evaluation: 0 | Fitness: 10 | Expected_Fitness: 8 | Reset: 0
+Random Test 107
+Random Test 108
+ERROR @ time = 2519000: Test 108 - evaluation_done never asserted! Actual: 0 | Chromosome: fbc2 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 10 | Reset: 0
+Random Test 109
+ERROR @ time = 2545000: Test 109 - evaluation_done never asserted! Actual: 0 | Chromosome: 0f30 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 6 | Reset: 0
+Random Test 110
+ERROR @ time = 2571000: Test 110 - evaluation_done never asserted! Actual: 0 | Chromosome: a3e5 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 9 | Reset: 0
+Random Test 111
+ERROR @ time = 2597000: Test 111 - evaluation_done never asserted! Actual: 0 | Chromosome: f737 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 12 | Reset: 0
+Random Test 112
+ERROR @ time = 2623000: Test 112 - evaluation_done never asserted! Actual: 0 | Chromosome: dbb7 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 12 | Reset: 0
+Random Test 113
+ERROR @ time = 2649000: Test 113 - evaluation_done never asserted! Actual: 0 | Chromosome: 51d3 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 8 | Reset: 0
+Random Test 114
+ERROR @ time = 2675000: Test 114 - evaluation_done never asserted! Actual: 0 | Chromosome: 4d8a | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 7 | Reset: 0
+Random Test 115
+ERROR @ time = 2701000: Test 115 - evaluation_done never asserted! Actual: 0 | Chromosome: d77a | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 11 | Reset: 0
+Random Test 116
+ERROR @ time = 2727000: Test 116 - evaluation_done never asserted! Actual: 0 | Chromosome: 6103 | Start_Evaluation: 0 | Fitness: 11 | Expected_Fitness: 5 | Reset: 0
+Test finished. Ran 116 tests, errors = 98
+TEST FAILED
+$finish called at time : 2731 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv" Line 275

@@ -71,7 +71,7 @@ module lfsr_SudoRandom #(
     assign fb4 = lfsr4[WIDTH4-1] ^ lfsr4[WIDTH4-2] ^ lfsr4[WIDTH4-4] ^ lfsr4[WIDTH4-5];       // x^13 + x^12 + x^10 + x^9 
 
     // Shift registers update
-    always_ff @(posedge clk or negedge rst) begin
+    always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             // default non-zero seeds
             lfsr1 <= defualtSeed1;
@@ -97,9 +97,6 @@ module lfsr_SudoRandom #(
 
     // Whitening: XOR with shifted versions
     always_comb begin
-        if(rst)
-             random_out = 0; 
-        else
-             random_out = combined  ^ (combined >> 7) ^ (combined << 3);
+        random_out = combined  ^ (combined >> 7) ^ (combined << 3);
     end
 endmodule

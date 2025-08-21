@@ -1,3 +1,4 @@
+(* keep_hierarchy = "yes" *)
 module crossover #(
 	parameter CHROMOSOME_WIDTH = 16,
 	parameter LSFR_WIDTH = 16
@@ -35,18 +36,19 @@ module crossover #(
 	input  logic [LSFR_WIDTH-1:0] 				LSFR_input;
 	
     // outputs
+    (* use_dsp = "no" *)
     output logic [CHROMOSOME_WIDTH-1:0] 		child;
     output logic 								crossover_done;
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     
     // Internal signals
-    logic [$clog2(CHROMOSOME_WIDTH):0] sp_rand, dp1_rand, dp2_rand;
-    logic [$clog2(CHROMOSOME_WIDTH):0] p1_fixed, p2_fixed;
-    logic [$clog2(CHROMOSOME_WIDTH):0] p1_float, p2_float;
-    logic [CHROMOSOME_WIDTH-1:0] mask_single_fixed, mask_double_fixed;
-    logic [CHROMOSOME_WIDTH-1:0] mask_single_float, mask_double_float;
-    logic [CHROMOSOME_WIDTH-1:0] active_uniform_mask;
+    (* keep = "true" *) logic [$clog2(CHROMOSOME_WIDTH):0] sp_rand, dp1_rand, dp2_rand;
+    (* keep = "true" *) logic [$clog2(CHROMOSOME_WIDTH):0] p1_fixed, p2_fixed;
+    (* keep = "true" *) logic [$clog2(CHROMOSOME_WIDTH):0] p1_float, p2_float;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_fixed, mask_double_fixed;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_float, mask_double_float;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] active_uniform_mask;
 
     // =========================
     // Combinational preparation
@@ -59,16 +61,19 @@ module crossover #(
         dp2_rand = LSFR_input[(3*PWIDTH)-1:(2*PWIDTH)];
 
         // ---- Sort double points ----
-        // Fixed
+		(* keep = "true", lut1 = "yes" *)
         p1_fixed = (crossover_double_point1 < crossover_double_point2) 
                    ? crossover_double_point1 : crossover_double_point2;
+		(* keep = "true", lut1 = "yes" *)		   
         p2_fixed = (crossover_double_point1 < crossover_double_point2) 
                    ? crossover_double_point2 : crossover_double_point1;
         // Float
+		(* keep = "true", lut1 = "yes" *)
         p1_float = (dp1_rand < dp2_rand) ? dp1_rand : dp2_rand;
+		(* keep = "true", lut1 = "yes" *)
         p2_float = (dp1_rand < dp2_rand) ? dp2_rand : dp1_rand;
 
-        // ---- Generate masks in-line safely ----
+        // Generate masks 
         // Fixed: single
         mask_single_fixed = (crossover_Single_point == 0) ? '0 :
                             (crossover_Single_point >= CHROMOSOME_WIDTH) ? 
@@ -105,7 +110,8 @@ module crossover #(
     // =========================
     // Main crossover process
     // =========================
-    always_ff @(posedge clk or negedge rst) begin
+    (* use_dsp = "no" *)
+    always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             child          <= '0;
             crossover_done <= 1'b0;

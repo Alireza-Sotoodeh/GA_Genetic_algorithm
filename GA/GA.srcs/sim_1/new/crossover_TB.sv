@@ -217,24 +217,24 @@ module crossover_tb;
 
         // MODE 1: FLOAT CROSSOVER (using LFSR input)
 		// Test 7: Float single point with LFSR = 0
-		intf.parent1                     = 16'b0000000000000000;
-		intf.parent2                     = 16'b1111111111111111;
-		intf.crossover_mode              = 2'b01;
-		intf.crossover_single_double     = 1'b0;
-		intf.LSFR_input                  = 16'h0000;  // Point 0
-		intf.mask_uniform                = 16'b0000000000000000;
-		intf.uniform_random_enable       = 1'b0;
-		start_lfsr = 1'b0;
-		seed_in = 16'h0000;
-		load_seed = 1'b1;
-		@(posedge CLK);
-		load_seed = 1'b0;
-		intf.start_crossover = 1'b1;
-		@(posedge CLK);
-		intf.start_crossover = 1'b0;
-		check_result();
-		@(posedge CLK);
-
+        intf.parent1                     = 16'b0000000000000000;
+        intf.parent2                     = 16'b1111111111111111;
+        intf.crossover_mode              = 2'b01;
+        intf.crossover_single_double     = 1'b0;
+        intf.mask_uniform                = 16'b0000000000000000;
+        intf.uniform_random_enable       = 1'b0;
+        start_lfsr = 1'b0;
+        seed_in = 16'h0000;
+        load_seed = 1'b1;
+        @(posedge CLK);
+        load_seed = 1'b0;
+        @(posedge CLK); // Extra cycle to ensure LFSR output stabilizes
+        intf.start_crossover = 1'b1;
+        @(posedge CLK);
+        intf.start_crossover = 1'b0;
+        check_result();
+        @(posedge CLK);
+    
 		// Test 8: Float double point with LFSR values
 		intf.parent1                     = 16'b1111000011110000;
 		intf.parent2                     = 16'b0000111100001111;
