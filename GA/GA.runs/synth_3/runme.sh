@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_1'
+HD_PWD='D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

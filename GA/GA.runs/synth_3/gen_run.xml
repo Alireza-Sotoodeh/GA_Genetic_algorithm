@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s6cpga196-2" LaunchTime="1755721429">
+<GenRun Id="synth_3" LaunchPart="xc7s6cpga196-2" LaunchTime="1755767748">
   <File Type="PA-TCL" Name="lfsr_SudoRandom.tcl"/>
   <File Type="RDS-PROPCONSTRS" Name="lfsr_SudoRandom_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="lfsr_SudoRandom_reports.tcl"/>
@@ -29,11 +29,16 @@
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
       <Option Name="TopModule" Val="lfsr_SudoRandom"/>
-      <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
     <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/CLK.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
     <Config>
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>

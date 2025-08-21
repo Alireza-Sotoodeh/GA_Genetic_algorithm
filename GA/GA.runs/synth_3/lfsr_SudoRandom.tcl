@@ -18,6 +18,8 @@ proc create_report { reportName command } {
   }
 }
 set_param chipscope.maxJobs 2
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 create_project -in_memory -part xc7s6cpga196-2
 
 set_param project.singleFileAddWarning.threshold 0
@@ -38,6 +40,9 @@ read_verilog -library xil_defaultlib -sv D:/university/studies/FPGA/PJ_FPGA/GA_G
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
+read_xdc D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/constrs_1/new/CLK.xdc
+set_property used_in_implementation false [get_files D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/constrs_1/new/CLK.xdc]
+
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
@@ -47,6 +52,6 @@ synth_design -top lfsr_SudoRandom -part xc7s6cpga196-2
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
 write_checkpoint -force -noxdef lfsr_SudoRandom.dcp
-create_report "synth_1_synth_report_utilization_0" "report_utilization -file lfsr_SudoRandom_utilization_synth.rpt -pb lfsr_SudoRandom_utilization_synth.pb"
+create_report "synth_3_synth_report_utilization_0" "report_utilization -file lfsr_SudoRandom_utilization_synth.rpt -pb lfsr_SudoRandom_utilization_synth.pb"
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]
