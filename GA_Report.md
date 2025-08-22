@@ -671,8 +671,6 @@ clk 5ns
 
     no change :)
 
-
-
 ## LSFR
 
 ### v1
@@ -717,8 +715,6 @@ as you see no 0 output and rst is active low
         end
     end
 ```
-
-
 
 ### Issues to fix:
 
@@ -808,8 +804,6 @@ the critical path:
 ![Screenshot 2025-08-21 144719.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a7a677927f34edf83d704bbc69a5702ed9fdd13c.png)
 
 ![Screenshot 2025-08-21 144824.png](C:\Users\Alireza\AppData\Roaming\marktext\images\22648f4b9edd42ab91f857beb3dcf56ce1286512.png)
-
-
 
 ## fitness evaluator
 
