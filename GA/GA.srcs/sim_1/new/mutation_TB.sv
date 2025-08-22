@@ -467,40 +467,42 @@ module mutation_tb;
                     end
                 end
                 // Bit-Swap Mutation
-                3'b001: begin
-                    // Edge case handler: if swap_pos1 == swap_pos2, regenerate
-                    if (swap_pos1 == swap_pos2) begin
-                        swap_pos1 = (intf.LSFR_input[11:8] % W);  // Regenerate pos1
-                        swap_pos2 = (intf.LSFR_input[15:12] % W); // Regenerate pos2
-                        // If still equal, skip
-                        if (swap_pos1 != swap_pos2) begin
-                            temp_child[swap_pos1] = intf.child_in[swap_pos2];
-                            temp_child[swap_pos2] = intf.child_in[swap_pos1];
-                        end
-                    end else begin
-                        // Normal swap
-                        temp_child[swap_pos1] = intf.child_in[swap_pos2];
-                        temp_child[swap_pos2] = intf.child_in[swap_pos1];
-                    end
-                    // Extra swap if high rate (with edge handler)
-                    if (intf.mutation_rate > intf.LSFR_input[15:8]) begin
-                        swap_pos1 = (swap_pos1 + 1) % W;
-                        swap_pos2 = (swap_pos2 + 2) % W;
-                        if (swap_pos1 == swap_pos2) begin
-                            // Edge handler: shift again to avoid equality
-                            swap_pos1 = (swap_pos1 + 3) % W;
-                            swap_pos2 = (swap_pos2 + 4) % W;
-                            if (swap_pos1 != swap_pos2) begin
-                                temp_child[swap_pos1] = temp_child[swap_pos2];
-                                temp_child[swap_pos2] = temp_child[swap_pos1];
-                            end
-                        end else begin
-                            // normal
-                            temp_child[swap_pos1] = temp_child[swap_pos2];
-                            temp_child[swap_pos2] = temp_child[swap_pos1];
-                        end
-                    end
-                end
+                // Bit-Swap Mutation
+3'b001: begin
+    // Edge case handler: if swap_pos1 == swap_pos2, regenerate
+    if (swap_pos1 == swap_pos2) begin
+        swap_pos1 = (intf.LSFR_input[11:8] % W);
+        swap_pos2 = (intf.LSFR_input[15:12] % W);
+        // If still equal, skip
+        if (swap_pos1 != swap_pos2) begin
+            temp_child[swap_pos1] = intf.child_in[swap_pos2];
+            temp_child[swap_pos2] = intf.child_in[swap_pos1];
+        end
+    end else begin
+        // Normal swap
+        temp_child[swap_pos1] = intf.child_in[swap_pos2];
+        temp_child[swap_pos2] = intf.child_in[swap_pos1];
+    end
+    // Extra swap if high rate (with edge handler)
+    if (intf.mutation_rate > intf.LSFR_input[15:8]) begin
+        logic [3:0] extra_pos1 = (swap_pos1 + 1) % W;
+        logic [3:0] extra_pos2 = (swap_pos2 + 2) % W;
+        if (extra_pos1 == extra_pos2) begin
+            // Edge handler: shift again to avoid equality
+            extra_pos1 = (extra_pos1 + 3) % W;
+            extra_pos2 = (extra_pos2 + 4) % W;
+            if (extra_pos1 != extra_pos2) begin
+                logic temp_bit = temp_child[extra_pos1];
+                temp_child[extra_pos1] = temp_child[extra_pos2];
+                temp_child[extra_pos2] = temp_bit;
+            end
+        end else begin
+            logic temp_bit = temp_child[extra_pos1];
+            temp_child[extra_pos1] = temp_child[extra_pos2];
+            temp_child[extra_pos2] = temp_bit;
+        end
+    end
+end
                 // Inversion Mutation
                 3'b010: begin
                     // Edge case handler: if sorted_start == sorted_end or length <1, skip
@@ -584,7 +586,10 @@ module mutation_tb;
         end 
         test_count++;
     endtask
-
+    
+    // -------------------------------------------------------
+    // Main Test Flow
+    // -------------------------------------------------------
     // ADDED: Initial block to run the generator (adjust num_tests as needed)
     initial begin
         // Wait for reset to deassert
