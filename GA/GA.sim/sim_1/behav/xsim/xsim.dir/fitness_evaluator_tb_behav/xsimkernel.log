@@ -1,7 +1,7 @@
-Running: xsim.dir/fitness_evaluator_tb_behav/xsimk.exe -simmode gui -wdb fitness_evaluator_tb_behav.wdb -simrunnum 0 -socket 2907
+Running: xsim.dir/fitness_evaluator_tb_behav/xsimk.exe -simmode gui -wdb fitness_evaluator_tb_behav.wdb -simrunnum 0 -socket 14381
 Design successfully loaded
-Design Loading Memory Usage: 7876 KB (Peak: 7876 KB)
+Design Loading Memory Usage: 7864 KB (Peak: 7864 KB)
 Design Loading CPU Usage: 0 ms
 Simulation completed
-Simulation Memory Usage: 8832 KB (Peak: 8832 KB)
-Simulation CPU Usage: 15 ms
+Simulation Memory Usage: 8796 KB (Peak: 8796 KB)
+Simulation CPU Usage: 0 ms

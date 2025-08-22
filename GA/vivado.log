@@ -18,3 +18,2087 @@ INFO: [IP_Flow 19-1704] No user IP repositories specified
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.2/data/ip'.
 open_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:08 . Memory (MB): peak = 929.641 ; gain = 223.781
 update_compile_order -fileset sources_1
+WARNING: [filemgmt 20-1445] Cannot import file 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv' on top of itself. Importing a file from the imported source directory can cause this problem.
+add_files -norecurse D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation.sv w ]
+add_files -fileset sim_1 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation.sv
+set_property top mutation [current_fileset]
+update_compile_order -fileset sim_1
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation.sv] -no_script -reset -force -quiet
+remove_files  -fileset sim_1 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation.sv
+file delete -force D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation.sv
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv w ]
+add_files -fileset sim_1 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv
+update_compile_order -fileset sim_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'fitness_evaluator_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj fitness_evaluator_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fitness_evaluator
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fitness_evaluator_tb
+INFO: [USF-XSim-69] 'compile' step finished in '3' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot fitness_evaluator_tb_behav xil_defaultlib.fitness_evaluator_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot fitness_evaluator_tb_behav xil_defaultlib.fitness_evaluator_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv" Line 1. Module fitness_evaluator doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.fitness_evaluator_if
+Compiling module xil_defaultlib.fitness_evaluator
+Compiling module xil_defaultlib.fitness_evaluator_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot fitness_evaluator_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "fitness_evaluator_tb_behav -key {Behavioral:sim_1:Functional:fitness_evaluator_tb} -tclbatch {fitness_evaluator_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source fitness_evaluator_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Test 1: All zeros chromosome
+Test 2: All ones chromosome
+Test 3: Single bit set
+Test 4: Half ones
+Test 5: Alternating bits
+Test 6: Near-max ones (15 ones)
+Test 7: Start held high
+Test 8: Back-to-back evaluations
+Test 9: Reset during evaluation
+ERROR: Reset did not clear outputs! Fitness: 16, Done: 1
+Test 10: Idle (no start)
+ERROR: evaluation_done high in idle!
+Starting random tests...
+Adding back-to-back random eval
+ERROR @ time = 193000: Test 23 - evaluation_done not asserted! Actual: 0 | Chromosome: b889 | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
+ERROR @ time = 275000: Test 33 - evaluation_done not asserted! Actual: 0 | Chromosome: ea70 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Adding back-to-back random eval
+ERROR @ time = 365000: Test 44 - evaluation_done not asserted! Actual: 0 | Chromosome: a09b | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
+ERROR @ time = 447000: Test 54 - evaluation_done not asserted! Actual: 0 | Chromosome: fb82 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
+Adding back-to-back random eval
+ERROR @ time = 537000: Test 65 - evaluation_done not asserted! Actual: 0 | Chromosome: 2480 | Start_Evaluation: 0 | Fitness: 3 | Expected_Fitness: 3 | Reset: 0
+ERROR @ time = 619000: Test 75 - evaluation_done not asserted! Actual: 0 | Chromosome: b42b | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Adding back-to-back random eval
+ERROR @ time = 709000: Test 86 - evaluation_done not asserted! Actual: 0 | Chromosome: 2c3e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+ERROR @ time = 791000: Test 96 - evaluation_done not asserted! Actual: 0 | Chromosome: 865e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Adding back-to-back random eval
+ERROR @ time = 881000: Test 107 - evaluation_done not asserted! Actual: 0 | Chromosome: cc3a | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
+Test finished. Ran 116 tests, errors = 11
+TEST FAILED
+$finish called at time : 957 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv" Line 274
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'fitness_evaluator_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:07 ; elapsed = 00:00:10 . Memory (MB): peak = 998.613 ; gain = 18.816
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+set_property top mutation_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+update_compile_order -fileset sim_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:370]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:75]
+ERROR: [VRFC 10-3818] variable 'swap_pos1' is driven by invalid combination of procedural drivers [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv:35]
+WARNING: [VRFC 10-2921] 'swap_pos1' driven by this always_comb block should not be driven by any other process [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv:43]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/elaborate.log'
+ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/elaborate.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+reset_run synth_3
+launch_runs synth_3 -jobs 8
+[Fri Aug 22 14:53:10 2025] Launched synth_3...
+Run output will be captured here: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3/runme.log
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:370]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:75]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+
+****** Webtalk v2019.2 (64-bit)
+  **** SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
+  **** IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/xsim.dir/mutation_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Fri Aug 22 14:55:17 2025...
+run_program: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.020 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '6' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "mutation_tb_behav -key {Behavioral:sim_1:Functional:mutation_tb} -tclbatch {mutation_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source mutation_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+PASS: Test 1
+PASS: Test 2
+PASS: Test 3
+PASS: Test 4
+PASS: Test 5
+PASS: Test 6
+PASS: Test 7
+PASS: Test 8
+PASS: Test 9
+PASS: Test 10
+PASS: Test 11
+PASS: Test 12
+PASS: Test 13
+PASS: Test 14
+PASS: Test 15
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'mutation_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:04 ; elapsed = 00:00:10 . Memory (MB): peak = 1055.020 ; gain = 0.000
+run all
+run: Time (s): cpu = 00:00:09 ; elapsed = 00:00:08 . Memory (MB): peak = 1055.020 ; gain = 0.000
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+close_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1055.020 ; gain = 0.000
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:424]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "mutation_tb_behav -key {Behavioral:sim_1:Functional:mutation_tb} -tclbatch {mutation_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source mutation_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+PASS test           1: Output matches 0000
+PASS test           2: Output matches aaaa
+PASS test           3: Output matches f0f0
+PASS test           4: Output matches 0f0f
+PASS test           5: Output matches aaaa
+PASS test           6: Output matches ffff
+PASS test           7: Output matches 0000
+PASS test           8: Output matches 0f0f
+PASS test           9: Output matches aaaa
+PASS test          10: Output matches f0f0
+PASS test          11: Output matches 0f0f
+PASS test          12: Output matches aaaa
+PASS test          13: Output matches ffff
+PASS test          14: Output matches 0000
+PASS test          15: Output matches aaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 69d2
+ERROR in test          18: Expected e67a, Got a07e
+PASS test          19: Output matches 05fa
+PASS test          20: Output matches cc1f
+PASS test          21: Output matches a718
+PASS test          22: Output matches c27e
+PASS test          23: Output matches 95ff
+ERROR in test          24: Expected 8d1b, Got 03e6
+PASS test          25: Output matches 07f0
+PASS test          26: Output matches 1181
+PASS test          27: Output matches 743e
+ERROR in test          28: Expected 50c4, Got d741
+PASS test          29: Output matches fd08
+PASS test          30: Output matches 7b93
+ERROR in test          31: Expected de4f, Got 3b54
+PASS test          32: Output matches 2d2d
+PASS test          33: Output matches 79ae
+PASS test          34: Output matches 3810
+ERROR in test          35: Expected ed97, Got 953c
+ERROR in test          36: Expected 8d55, Got 8d47
+PASS test          37: Output matches 9cb6
+PASS test          38: Output matches 4c33
+PASS test          39: Output matches c8eb
+ERROR in test          40: Expected 1c32, Got 7374
+ERROR in test          41: Expected 106a, Got b238
+PASS test          42: Output matches d04c
+PASS test          43: Output matches 1d4a
+PASS test          44: Output matches 52d4
+ERROR in test          45: Expected bd1f, Got 17b5
+PASS test          46: Output matches 2514
+ERROR in test          47: Expected 1740, Got 8459
+ERROR in test          48: Expected 95c8, Got d97e
+ERROR in test          49: Expected 0897, Got 6c4a
+PASS test          50: Output matches 940c
+PASS test          51: Output matches e9ec
+ERROR in test          52: Expected dc61, Got 0398
+PASS test          53: Output matches bf6b
+PASS test          54: Output matches 7b5f
+ERROR in test          55: Expected 3fcd, Got 2a2b
+PASS test          56: Output matches ad2f
+PASS test          57: Output matches 8f0a
+ERROR in test          58: Expected bdc4, Got bccc
+ERROR in test          59: Expected 7039, Got cd25
+PASS test          60: Output matches 7f82
+PASS test          61: Output matches 4f40
+PASS test          62: Output matches 69b1
+PASS test          63: Output matches 7c03
+PASS test          64: Output matches 1540
+ERROR in test          65: Expected 739e, Got 7872
+PASS test          66: Output matches e007
+PASS test          67: Output matches 5e38
+PASS test          68: Output matches bc09
+ERROR in test          69: Expected 634a, Got 632a
+PASS test          70: Output matches cf9e
+ERROR in test          71: Expected af88, Got 70c1
+ERROR in test          72: Expected 19c4, Got 9c03
+ERROR in test          73: Expected eb54, Got eb1c
+ERROR in test          74: Expected de62, Got c6d5
+PASS test          75: Output matches 4987
+PASS test          76: Output matches 0683
+PASS test          77: Output matches bd59
+PASS test          78: Output matches 84b2
+ERROR in test          79: Expected 6aa0, Got 8705
+PASS test          80: Output matches af70
+ERROR in test          81: Expected 484b, Got 6e12
+ERROR in test          82: Expected cb48, Got b6a1
+PASS test          83: Output matches 3906
+PASS test          84: Output matches 7be4
+PASS test          85: Output matches 2db8
+ERROR in test          86: Expected f0d5, Got d587
+ERROR in test          87: Expected 22c1, Got 7745
+ERROR in test          88: Expected c114, Got ca20
+ERROR in test          89: Expected 032d, Got ac0f
+ERROR in test          90: Expected c0bc, Got cd58
+PASS test          91: Output matches 4694
+PASS test          92: Output matches a8c6
+ERROR in test          93: Expected 8bd7, Got df91
+ERROR in test          94: Expected 6642, Got 1541
+PASS test          95: Output matches b222
+PASS test          96: Output matches 87d3
+PASS test          97: Output matches eac5
+PASS test          98: Output matches 218c
+PASS test          99: Output matches d4ed
+PASS test         100: Output matches 029d
+PASS test         101: Output matches 12b8
+PASS test         102: Output matches b760
+PASS test         103: Output matches 7869
+PASS test         104: Output matches 4097
+PASS test         105: Output matches 3178
+PASS test         106: Output matches 1ff8
+PASS test         107: Output matches 0eb5
+PASS test         108: Output matches 1067
+ERROR in test         109: Expected a743, Got 895e
+ERROR in test         110: Expected b903, Got 4d0f
+PASS test         111: Output matches 7d55
+PASS test         112: Output matches c442
+ERROR in test         113: Expected 1bbe, Got dff5
+PASS test         114: Output matches df23
+PASS test         115: Output matches d235
+ERROR in test         116: Expected 91d9, Got 9599
+Tests completed:         116, Errors:          36
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 561
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'mutation_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.020 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 562
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:424]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+PASS test           1: Output matches 0000
+PASS test           2: Output matches aaaa
+PASS test           3: Output matches f0f0
+PASS test           4: Output matches 0f0f
+PASS test           5: Output matches aaaa
+PASS test           6: Output matches ffff
+PASS test           7: Output matches 0000
+PASS test           8: Output matches 0f0f
+PASS test           9: Output matches aaaa
+PASS test          10: Output matches f0f0
+PASS test          11: Output matches 0f0f
+PASS test          12: Output matches aaaa
+PASS test          13: Output matches ffff
+PASS test          14: Output matches 0000
+PASS test          15: Output matches aaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 69d2
+ERROR at test 18: Mode=11, child_in=0x6526, mutation_rate=249, LSFR_input=0x934c, mutation_done=1
+Expected child_out=0xe67a, but got 0xa07e
+Details: Probabilistic check passed (LSFR[7:0]=76  < rate=249)
+Scramble: mask=0x934c
+PASS test          19: Output matches 05fa
+PASS test          20: Output matches cc1f
+PASS test          21: Output matches a718
+PASS test          22: Output matches c27e
+PASS test          23: Output matches 95ff
+ERROR at test 24: Mode=100, child_in=0x8b6e, mutation_rate=189, LSFR_input=0x0675, mutation_done=1
+Expected child_out=0x8d1b, but got 0x03e6
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=189)
+Combined: flip_mask=0x0675, pos1=5, pos2=7
+PASS test          25: Output matches 07f0
+PASS test          26: Output matches 1181
+PASS test          27: Output matches 743e
+ERROR at test 28: Mode=11, child_in=0xd741, mutation_rate=188, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x50c4, but got 0xd741
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=188)
+Scramble: mask=0x8785
+PASS test          29: Output matches fd08
+PASS test          30: Output matches 7b93
+ERROR at test 31: Mode=11, child_in=0xde4f, mutation_rate=98, LSFR_input=0x7289, mutation_done=1
+Expected child_out=0xde4f, but got 0x3b54
+Details: Probabilistic check failed (LSFR[7:0]=137 >= rate=98)
+Scramble: mask=0x7289
+PASS test          32: Output matches 2d2d
+PASS test          33: Output matches 79ae
+PASS test          34: Output matches 3810
+ERROR at test 35: Mode=0, child_in=0x3f96, mutation_rate=125, LSFR_input=0xd201, mutation_done=1
+Expected child_out=0xed97, but got 0x953c
+Details: Probabilistic check passed (LSFR[7:0]=1  < rate=125)
+Bit-Flip: flip_mask=0xd201
+ERROR at test 36: Mode=1, child_in=0x8d47, mutation_rate=183, LSFR_input=0x1314, mutation_done=1
+Expected child_out=0x8d55, but got 0x8d47
+Details: Probabilistic check passed (LSFR[7:0]=20  < rate=183)
+Bit-Swap: pos1=4, pos2=1
+PASS test          37: Output matches 9cb6
+PASS test          38: Output matches 4c33
+PASS test          39: Output matches c8eb
+ERROR at test 40: Mode=0, child_in=0x8c8b, mutation_rate=254, LSFR_input=0x90b9, mutation_done=1
+Expected child_out=0x1c32, but got 0x7374
+Details: Probabilistic check passed (LSFR[7:0]=185  < rate=254)
+Bit-Flip: flip_mask=0x90b9
+ERROR at test 41: Mode=11, child_in=0xcf24, mutation_rate=138, LSFR_input=0xdf4e, mutation_done=1
+Expected child_out=0x106a, but got 0xb238
+Details: Probabilistic check passed (LSFR[7:0]=78  < rate=138)
+Scramble: mask=0xdf4e
+PASS test          42: Output matches d04c
+PASS test          43: Output matches 1d4a
+PASS test          44: Output matches 52d4
+ERROR at test 45: Mode=0, child_in=0xbd1f, mutation_rate=133, LSFR_input=0x6f9a, mutation_done=1
+Expected child_out=0xbd1f, but got 0x17b5
+Details: Probabilistic check failed (LSFR[7:0]=154 >= rate=133)
+Bit-Flip: flip_mask=0x6f9a
+PASS test          46: Output matches 2514
+ERROR at test 47: Mode=11, child_in=0x1740, mutation_rate=27, LSFR_input=0x982c, mutation_done=1
+Expected child_out=0x1740, but got 0x8459
+Details: Probabilistic check failed (LSFR[7:0]=44 >= rate=27)
+Scramble: mask=0x982c
+ERROR at test 48: Mode=0, child_in=0x62c5, mutation_rate=224, LSFR_input=0xf70d, mutation_done=1
+Expected child_out=0x95c8, but got 0xd97e
+Details: Probabilistic check passed (LSFR[7:0]=13  < rate=224)
+Bit-Flip: flip_mask=0xf70d
+ERROR at test 49: Mode=0, child_in=0xd7f1, mutation_rate=195, LSFR_input=0xdf66, mutation_done=1
+Expected child_out=0x0897, but got 0x6c4a
+Details: Probabilistic check passed (LSFR[7:0]=102  < rate=195)
+Bit-Flip: flip_mask=0xdf66
+PASS test          50: Output matches 940c
+PASS test          51: Output matches e9ec
+ERROR at test 52: Mode=11, child_in=0x96b0, mutation_rate=241, LSFR_input=0x6ad0, mutation_done=1
+Expected child_out=0xdc61, but got 0x0398
+Details: Probabilistic check passed (LSFR[7:0]=208  < rate=241)
+Scramble: mask=0x6ad0
+PASS test          53: Output matches bf6b
+PASS test          54: Output matches 7b5f
+ERROR at test 55: Mode=11, child_in=0x2d50, mutation_rate=194, LSFR_input=0x129d, mutation_done=1
+Expected child_out=0x3fcd, but got 0x2a2b
+Details: Probabilistic check passed (LSFR[7:0]=157  < rate=194)
+Scramble: mask=0x129d
+PASS test          56: Output matches ad2f
+PASS test          57: Output matches 8f0a
+ERROR at test 58: Mode=1, child_in=0xbccc, mutation_rate=190, LSFR_input=0xc283, mutation_done=1
+Expected child_out=0xbdc4, but got 0xbccc
+Details: Probabilistic check passed (LSFR[7:0]=131  < rate=190)
+Bit-Swap: pos1=3, pos2=8
+ERROR at test 59: Mode=11, child_in=0xcd25, mutation_rate=112, LSFR_input=0xfd1e, mutation_done=1
+Expected child_out=0x7039, but got 0xcd25
+Details: Probabilistic check passed (LSFR[7:0]=30  < rate=112)
+Scramble: mask=0xfd1e
+PASS test          60: Output matches 7f82
+PASS test          61: Output matches 4f40
+PASS test          62: Output matches 69b1
+PASS test          63: Output matches 7c03
+PASS test          64: Output matches 1540
+ERROR at test 65: Mode=11, child_in=0xf235, mutation_rate=208, LSFR_input=0x85a3, mutation_done=1
+Expected child_out=0x739e, but got 0x7872
+Details: Probabilistic check passed (LSFR[7:0]=163  < rate=208)
+Scramble: mask=0x85a3
+PASS test          66: Output matches e007
+PASS test          67: Output matches 5e38
+PASS test          68: Output matches bc09
+ERROR at test 69: Mode=1, child_in=0x632a, mutation_rate=210, LSFR_input=0x3165, mutation_done=1
+Expected child_out=0x634a, but got 0x632a
+Details: Probabilistic check passed (LSFR[7:0]=101  < rate=210)
+Bit-Swap: pos1=5, pos2=6
+PASS test          70: Output matches cf9e
+ERROR at test 71: Mode=100, child_in=0x16a7, mutation_rate=172, LSFR_input=0xb923, mutation_done=1
+Expected child_out=0xaf88, but got 0x70c1
+Details: Probabilistic check passed (LSFR[7:0]=35  < rate=172)
+Combined: flip_mask=0xb923, pos1=3, pos2=2
+ERROR at test 72: Mode=11, child_in=0x2a79, mutation_rate=191, LSFR_input=0x1bbd, mutation_done=1
+Expected child_out=0x19c4, but got 0x9c03
+Details: Probabilistic check passed (LSFR[7:0]=189  < rate=191)
+Scramble: mask=0x1bbd
+ERROR at test 73: Mode=10, child_in=0xeb1c, mutation_rate=251, LSFR_input=0x6336, mutation_done=1
+Expected child_out=0xeb54, but got 0xeb1c
+Details: Probabilistic check passed (LSFR[7:0]=54  < rate=251)
+Inversion: sorted_start=3, sorted_end=6
+ERROR at test 74: Mode=11, child_in=0xb6c8, mutation_rate=214, LSFR_input=0x68aa, mutation_done=1
+Expected child_out=0xde62, but got 0xc6d5
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=214)
+Scramble: mask=0x68aa
+PASS test          75: Output matches 4987
+PASS test          76: Output matches 0683
+PASS test          77: Output matches bd59
+PASS test          78: Output matches 84b2
+ERROR at test 79: Mode=11, child_in=0x8705, mutation_rate=177, LSFR_input=0xec85, mutation_done=1
+Expected child_out=0x6aa0, but got 0x8705
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=177)
+Scramble: mask=0xec85
+PASS test          80: Output matches af70
+ERROR at test 81: Mode=11, child_in=0xb4ba, mutation_rate=222, LSFR_input=0xfc70, mutation_done=1
+Expected child_out=0x484b, but got 0x6e12
+Details: Probabilistic check passed (LSFR[7:0]=112  < rate=222)
+Scramble: mask=0xfc70
+ERROR at test 82: Mode=11, child_in=0xe06b, mutation_rate=212, LSFR_input=0x2b61, mutation_done=1
+Expected child_out=0xcb48, but got 0xb6a1
+Details: Probabilistic check passed (LSFR[7:0]=97  < rate=212)
+Scramble: mask=0x2b61
+PASS test          83: Output matches 3906
+PASS test          84: Output matches 7be4
+PASS test          85: Output matches 2db8
+ERROR at test 86: Mode=10, child_in=0xd587, mutation_rate=239, LSFR_input=0xd102, mutation_done=1
+Expected child_out=0xf0d5, but got 0xd587
+Details: Probabilistic check passed (LSFR[7:0]=2  < rate=239)
+Inversion: sorted_start=1, sorted_end=13
+ERROR at test 87: Mode=11, child_in=0x22c1, mutation_rate=133, LSFR_input=0x2bc2, mutation_done=1
+Expected child_out=0x22c1, but got 0x7745
+Details: Probabilistic check failed (LSFR[7:0]=194 >= rate=133)
+Scramble: mask=0x2bc2
+ERROR at test 88: Mode=10, child_in=0xca20, mutation_rate=255, LSFR_input=0xd056, mutation_done=1
+Expected child_out=0xc114, but got 0xca20
+Details: Probabilistic check passed (LSFR[7:0]=86  < rate=255)
+Inversion: sorted_start=0, sorted_end=13
+ERROR at test 89: Mode=100, child_in=0xac0f, mutation_rate=50, LSFR_input=0xaf22, mutation_done=1
+Expected child_out=0x032d, but got 0xac0f
+Details: Probabilistic check passed (LSFR[7:0]=34  < rate=50)
+Combined: flip_mask=0xaf22, pos1=2, pos2=2
+ERROR at test 90: Mode=100, child_in=0x0194, mutation_rate=237, LSFR_input=0xd12c, mutation_done=1
+Expected child_out=0xc0bc, but got 0xcd58
+Details: Probabilistic check passed (LSFR[7:0]=44  < rate=237)
+Combined: flip_mask=0xd12c, pos1=12, pos2=2
+PASS test          91: Output matches 4694
+PASS test          92: Output matches a8c6
+ERROR at test 93: Mode=100, child_in=0xfdb3, mutation_rate=177, LSFR_input=0x7664, mutation_done=1
+Expected child_out=0x8bd7, but got 0xdf91
+Details: Probabilistic check passed (LSFR[7:0]=100  < rate=177)
+Combined: flip_mask=0x7664, pos1=4, pos2=6
+ERROR at test 94: Mode=11, child_in=0x681c, mutation_rate=242, LSFR_input=0x4e4e, mutation_done=1
+Expected child_out=0x6642, but got 0x1541
+Details: Probabilistic check passed (LSFR[7:0]=78  < rate=242)
+Scramble: mask=0x4e4e
+PASS test          95: Output matches b222
+PASS test          96: Output matches 87d3
+PASS test          97: Output matches eac5
+PASS test          98: Output matches 218c
+PASS test          99: Output matches d4ed
+PASS test         100: Output matches 029d
+PASS test         101: Output matches 12b8
+PASS test         102: Output matches b760
+PASS test         103: Output matches 7869
+PASS test         104: Output matches 4097
+PASS test         105: Output matches 3178
+PASS test         106: Output matches 1ff8
+PASS test         107: Output matches 0eb5
+PASS test         108: Output matches 1067
+ERROR at test 109: Mode=11, child_in=0xdc70, mutation_rate=236, LSFR_input=0x7b33, mutation_done=1
+Expected child_out=0xa743, but got 0x895e
+Details: Probabilistic check passed (LSFR[7:0]=51  < rate=236)
+Scramble: mask=0x7b33
+ERROR at test 110: Mode=11, child_in=0xeb37, mutation_rate=179, LSFR_input=0x423c, mutation_done=1
+Expected child_out=0xb903, but got 0x4d0f
+Details: Probabilistic check passed (LSFR[7:0]=60  < rate=179)
+Scramble: mask=0x423c
+PASS test         111: Output matches 7d55
+PASS test         112: Output matches c442
+ERROR at test 113: Mode=0, child_in=0xdff5, mutation_rate=100, LSFR_input=0xc44b, mutation_done=1
+Expected child_out=0x1bbe, but got 0xdff5
+Details: Probabilistic check passed (LSFR[7:0]=75  < rate=100)
+Bit-Flip: flip_mask=0xc44b
+PASS test         114: Output matches df23
+PASS test         115: Output matches d235
+ERROR at test 116: Mode=10, child_in=0x9599, mutation_rate=241, LSFR_input=0x4ce0, mutation_done=1
+Expected child_out=0x91d9, but got 0x9599
+Details: Probabilistic check passed (LSFR[7:0]=224  < rate=241)
+Inversion: sorted_start=4, sorted_end=12
+Tests completed:         116, Errors:          36
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 578
+relaunch_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.020 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 579
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:397]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "mutation_tb_behav -key {Behavioral:sim_1:Functional:mutation_tb} -tclbatch {mutation_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source mutation_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+PASS test           1: Output matches 0x0000
+PASS test           2: Output matches 0xaaaa
+PASS test           3: Output matches 0xf0f0
+PASS test           4: Output matches 0x0f0f
+PASS test           5: Output matches 0xaaaa
+PASS test           6: Output matches 0xffff
+PASS test           7: Output matches 0x0000
+PASS test           8: Output matches 0x0f0f
+PASS test           9: Output matches 0xaaaa
+PASS test          10: Output matches 0xf0f0
+PASS test          11: Output matches 0x0f0f
+PASS test          12: Output matches 0xaaaa
+PASS test          13: Output matches 0xffff
+PASS test          14: Output matches 0x0000
+PASS test          15: Output matches 0xaaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 0x406c
+PASS test          18: Output matches 0xb81b
+PASS test          19: Output matches 0x21ed
+PASS test          20: Output matches 0x8714
+PASS test          21: Output matches 0x8d0e
+ERROR at test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+PASS test          23: Output matches 0x0045
+PASS test          24: Output matches 0xc2c4
+PASS test          25: Output matches 0x58c3
+PASS test          26: Output matches 0xe431
+PASS test          27: Output matches 0xec22
+PASS test          28: Output matches 0xfda3
+PASS test          29: Output matches 0x71e1
+PASS test          30: Output matches 0x4923
+PASS test          31: Output matches 0x462b
+PASS test          32: Output matches 0xc1be
+PASS test          33: Output matches 0xa00d
+PASS test          34: Output matches 0xcd3a
+PASS test          35: Output matches 0x46e8
+PASS test          36: Output matches 0x7ef9
+PASS test          37: Output matches 0xbe8f
+ERROR at test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbd6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=15, pos2=4
+PASS test          39: Output matches 0x1773
+PASS test          40: Output matches 0x34c0
+PASS test          41: Output matches 0xfdab
+ERROR at test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+PASS test          43: Output matches 0x595a
+PASS test          44: Output matches 0x29a6
+PASS test          45: Output matches 0x46f0
+PASS test          46: Output matches 0xf2d3
+PASS test          47: Output matches 0x56e3
+PASS test          48: Output matches 0x8407
+PASS test          49: Output matches 0x9338
+ERROR at test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+ERROR at test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+PASS test          52: Output matches 0x61fb
+PASS test          53: Output matches 0x4be7
+PASS test          54: Output matches 0xe297
+PASS test          55: Output matches 0xa203
+PASS test          56: Output matches 0x1d62
+PASS test          57: Output matches 0x4ab2
+PASS test          58: Output matches 0xf7e1
+PASS test          59: Output matches 0xe08d
+PASS test          60: Output matches 0x43b7
+PASS test          61: Output matches 0x10dd
+PASS test          62: Output matches 0x905f
+PASS test          63: Output matches 0xdf9f
+PASS test          64: Output matches 0x4950
+PASS test          65: Output matches 0xc553
+PASS test          66: Output matches 0xda94
+PASS test          67: Output matches 0xccc9
+PASS test          68: Output matches 0xacd1
+ERROR at test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+ERROR at test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+PASS test          71: Output matches 0x8096
+PASS test          72: Output matches 0xf9db
+ERROR at test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+PASS test          74: Output matches 0x3afb
+PASS test          75: Output matches 0xd9e8
+PASS test          76: Output matches 0xdcdf
+ERROR at test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+PASS test          78: Output matches 0x2cea
+ERROR at test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb43, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=8, pos2=6
+ERROR at test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+PASS test          81: Output matches 0xf5fb
+PASS test          82: Output matches 0xa56b
+PASS test          83: Output matches 0x5a25
+ERROR at test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+PASS test          85: Output matches 0x7396
+PASS test          86: Output matches 0xef7a
+PASS test          87: Output matches 0x1d33
+PASS test          88: Output matches 0xf2ba
+PASS test          89: Output matches 0x157c
+PASS test          90: Output matches 0xdf9c
+PASS test          91: Output matches 0x8bac
+PASS test          92: Output matches 0x8d40
+PASS test          93: Output matches 0xd3d4
+PASS test          94: Output matches 0x7c9b
+PASS test          95: Output matches 0x7a4e
+PASS test          96: Output matches 0xe26b
+PASS test          97: Output matches 0x7a63
+ERROR at test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+PASS test          99: Output matches 0x6140
+PASS test         100: Output matches 0xd74d
+PASS test         101: Output matches 0xfd9f
+PASS test         102: Output matches 0x003d
+PASS test         103: Output matches 0x7493
+PASS test         104: Output matches 0xca56
+ERROR at test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+PASS test         106: Output matches 0x8356
+PASS test         107: Output matches 0xb4ce
+PASS test         108: Output matches 0xd4c6
+PASS test         109: Output matches 0xe37b
+PASS test         110: Output matches 0xf3e3
+PASS test         111: Output matches 0xd053
+ERROR at test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xab86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=3, pos2=14
+PASS test         113: Output matches 0x1ac2
+PASS test         114: Output matches 0xfd22
+PASS test         115: Output matches 0xdd17
+PASS test         116: Output matches 0xbc3a
+Tests completed:         116, Errors:          15
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 596
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'mutation_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 1055.191 ; gain = 0.172
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 597
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:444]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:81]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+PASS test           1: Output matches 0000
+PASS test           2: Output matches aaaa
+PASS test           3: Output matches f0f0
+PASS test           4: Output matches 0f0f
+PASS test           5: Output matches aaaa
+PASS test           6: Output matches ffff
+PASS test           7: Output matches 0000
+PASS test           8: Output matches 0f0f
+PASS test           9: Output matches aaaa
+PASS test          10: Output matches f0f0
+PASS test          11: Output matches 0f0f
+PASS test          12: Output matches aaaa
+PASS test          13: Output matches ffff
+PASS test          14: Output matches 0000
+PASS test          15: Output matches aaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 69d2
+ERROR at test 18: Mode=11, child_in=0x6526, mutation_rate=249, LSFR_value=0xc558, mutation_done=1
+Expected child_out=0xa15e, but got 0xa07e
+Details: Probabilistic check passed (LSFR[7:0]=88  < rate=249)
+Scramble: mask=0xc558
+PASS test          19: Output matches 05fa
+PASS test          20: Output matches cc1f
+PASS test          21: Output matches a718
+PASS test          22: Output matches c27e
+PASS test          23: Output matches 95ff
+ERROR at test 24: Mode=100, child_in=0x8b6e, mutation_rate=189, LSFR_value=0x2eaa, mutation_done=1
+Expected child_out=0xa5c4, but got 0x03e6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=189)
+Combined: flip_mask=0x2eaa, pos1=10, pos2=10
+PASS test          25: Output matches 07f0
+PASS test          26: Output matches 1181
+PASS test          27: Output matches 743e
+PASS test          28: Output matches d741
+ERROR at test 29: Mode=1, child_in=0xfd08, mutation_rate=222, LSFR_value=0x4837, mutation_done=1
+Expected child_out=0xfd80, but got 0xfd08
+Details: Probabilistic check passed (LSFR[7:0]=55  < rate=222)
+Bit-Swap: pos1=7, pos2=3
+PASS test          30: Output matches 7b93
+ERROR at test 31: Mode=11, child_in=0xde4f, mutation_rate=98, LSFR_value=0xe51b, mutation_done=1
+Expected child_out=0x3356, but got 0x3b54
+Details: Probabilistic check passed (LSFR[7:0]=27  < rate=98)
+Scramble: mask=0xe51b
+PASS test          32: Output matches 2d2d
+PASS test          33: Output matches 79ae
+PASS test          34: Output matches 3810
+ERROR at test 35: Mode=0, child_in=0x3f96, mutation_rate=125, LSFR_value=0x270b, mutation_done=1
+Expected child_out=0x189d, but got 0x953c
+Details: Probabilistic check passed (LSFR[7:0]=11  < rate=125)
+Bit-Flip: flip_mask=0x270b
+PASS test          36: Output matches 8d47
+PASS test          37: Output matches 9cb6
+PASS test          38: Output matches 4c33
+PASS test          39: Output matches c8eb
+ERROR at test 40: Mode=0, child_in=0x8c8b, mutation_rate=254, LSFR_value=0xc0b2, mutation_done=1
+Expected child_out=0x4c39, but got 0x7374
+Details: Probabilistic check passed (LSFR[7:0]=178  < rate=254)
+Bit-Flip: flip_mask=0xc0b2
+ERROR at test 41: Mode=11, child_in=0xcf24, mutation_rate=138, LSFR_value=0x7d1c, mutation_done=1
+Expected child_out=0xa23a, but got 0xb238
+Details: Probabilistic check passed (LSFR[7:0]=28  < rate=138)
+Scramble: mask=0x7d1c
+PASS test          42: Output matches d04c
+ERROR at test 43: Mode=10, child_in=0x1d4a, mutation_rate=245, LSFR_value=0x3026, mutation_done=1
+Expected child_out=0x1d45, but got 0x1d4a
+Details: Probabilistic check passed (LSFR[7:0]=38  < rate=245)
+Inversion: sorted_start=0, sorted_end=3
+PASS test          44: Output matches 52d4
+ERROR at test 45: Mode=0, child_in=0xbd1f, mutation_rate=133, LSFR_value=0x5c3d, mutation_done=1
+Expected child_out=0xe122, but got 0x17b5
+Details: Probabilistic check passed (LSFR[7:0]=61  < rate=133)
+Bit-Flip: flip_mask=0x5c3d
+ERROR at test 46: Mode=100, child_in=0x2514, mutation_rate=43, LSFR_value=0xfa22, mutation_done=1
+Expected child_out=0xdf36, but got 0x2514
+Details: Probabilistic check passed (LSFR[7:0]=34  < rate=43)
+Combined: flip_mask=0xfa22, pos1=2, pos2=2
+PASS test          47: Output matches 8459
+ERROR at test 48: Mode=0, child_in=0x62c5, mutation_rate=224, LSFR_value=0xce5b, mutation_done=1
+Expected child_out=0xac9e, but got 0xd97e
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=224)
+Bit-Flip: flip_mask=0xce5b
+ERROR at test 49: Mode=0, child_in=0xd7f1, mutation_rate=195, LSFR_value=0x5d05, mutation_done=1
+Expected child_out=0x8af4, but got 0x6c4a
+Details: Probabilistic check passed (LSFR[7:0]=5  < rate=195)
+Bit-Flip: flip_mask=0x5d05
+PASS test          50: Output matches 940c
+PASS test          51: Output matches e9ec
+ERROR at test 52: Mode=11, child_in=0x96b0, mutation_rate=241, LSFR_value=0x9528, mutation_done=1
+Expected child_out=0x029c, but got 0x0398
+Details: Probabilistic check passed (LSFR[7:0]=40  < rate=241)
+Scramble: mask=0x9528
+PASS test          53: Output matches bf6b
+PASS test          54: Output matches 7b5f
+ERROR at test 55: Mode=11, child_in=0x2d50, mutation_rate=194, LSFR_value=0x077b, mutation_done=1
+Expected child_out=0x22ab, but got 0x2a2b
+Details: Probabilistic check passed (LSFR[7:0]=123  < rate=194)
+Scramble: mask=0x077b
+PASS test          56: Output matches ad2f
+PASS test          57: Output matches 8f0a
+PASS test          58: Output matches bccc
+PASS test          59: Output matches cd25
+PASS test          60: Output matches 7f82
+PASS test          61: Output matches 4f40
+PASS test          62: Output matches 69b1
+PASS test          63: Output matches 7c03
+PASS test          64: Output matches 1540
+ERROR at test 65: Mode=11, child_in=0xf235, mutation_rate=208, LSFR_value=0x8a47, mutation_done=1
+Expected child_out=0x78e2, but got 0x7872
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=208)
+Scramble: mask=0x8a47
+PASS test          66: Output matches e007
+PASS test          67: Output matches 5e38
+PASS test          68: Output matches bc09
+PASS test          69: Output matches 632a
+PASS test          70: Output matches cf9e
+ERROR at test 71: Mode=100, child_in=0x16a7, mutation_rate=172, LSFR_value=0xd30f, mutation_done=1
+Expected child_out=0x45a9, but got 0x70c1
+Details: Probabilistic check passed (LSFR[7:0]=15  < rate=172)
+Combined: flip_mask=0xd30f, pos1=15, pos2=0
+ERROR at test 72: Mode=11, child_in=0x2a79, mutation_rate=191, LSFR_value=0xb67a, mutation_done=1
+Expected child_out=0x9883, but got 0x9c03
+Details: Probabilistic check passed (LSFR[7:0]=122  < rate=191)
+Scramble: mask=0xb67a
+ERROR at test 73: Mode=10, child_in=0xeb1c, mutation_rate=251, LSFR_value=0xe62d, mutation_done=1
+Expected child_out=0x8bdc, but got 0xeb1c
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=251)
+Inversion: sorted_start=6, sorted_end=14
+PASS test          74: Output matches c6d5
+PASS test          75: Output matches 4987
+PASS test          76: Output matches 0683
+PASS test          77: Output matches bd59
+PASS test          78: Output matches 84b2
+PASS test          79: Output matches 8705
+PASS test          80: Output matches af70
+ERROR at test 81: Mode=11, child_in=0xb4ba, mutation_rate=222, LSFR_value=0xdaa8, mutation_done=1
+Expected child_out=0x6b12, but got 0x6e12
+Details: Probabilistic check passed (LSFR[7:0]=168  < rate=222)
+Scramble: mask=0xdaa8
+PASS test          82: Output matches b6a1
+PASS test          83: Output matches 3906
+PASS test          84: Output matches 7be4
+PASS test          85: Output matches 2db8
+ERROR at test 86: Mode=10, child_in=0xd587, mutation_rate=239, LSFR_value=0xc2cd, mutation_done=1
+Expected child_out=0xd0d7, but got 0xd587
+Details: Probabilistic check passed (LSFR[7:0]=205  < rate=239)
+Inversion: sorted_start=2, sorted_end=12
+ERROR at test 87: Mode=11, child_in=0x22c1, mutation_rate=133, LSFR_value=0x5584, mutation_done=1
+Expected child_out=0x7655, but got 0x7745
+Details: Probabilistic check passed (LSFR[7:0]=132  < rate=133)
+Scramble: mask=0x5584
+PASS test          88: Output matches ca20
+PASS test          89: Output matches ac0f
+ERROR at test 90: Mode=100, child_in=0x0194, mutation_rate=237, LSFR_value=0x4398, mutation_done=1
+Expected child_out=0x410c, but got 0xcd58
+Details: Probabilistic check passed (LSFR[7:0]=152  < rate=237)
+Combined: flip_mask=0x4398, pos1=8, pos2=9
+ERROR at test 91: Mode=100, child_in=0x4694, mutation_rate=105, LSFR_value=0xbc59, mutation_done=1
+Expected child_out=0xf8ed, but got 0x4694
+Details: Probabilistic check passed (LSFR[7:0]=89  < rate=105)
+Combined: flip_mask=0xbc59, pos1=9, pos2=5
+PASS test          92: Output matches a8c6
+ERROR at test 93: Mode=100, child_in=0xfdb3, mutation_rate=177, LSFR_value=0xac48, mutation_done=1
+Expected child_out=0x51fb, but got 0xdf91
+Details: Probabilistic check passed (LSFR[7:0]=72  < rate=177)
+Combined: flip_mask=0xac48, pos1=8, pos2=4
+PASS test          94: Output matches 1541
+PASS test          95: Output matches b222
+PASS test          96: Output matches 87d3
+PASS test          97: Output matches eac5
+PASS test          98: Output matches 218c
+PASS test          99: Output matches d4ed
+PASS test         100: Output matches 029d
+PASS test         101: Output matches 12b8
+PASS test         102: Output matches b760
+PASS test         103: Output matches 7869
+PASS test         104: Output matches 4097
+PASS test         105: Output matches 3178
+PASS test         106: Output matches 1ff8
+PASS test         107: Output matches 0eb5
+PASS test         108: Output matches 1067
+ERROR at test 109: Mode=11, child_in=0xdc70, mutation_rate=236, LSFR_value=0x552e, mutation_done=1
+Expected child_out=0xc95a, but got 0x895e
+Details: Probabilistic check passed (LSFR[7:0]=46  < rate=236)
+Scramble: mask=0x552e
+PASS test         110: Output matches 4d0f
+PASS test         111: Output matches 7d55
+PASS test         112: Output matches c442
+PASS test         113: Output matches dff5
+ERROR at test 114: Mode=10, child_in=0xdf23, mutation_rate=239, LSFR_value=0xf114, mutation_done=1
+Expected child_out=0x89f7, but got 0xdf23
+Details: Probabilistic check passed (LSFR[7:0]=20  < rate=239)
+Inversion: sorted_start=1, sorted_end=15
+PASS test         115: Output matches d235
+PASS test         116: Output matches 9599
+Tests completed:         116, Errors:          26
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 597
+relaunch_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.191 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 598
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:444]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:81]
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+PASS test           1: Output matches 0000
+PASS test           2: Output matches aaaa
+PASS test           3: Output matches f0f0
+PASS test           4: Output matches 0f0f
+PASS test           5: Output matches aaaa
+PASS test           6: Output matches ffff
+PASS test           7: Output matches 0000
+PASS test           8: Output matches 0f0f
+PASS test           9: Output matches aaaa
+PASS test          10: Output matches f0f0
+PASS test          11: Output matches 0f0f
+PASS test          12: Output matches aaaa
+PASS test          13: Output matches ffff
+PASS test          14: Output matches 0000
+PASS test          15: Output matches aaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 69d2
+ERROR at test 18: Mode=11, child_in=0x6526, mutation_rate=249, LSFR_value=0xc558, mutation_done=1
+Expected child_out=0xa15e, but got 0xa07e
+Details: Probabilistic check passed (LSFR[7:0]=88  < rate=249)
+Scramble: mask=0xc558
+PASS test          19: Output matches 05fa
+PASS test          20: Output matches cc1f
+PASS test          21: Output matches a718
+PASS test          22: Output matches c27e
+PASS test          23: Output matches 95ff
+ERROR at test 24: Mode=100, child_in=0x8b6e, mutation_rate=189, LSFR_value=0x2eaa, mutation_done=1
+Expected child_out=0xa5c4, but got 0x03e6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=189)
+Combined: flip_mask=0x2eaa, pos1=10, pos2=10
+PASS test          25: Output matches 07f0
+PASS test          26: Output matches 1181
+PASS test          27: Output matches 743e
+PASS test          28: Output matches d741
+ERROR at test 29: Mode=1, child_in=0xfd08, mutation_rate=222, LSFR_value=0x4837, mutation_done=1
+Expected child_out=0xfd80, but got 0xfd08
+Details: Probabilistic check passed (LSFR[7:0]=55  < rate=222)
+Bit-Swap: pos1=7, pos2=3
+PASS test          30: Output matches 7b93
+ERROR at test 31: Mode=11, child_in=0xde4f, mutation_rate=98, LSFR_value=0xe51b, mutation_done=1
+Expected child_out=0x3356, but got 0x3b54
+Details: Probabilistic check passed (LSFR[7:0]=27  < rate=98)
+Scramble: mask=0xe51b
+PASS test          32: Output matches 2d2d
+PASS test          33: Output matches 79ae
+PASS test          34: Output matches 3810
+ERROR at test 35: Mode=0, child_in=0x3f96, mutation_rate=125, LSFR_value=0x270b, mutation_done=1
+Expected child_out=0x189d, but got 0x953c
+Details: Probabilistic check passed (LSFR[7:0]=11  < rate=125)
+Bit-Flip: flip_mask=0x270b
+PASS test          36: Output matches 8d47
+PASS test          37: Output matches 9cb6
+PASS test          38: Output matches 4c33
+PASS test          39: Output matches c8eb
+ERROR at test 40: Mode=0, child_in=0x8c8b, mutation_rate=254, LSFR_value=0xc0b2, mutation_done=1
+Expected child_out=0x4c39, but got 0x7374
+Details: Probabilistic check passed (LSFR[7:0]=178  < rate=254)
+Bit-Flip: flip_mask=0xc0b2
+ERROR at test 41: Mode=11, child_in=0xcf24, mutation_rate=138, LSFR_value=0x7d1c, mutation_done=1
+Expected child_out=0xa23a, but got 0xb238
+Details: Probabilistic check passed (LSFR[7:0]=28  < rate=138)
+Scramble: mask=0x7d1c
+PASS test          42: Output matches d04c
+ERROR at test 43: Mode=10, child_in=0x1d4a, mutation_rate=245, LSFR_value=0x3026, mutation_done=1
+Expected child_out=0x1d45, but got 0x1d4a
+Details: Probabilistic check passed (LSFR[7:0]=38  < rate=245)
+Inversion: sorted_start=0, sorted_end=3
+PASS test          44: Output matches 52d4
+ERROR at test 45: Mode=0, child_in=0xbd1f, mutation_rate=133, LSFR_value=0x5c3d, mutation_done=1
+Expected child_out=0xe122, but got 0x17b5
+Details: Probabilistic check passed (LSFR[7:0]=61  < rate=133)
+Bit-Flip: flip_mask=0x5c3d
+ERROR at test 46: Mode=100, child_in=0x2514, mutation_rate=43, LSFR_value=0xfa22, mutation_done=1
+Expected child_out=0xdf36, but got 0x2514
+Details: Probabilistic check passed (LSFR[7:0]=34  < rate=43)
+Combined: flip_mask=0xfa22, pos1=2, pos2=2
+PASS test          47: Output matches 8459
+ERROR at test 48: Mode=0, child_in=0x62c5, mutation_rate=224, LSFR_value=0xce5b, mutation_done=1
+Expected child_out=0xac9e, but got 0xd97e
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=224)
+Bit-Flip: flip_mask=0xce5b
+ERROR at test 49: Mode=0, child_in=0xd7f1, mutation_rate=195, LSFR_value=0x5d05, mutation_done=1
+Expected child_out=0x8af4, but got 0x6c4a
+Details: Probabilistic check passed (LSFR[7:0]=5  < rate=195)
+Bit-Flip: flip_mask=0x5d05
+PASS test          50: Output matches 940c
+PASS test          51: Output matches e9ec
+ERROR at test 52: Mode=11, child_in=0x96b0, mutation_rate=241, LSFR_value=0x9528, mutation_done=1
+Expected child_out=0x029c, but got 0x0398
+Details: Probabilistic check passed (LSFR[7:0]=40  < rate=241)
+Scramble: mask=0x9528
+PASS test          53: Output matches bf6b
+PASS test          54: Output matches 7b5f
+ERROR at test 55: Mode=11, child_in=0x2d50, mutation_rate=194, LSFR_value=0x077b, mutation_done=1
+Expected child_out=0x22ab, but got 0x2a2b
+Details: Probabilistic check passed (LSFR[7:0]=123  < rate=194)
+Scramble: mask=0x077b
+PASS test          56: Output matches ad2f
+PASS test          57: Output matches 8f0a
+PASS test          58: Output matches bccc
+PASS test          59: Output matches cd25
+PASS test          60: Output matches 7f82
+PASS test          61: Output matches 4f40
+PASS test          62: Output matches 69b1
+PASS test          63: Output matches 7c03
+PASS test          64: Output matches 1540
+ERROR at test 65: Mode=11, child_in=0xf235, mutation_rate=208, LSFR_value=0x8a47, mutation_done=1
+Expected child_out=0x78e2, but got 0x7872
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=208)
+Scramble: mask=0x8a47
+PASS test          66: Output matches e007
+PASS test          67: Output matches 5e38
+PASS test          68: Output matches bc09
+PASS test          69: Output matches 632a
+PASS test          70: Output matches cf9e
+ERROR at test 71: Mode=100, child_in=0x16a7, mutation_rate=172, LSFR_value=0xd30f, mutation_done=1
+Expected child_out=0x45a9, but got 0x70c1
+Details: Probabilistic check passed (LSFR[7:0]=15  < rate=172)
+Combined: flip_mask=0xd30f, pos1=15, pos2=0
+ERROR at test 72: Mode=11, child_in=0x2a79, mutation_rate=191, LSFR_value=0xb67a, mutation_done=1
+Expected child_out=0x9883, but got 0x9c03
+Details: Probabilistic check passed (LSFR[7:0]=122  < rate=191)
+Scramble: mask=0xb67a
+ERROR at test 73: Mode=10, child_in=0xeb1c, mutation_rate=251, LSFR_value=0xe62d, mutation_done=1
+Expected child_out=0x8bdc, but got 0xeb1c
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=251)
+Inversion: sorted_start=6, sorted_end=14
+PASS test          74: Output matches c6d5
+PASS test          75: Output matches 4987
+PASS test          76: Output matches 0683
+PASS test          77: Output matches bd59
+PASS test          78: Output matches 84b2
+PASS test          79: Output matches 8705
+PASS test          80: Output matches af70
+ERROR at test 81: Mode=11, child_in=0xb4ba, mutation_rate=222, LSFR_value=0xdaa8, mutation_done=1
+Expected child_out=0x6b12, but got 0x6e12
+Details: Probabilistic check passed (LSFR[7:0]=168  < rate=222)
+Scramble: mask=0xdaa8
+PASS test          82: Output matches b6a1
+PASS test          83: Output matches 3906
+PASS test          84: Output matches 7be4
+PASS test          85: Output matches 2db8
+ERROR at test 86: Mode=10, child_in=0xd587, mutation_rate=239, LSFR_value=0xc2cd, mutation_done=1
+Expected child_out=0xd0d7, but got 0xd587
+Details: Probabilistic check passed (LSFR[7:0]=205  < rate=239)
+Inversion: sorted_start=2, sorted_end=12
+ERROR at test 87: Mode=11, child_in=0x22c1, mutation_rate=133, LSFR_value=0x5584, mutation_done=1
+Expected child_out=0x7655, but got 0x7745
+Details: Probabilistic check passed (LSFR[7:0]=132  < rate=133)
+Scramble: mask=0x5584
+PASS test          88: Output matches ca20
+PASS test          89: Output matches ac0f
+ERROR at test 90: Mode=100, child_in=0x0194, mutation_rate=237, LSFR_value=0x4398, mutation_done=1
+Expected child_out=0x410c, but got 0xcd58
+Details: Probabilistic check passed (LSFR[7:0]=152  < rate=237)
+Combined: flip_mask=0x4398, pos1=8, pos2=9
+ERROR at test 91: Mode=100, child_in=0x4694, mutation_rate=105, LSFR_value=0xbc59, mutation_done=1
+Expected child_out=0xf8ed, but got 0x4694
+Details: Probabilistic check passed (LSFR[7:0]=89  < rate=105)
+Combined: flip_mask=0xbc59, pos1=9, pos2=5
+PASS test          92: Output matches a8c6
+ERROR at test 93: Mode=100, child_in=0xfdb3, mutation_rate=177, LSFR_value=0xac48, mutation_done=1
+Expected child_out=0x51fb, but got 0xdf91
+Details: Probabilistic check passed (LSFR[7:0]=72  < rate=177)
+Combined: flip_mask=0xac48, pos1=8, pos2=4
+PASS test          94: Output matches 1541
+PASS test          95: Output matches b222
+PASS test          96: Output matches 87d3
+PASS test          97: Output matches eac5
+PASS test          98: Output matches 218c
+PASS test          99: Output matches d4ed
+PASS test         100: Output matches 029d
+PASS test         101: Output matches 12b8
+PASS test         102: Output matches b760
+PASS test         103: Output matches 7869
+PASS test         104: Output matches 4097
+PASS test         105: Output matches 3178
+PASS test         106: Output matches 1ff8
+PASS test         107: Output matches 0eb5
+PASS test         108: Output matches 1067
+ERROR at test 109: Mode=11, child_in=0xdc70, mutation_rate=236, LSFR_value=0x552e, mutation_done=1
+Expected child_out=0xc95a, but got 0x895e
+Details: Probabilistic check passed (LSFR[7:0]=46  < rate=236)
+Scramble: mask=0x552e
+PASS test         110: Output matches 4d0f
+PASS test         111: Output matches 7d55
+PASS test         112: Output matches c442
+PASS test         113: Output matches dff5
+ERROR at test 114: Mode=10, child_in=0xdf23, mutation_rate=239, LSFR_value=0xf114, mutation_done=1
+Expected child_out=0x89f7, but got 0xdf23
+Details: Probabilistic check passed (LSFR[7:0]=20  < rate=239)
+Inversion: sorted_start=1, sorted_end=15
+PASS test         115: Output matches d235
+PASS test         116: Output matches 9599
+Tests completed:         116, Errors:          26
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 597
+relaunch_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 1055.191 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 598
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:397]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "mutation_tb_behav -key {Behavioral:sim_1:Functional:mutation_tb} -tclbatch {mutation_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source mutation_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+PASS test           1: Output matches 0x0000
+PASS test           2: Output matches 0xaaaa
+PASS test           3: Output matches 0xf0f0
+PASS test           4: Output matches 0x0f0f
+PASS test           5: Output matches 0xaaaa
+PASS test           6: Output matches 0xffff
+PASS test           7: Output matches 0x0000
+PASS test           8: Output matches 0x0f0f
+PASS test           9: Output matches 0xaaaa
+PASS test          10: Output matches 0xf0f0
+PASS test          11: Output matches 0x0f0f
+PASS test          12: Output matches 0xaaaa
+PASS test          13: Output matches 0xffff
+PASS test          14: Output matches 0x0000
+PASS test          15: Output matches 0xaaaa
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+PASS test          17: Output matches 0x406c
+PASS test          18: Output matches 0xb81b
+PASS test          19: Output matches 0x21ed
+PASS test          20: Output matches 0x8714
+PASS test          21: Output matches 0x8d0e
+------------------------------------------------------------
+>>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+------------------------------------------------------------
+PASS test          23: Output matches 0x0045
+PASS test          24: Output matches 0xc2c4
+PASS test          25: Output matches 0x58c3
+PASS test          26: Output matches 0xe431
+PASS test          27: Output matches 0xec22
+PASS test          28: Output matches 0xfda3
+PASS test          29: Output matches 0x71e1
+PASS test          30: Output matches 0x4923
+PASS test          31: Output matches 0x462b
+PASS test          32: Output matches 0xc1be
+PASS test          33: Output matches 0xa00d
+PASS test          34: Output matches 0xcd3a
+PASS test          35: Output matches 0x46e8
+PASS test          36: Output matches 0x7ef9
+PASS test          37: Output matches 0xbe8f
+------------------------------------------------------------
+>>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbd6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=15, pos2=4
+------------------------------------------------------------
+PASS test          39: Output matches 0x1773
+PASS test          40: Output matches 0x34c0
+PASS test          41: Output matches 0xfdab
+------------------------------------------------------------
+>>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+------------------------------------------------------------
+PASS test          43: Output matches 0x595a
+PASS test          44: Output matches 0x29a6
+PASS test          45: Output matches 0x46f0
+PASS test          46: Output matches 0xf2d3
+PASS test          47: Output matches 0x56e3
+PASS test          48: Output matches 0x8407
+PASS test          49: Output matches 0x9338
+------------------------------------------------------------
+>>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+------------------------------------------------------------
+PASS test          52: Output matches 0x61fb
+PASS test          53: Output matches 0x4be7
+PASS test          54: Output matches 0xe297
+PASS test          55: Output matches 0xa203
+PASS test          56: Output matches 0x1d62
+PASS test          57: Output matches 0x4ab2
+PASS test          58: Output matches 0xf7e1
+PASS test          59: Output matches 0xe08d
+PASS test          60: Output matches 0x43b7
+PASS test          61: Output matches 0x10dd
+PASS test          62: Output matches 0x905f
+PASS test          63: Output matches 0xdf9f
+PASS test          64: Output matches 0x4950
+PASS test          65: Output matches 0xc553
+PASS test          66: Output matches 0xda94
+PASS test          67: Output matches 0xccc9
+PASS test          68: Output matches 0xacd1
+------------------------------------------------------------
+>>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+------------------------------------------------------------
+PASS test          71: Output matches 0x8096
+PASS test          72: Output matches 0xf9db
+------------------------------------------------------------
+>>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+------------------------------------------------------------
+PASS test          74: Output matches 0x3afb
+PASS test          75: Output matches 0xd9e8
+PASS test          76: Output matches 0xdcdf
+------------------------------------------------------------
+>>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+------------------------------------------------------------
+PASS test          78: Output matches 0x2cea
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb43, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=8, pos2=6
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+------------------------------------------------------------
+PASS test          81: Output matches 0xf5fb
+PASS test          82: Output matches 0xa56b
+PASS test          83: Output matches 0x5a25
+------------------------------------------------------------
+>>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+------------------------------------------------------------
+PASS test          85: Output matches 0x7396
+PASS test          86: Output matches 0xef7a
+PASS test          87: Output matches 0x1d33
+PASS test          88: Output matches 0xf2ba
+PASS test          89: Output matches 0x157c
+PASS test          90: Output matches 0xdf9c
+PASS test          91: Output matches 0x8bac
+PASS test          92: Output matches 0x8d40
+PASS test          93: Output matches 0xd3d4
+PASS test          94: Output matches 0x7c9b
+PASS test          95: Output matches 0x7a4e
+PASS test          96: Output matches 0xe26b
+PASS test          97: Output matches 0x7a63
+------------------------------------------------------------
+>>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+------------------------------------------------------------
+PASS test          99: Output matches 0x6140
+PASS test         100: Output matches 0xd74d
+PASS test         101: Output matches 0xfd9f
+PASS test         102: Output matches 0x003d
+PASS test         103: Output matches 0x7493
+PASS test         104: Output matches 0xca56
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+PASS test         106: Output matches 0x8356
+PASS test         107: Output matches 0xb4ce
+PASS test         108: Output matches 0xd4c6
+PASS test         109: Output matches 0xe37b
+PASS test         110: Output matches 0xf3e3
+PASS test         111: Output matches 0xd053
+------------------------------------------------------------
+>>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xab86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=3, pos2=14
+------------------------------------------------------------
+PASS test         113: Output matches 0x1ac2
+PASS test         114: Output matches 0xfd22
+PASS test         115: Output matches 0xdd17
+PASS test         116: Output matches 0xbc3a
+Tests completed:         116, Errors:          15
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 598
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'mutation_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.191 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 599
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:397]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '2' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+------------------------------------------------------------
+>>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbd6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=15, pos2=4
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb43, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=8, pos2=6
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xab86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=3, pos2=14
+------------------------------------------------------------
+Tests completed:         116, Errors:          15
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 596
+relaunch_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.191 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 597
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lfsr_SudoRandom
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mutation_tb
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:397]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv" Line 1. Module mutation doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv" Line 1. Module lfsr_SudoRandom doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.mutation_if
+Compiling module xil_defaultlib.mutation
+Compiling module xil_defaultlib.lfsr_SudoRandom
+Compiling module xil_defaultlib.mutation_tb
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot mutation_tb_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "mutation_tb_behav -key {Behavioral:sim_1:Functional:mutation_tb} -tclbatch {mutation_tb.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+source mutation_tb.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+------------------------------------------------------------
+>>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbc6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=10, pos2=10
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb03, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=7, pos2=4
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xeb86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=2, pos2=12
+------------------------------------------------------------
+Tests completed:         116, Errors:          15
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 608
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'mutation_tb_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 1055.770 ; gain = 0.578
+relaunch_sim
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'mutation_tb' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj mutation_tb_vlog.prj"
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+Command: launch_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim'
+"xelab -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto bb158da9db984e639b505cb4a8db05df --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot mutation_tb_behav xil_defaultlib.mutation_tb xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3815] value of parameter 'W' cannot contain a hierarchical identifier [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:397]
+WARNING: [VRFC 10-3091] actual bit length 16 differs from formal bit length 58 for port 'seed_in' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv:78]
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+------------------------------------------------------------
+>>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbc6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=10, pos2=10
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb03, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=7, pos2=4
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xeb86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=2, pos2=12
+------------------------------------------------------------
+Tests completed:         116, Errors:          15
+$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 608
+relaunch_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1055.770 ; gain = 0.000
+run all
+$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 609
+close_sim
+INFO: [Simtcl 6-16] Simulation closed

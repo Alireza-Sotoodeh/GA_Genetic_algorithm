@@ -1,13 +1,13 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2700185 Thu Oct 24 18:46:05 MDT 2019
-| Date         : Thu Aug 21 23:36:18 2025
+| Date         : Fri Aug 22 14:54:56 2025
 | Host         : DESKTOP-D8PL7JH running 64-bit major release  (build 9200)
-| Command      : report_utilization -file fitness_evaluator_utilization_synth.rpt -pb fitness_evaluator_utilization_synth.pb
-| Design       : fitness_evaluator
+| Command      : report_utilization -file mutation_utilization_synth.rpt -pb mutation_utilization_synth.pb
+| Design       : mutation
 | Device       : 7s6cpga196-2
 | Design State : Synthesized
------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 
 Utilization Design Information
 
@@ -30,13 +30,13 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |   22 |     0 |      3750 |  0.59 |
-|   LUT as Logic          |   22 |     0 |      3750 |  0.59 |
+| Slice LUTs*             | 1152 |     0 |      3750 | 30.72 |
+|   LUT as Logic          | 1152 |     0 |      3750 | 30.72 |
 |   LUT as Memory         |    0 |     0 |      2400 |  0.00 |
-| Slice Registers         |    7 |     0 |      7500 |  0.09 |
-|   Register as Flip Flop |    7 |     0 |      7500 |  0.09 |
-|   Register as Latch     |    0 |     0 |      7500 |  0.00 |
-| F7 Muxes                |    0 |     0 |      4000 |  0.00 |
+| Slice Registers         |  145 |     0 |      7500 |  1.93 |
+|   Register as Flip Flop |  113 |     0 |      7500 |  1.51 |
+|   Register as Latch     |   32 |     0 |      7500 |  0.43 |
+| F7 Muxes                |   33 |     0 |      4000 |  0.83 |
 | F8 Muxes                |    0 |     0 |      2000 |  0.00 |
 +-------------------------+------+-------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
@@ -48,14 +48,14 @@ Table of Contents
 +-------+--------------+-------------+--------------+
 | Total | Clock Enable | Synchronous | Asynchronous |
 +-------+--------------+-------------+--------------+
-| 0     |            _ |           - |            - |
+| 48    |            _ |           - |            - |
 | 0     |            _ |           - |          Set |
 | 0     |            _ |           - |        Reset |
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 0     |          Yes |           - |          Set |
-| 7     |          Yes |           - |        Reset |
+| 16    |          Yes |           - |          Set |
+| 81    |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
 | 0     |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -90,7 +90,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   34 |     0 |       100 | 34.00 |
+| Bonded IOB                  |   63 |     0 |       100 | 63.00 |
 | PHY_CONTROL                 |    0 |     0 |         2 |  0.00 |
 | PHASER_REF                  |    0 |     0 |         2 |  0.00 |
 | OUT_FIFO                    |    0 |     0 |         8 |  0.00 |
@@ -143,13 +143,19 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| IBUF     |   19 |                  IO |
-| OBUF     |   15 |                  IO |
-| LUT6     |   11 |                 LUT |
-| LUT3     |    9 |                 LUT |
-| FDCE     |    7 |        Flop & Latch |
-| LUT5     |    5 |                 LUT |
-| LUT2     |    2 |                 LUT |
+| LUT6     |  525 |                 LUT |
+| LUT5     |  249 |                 LUT |
+| LUT4     |  190 |                 LUT |
+| LUT3     |  143 |                 LUT |
+| LUT2     |   93 |                 LUT |
+| FDCE     |   81 |        Flop & Latch |
+| IBUF     |   46 |                  IO |
+| LUT1     |   36 |                 LUT |
+| MUXF7    |   33 |               MuxFx |
+| LDCE     |   32 |        Flop & Latch |
+| FDPE     |   32 |        Flop & Latch |
+| OBUF     |   17 |                  IO |
+| CARRY4   |   10 |          CarryLogic |
 | BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 
