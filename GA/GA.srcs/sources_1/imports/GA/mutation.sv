@@ -56,7 +56,7 @@ module mutation #(
         sorted_end   = (inv_start < inv_end) ? inv_end : inv_start;
     end
 
-// =========================
+    // =========================
     // Main mutation process
     // =========================
     (* use_dsp = "no" *)
@@ -94,7 +94,7 @@ module mutation #(
                                 end
                             end
                         end
-                        // Bit-Swap Mutation (now probabilistic overall)
+                        // Bit-Swap Mutation (now probabilistic overall) - MODIFIED for consistency and safety
                         3'b001: begin
                             local_swap_pos1 = swap_pos1;
                             local_swap_pos2 = swap_pos2;
@@ -106,14 +106,14 @@ module mutation #(
                                 if (local_swap_pos1 == local_swap_pos2) begin
                                     // Do nothing (edge case: no swap possible)
                                 end else begin
-                                    temp_bit = child_in[local_swap_pos1];
-                                    next_temp_child[local_swap_pos1] = child_in[local_swap_pos2];
+                                    temp_bit = next_temp_child[local_swap_pos1];  // Use temp_bit for safe swap (consistent with temp_child)
+                                    next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
                                     next_temp_child[local_swap_pos2] = temp_bit;
                                 end
                             end else begin
                                 // Normal swap
-                                temp_bit = child_in[local_swap_pos1];
-                                next_temp_child[local_swap_pos1] = child_in[local_swap_pos2];
+                                temp_bit = next_temp_child[local_swap_pos1];  // Use temp_bit
+                                next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
                                 next_temp_child[local_swap_pos2] = temp_bit;
                             end
                             // Extra swap if high rate (with edge handler)
@@ -139,20 +139,20 @@ module mutation #(
                                 end
                             end
                         end
-                        // Inversion Mutation (now probabilistic)
+                        // Inversion Mutation (now probabilistic) - MODIFIED with temp_bit for consistency
                         3'b010: begin
                             // Edge case handler: if sorted_start == sorted_end (length 0 or 1), skip inversion
                             if (sorted_start != sorted_end && (sorted_end - sorted_start >= 1)) begin
                                 for (int i = 0; i < (sorted_end - sorted_start + 1)/2; i++) begin
-                                    temp_bit = child_in[sorted_start + i];
-                                    next_temp_child[sorted_start + i] = child_in[sorted_end - i];
+                                    temp_bit = next_temp_child[sorted_start + i];
+                                    next_temp_child[sorted_start + i] = next_temp_child[sorted_end - i];
                                     next_temp_child[sorted_end - i] = temp_bit;
                                 end
                             end else begin
                                 // Do nothing for single-bit or zero-length (edge case)
                             end
                         end
-                        // Scramble Mutation (now probabilistic)
+                        // Scramble Mutation (now probabilistic) - MODIFIED with temp_bit for swaps
                         3'b011: begin
                             // Simple scramble: XOR with mask
                             next_temp_child = child_in ^ scramble_mask;
@@ -173,7 +173,7 @@ module mutation #(
                                 end
                             end
                         end
-                        // Combined: Bit-Flip + Bit-Swap (now probabilistic overall)
+                        // Combined: Bit-Flip + Bit-Swap (now probabilistic overall) - MODIFIED with temp_bit
                         3'b100: begin
                             // First apply Bit-Flip with half rate
                             for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
