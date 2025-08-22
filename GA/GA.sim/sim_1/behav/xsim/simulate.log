@@ -1,7 +1,6 @@
 Vivado Simulator 2019.2
 Time resolution is 1 ps
-PASS: Reset test          16 handled correctly (done=0)
-PASS: child_out reset correctly
-Tests completed:         116, Errors:           0
-$finish called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 601
-$stop called at time : 735 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv" Line 602
+Test finished. Ran 114 tests, errors = 0
+TEST PASSED
+$finish called at time : 913 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/selection_TB.sv" Line 454
+$stop called at time : 913 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/selection_TB.sv" Line 455

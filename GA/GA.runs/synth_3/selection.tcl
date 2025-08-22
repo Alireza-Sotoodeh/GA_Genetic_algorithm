@@ -17,6 +17,8 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 create_project -in_memory -part xc7s6cpga196-2
 
 set_param project.singleFileAddWarning.threshold 0
@@ -28,7 +30,7 @@ set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_output_repo d:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
-read_verilog -library xil_defaultlib -sv D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv
+read_verilog -library xil_defaultlib -sv D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/selection.sv
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
 # design are intentionally left as such for best results. Dcp files will be
@@ -43,12 +45,12 @@ set_property used_in_implementation false [get_files D:/university/studies/FPGA/
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
-synth_design -top mutation -part xc7s6cpga196-2
+synth_design -top selection -part xc7s6cpga196-2
 
 
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef mutation.dcp
-create_report "synth_3_synth_report_utilization_0" "report_utilization -file mutation_utilization_synth.rpt -pb mutation_utilization_synth.pb"
+write_checkpoint -force -noxdef selection.dcp
+create_report "synth_3_synth_report_utilization_0" "report_utilization -file selection_utilization_synth.rpt -pb selection_utilization_synth.pb"
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]

@@ -805,6 +805,8 @@ the critical path:
 
 ![Screenshot 2025-08-21 144824.png](C:\Users\Alireza\AppData\Roaming\marktext\images\22648f4b9edd42ab91f857beb3dcf56ce1286512.png)
 
+----------------------
+
 ## fitness evaluator
 
 ⚠️**error testbench**
@@ -840,12 +842,540 @@ adding wait for done signal in checker might help!
 
 ### Issues to fix:
 
-> - [x] **Bug1**: The for-loop uses non-blocking assignments (`<=`) inside an `always_ff` block.
+> - [ ] **Bug1**: The for-loop uses non-blocking assignments (`<=`) inside an `always_ff` block.
 > 
-> - [x] **Single-Cycle Loop Assumption**: For large `CHROMOSOME_WIDTH` (e.g., >32), the loop could cause high usage of utiazation and high timing 
+> - [ ] **Single-Cycle Loop Assumption**: For large `CHROMOSOME_WIDTH` (e.g., >32), the loop could cause high usage of utiazation and high timing 
 > 
 > - [ ] **No Edge Case Handling**: Doesn’t handle cases like all-zero chromosome (fitness=0), maximum fitness, or invalid inputs.
 > 
 > - [ ] **Done Signal Behavior**: `evaluation_done` is set to 1 immediately on `start_evaluation`, but the calculation happens in the same cycle.
 > 
 > - [ ] **Synthesis/Optimization**
+
+---
+
+## Mutation
+
+### 📝Mutation Methods Summary
+
+#### Bit-Flip Mutation
+
+- **Description**: Flips each bit (0→1, 1→0) with given probability
+- **Strengths**: Simple hardware implementation (XOR/NOT), low resource cost, good for binary GAs
+- **Weaknesses**: High rates can over-perturb population; may lack diversity in complex problems
+- **Application**: Random check per bit (16 bits), pairs well with LFSR random generation
+
+#### Bit-Swap Mutation
+
+- **Description**: Selects two random bits and swaps them (single or multi-point)
+- **Strengths**: Provides variety without changing overall value; useful for numerical constraints
+- **Weaknesses**: More complex than bit-flip; requires two random indices
+- **Application**: Swap bits at two random indices (0-15); rate controls swap frequency
+
+#### Inversion Mutation
+
+- **Description**: Selects subsequence and reverses the bits
+- **Strengths**: Good for sequential problems; provides local variation
+- **Weaknesses**: Complex for simple binary; requires unrolled loops in hardware
+- **Application**: Reverse bits between two random points; rate per chromosome
+
+#### Scramble Mutation
+
+- **Description**: Shuffles a subsequence via random permutation
+- **Strengths**: High variation for complex problems
+- **Weaknesses**: High hardware complexity (sorter/shuffle logic); resource-intensive
+- **Application**: Scramble 4-8 random bits; less recommended for binary GAs
+
+#### Uniform (Replacement) Mutation
+
+- **Description**: Replaces each bit with new random value with probability
+- **Strengths**: More variety than bit-flip; useful for large-range problems
+- **Weaknesses**: May produce invalid values with constraints
+- **Application**: Replace bits with LFSR random values per mutation event
+
+#### Advanced Methods
+
+- **Dynamic mutation rate**: Adjust rate based on GA progress (e.g., fitness stagnation)
+- **Hybrid approaches**: Combine methods (e.g., bit-flip + swap) with separate probabilities
+- **Rate strategies**: Per-bit rate (~6% for 16 bits) ensures at least one mutation per chromosome
+
+### Mutation Module Issues Summary
+
+#### Major Logical Bug in Comparison
+
+- **Problem**: `mutation_mask[i] < mutation_rate` comparison is flawed
+
+- **Issue**: `mutation_mask[i]` is a single bit (0/1) while `mutation_rate` is 8-bit (0-255)
+
+- **Consequence**: Mutation almost always occurs if `mutation_rate > 1`; never if `mutation_rate = 0`
+
+- **Evidence**: Comment `"// how???"` indicates implementation uncertainty
+
+#### Chromosome Size Incompatibility
+
+- **Current**: `CHROMOSOME_WIDTH=8` but 16 bits required
+
+- **Impact**: Input/output widths (`child_in`, `mutation_mask`, `child_out`) insufficient
+
+- **Rate Scaling**: 8-bit `mutation_rate` (0-255) inappropriate for 16-bit chromosomes
+
+- **Solution Needed**: Scale rate probabilistically (e.g., divide by 256 for 0-1 probability)
+
+#### Loop and Synthesis Concerns
+
+- **Current**: `for` loop in `always_ff` block unrolls to combinational logic
+
+- **Risk**: For 16 bits, creates 16 separate comparisons; consumes more LUTs
+
+- **Timing**: Potential long timing paths if `mutation_mask` from LFSR
+
+- **Scalability**: Resource consumption increases with larger widths
+
+#### Handshake Signal Issues
+
+- **Problem**: `mutation_done` pulses for single cycle when `start_mutation=1`
+
+- **Risk**: Incomplete handshake with `genetic_algorithm.sv` if more cycles needed
+
+- **Potential**: Race conditions or missed `done` signals during integration
+
+#### Reset and Initialization Problems
+
+- **Issue**: `child_out` set to `'0` on reset - may create invalid chromosome
+
+- **Risk**: Partial `child_out` results if reset occurs during operation
+
+- `mutation_done` reset to 0, but incomplete operations may persist
+
+#### Chromosome Validation Missing
+
+- **Gap**: No checks for invalid chromosome generation
+
+- **Examples**: No protection against specific bit constraints or overflow
+
+- **Risk**: Mutations may produce values outside valid range [0, 2^16-1]
+
+#### External Input Dependencies
+
+- **Incompatibility**: `mutation_mask` width must match `CHROMOSOME_WIDTH`
+
+- **Conflict**: 8-bit `mutation_rate` comparison requires larger mask values
+
+- **LFSR Issue**: Incompatible with `lfsr_random.sv` variable width output
+
+#### Flexibility Limitations
+
+- **Fixed Rate**: 8-bit mutation rate without dynamic adjustment options
+
+- **Method Restriction**: Only bit-flip mutation supported
+
+- **No Alternatives**: Cannot implement swap, inversion, or other mutation types
+
+### Issues to fix:
+
+> - [x]  Major Logical Bug in Comparison
+> 
+> - [x] Chromosome Size Incompatibility
+> 
+> - [x] Loop and Synthesis Concerns
+> 
+> - [ ] Handshake Signal Issues
+> 
+> - [ ] Reset and Initialization Problems
+> 
+> - [ ] Chromosome Validation Missing
+> 
+> - [ ] External Input Dependencies
+> 
+> - [ ] Flexibility Limitations
+
+error 
+
+```v
+(* keep_hierarchy = "yes" *)
+module mutation #(
+    parameter CHROMOSOME_WIDTH = 16,
+    parameter LSFR_WIDTH = 16  // Adjusted to 16-bit as per user specification (sufficient for slicing random values)
+)(
+    clk,
+    rst,
+    start_mutation,
+    child_in,
+    mutation_mode,
+    mutation_rate,
+    LSFR_input,
+    child_out,
+    mutation_done
+);
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    // Inputs
+    input  logic                               clk;
+    input  logic                               rst;  // Active-high reset
+    input  logic                               start_mutation;
+    input  logic [CHROMOSOME_WIDTH-1:0]        child_in;
+    input  logic [2:0]                         mutation_mode;  // 000: Bit-Flip, 001: Bit-Swap, 010: Inversion, 011: Scramble, 100: Combined (Flip + Swap)
+    input  logic [7:0]                         mutation_rate;  // 0-255, controls probability/intensity
+    input  logic [LSFR_WIDTH-1:0]              LSFR_input;     // Random input from LFSR (now 16-bit)
+
+    // Outputs
+    (* use_dsp = "no" *)
+    output logic [CHROMOSOME_WIDTH-1:0]        child_out;
+    output logic                               mutation_done;
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+    // Internal signals (original)
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] temp_child;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] flip_mask;
+    (* keep = "true" *) logic [3:0]                 swap_pos1, swap_pos2;
+    (* keep = "true" *) logic [3:0]                 inv_start, inv_end;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] scramble_mask;
+    (* keep = "true" *) logic [3:0]                 sorted_start, sorted_end;
+
+    // ADDED: New logic signals at module level for edge-case handling (instead of local variables)
+    // These are driven only in always_ff to avoid multiple drivers
+    (* keep = "true" *) logic [3:0]                 effective_swap_pos1;
+    (* keep = "true" *) logic [3:0]                 effective_swap_pos2;
+    (* keep = "true" *) logic [3:0]                 effective_extra_pos1;  // For extra swap in Bit-Swap
+    (* keep = "true" *) logic [3:0]                 effective_extra_pos2;  // For extra swap in Bit-Swap
+    (* keep = "true" *) logic [3:0]                 scramble_pos1 [1:0];   // Array for 2 swaps in Scramble
+    (* keep = "true" *) logic [3:0]                 scramble_pos2 [1:0];   // Array for 2 swaps in Scramble
+
+    // =========================
+    // Combinational preparation (unchanged)
+    // =========================
+    always_comb begin
+        // Slice LSFR for random values (adjusted for 16-bit LSFR; reuse/overlap bits to fit all needs)
+        flip_mask     = LSFR_input[15:0];  // Full 16 bits for flip decisions (per-bit will slice further)
+        swap_pos1     = LSFR_input[3:0] % CHROMOSOME_WIDTH;
+        swap_pos2     = LSFR_input[7:4] % CHROMOSOME_WIDTH;
+        inv_start     = LSFR_input[11:8] % CHROMOSOME_WIDTH;
+        inv_end       = LSFR_input[15:12] % CHROMOSOME_WIDTH;
+        scramble_mask = LSFR_input[15:0];  // Reuse full 16 bits for scramble (fits CHROMOSOME_WIDTH=16)
+
+        // Sort inversion points
+        (* keep = "true", lut1 = "yes" *)
+        sorted_start = (inv_start < inv_end) ? inv_start : inv_end;
+        (* keep = "true", lut1 = "yes" *)
+        sorted_end   = (inv_start < inv_end) ? inv_end : inv_start;
+    end
+
+    // =========================
+    // Main mutation process
+    // =========================
+    (* use_dsp = "no" *)
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            child_out            <= '0;
+            mutation_done        <= 1'b0;
+            effective_swap_pos1  <= '0;  // ADDED: Reset new signals
+            effective_swap_pos2  <= '0;
+            effective_extra_pos1 <= '0;
+            effective_extra_pos2 <= '0;
+            scramble_pos1[0]     <= '0;
+            scramble_pos1[1]     <= '0;
+            scramble_pos2[0]     <= '0;
+            scramble_pos2[1]     <= '0;
+        end else begin
+            mutation_done <= 1'b0;  // default
+            if (start_mutation) begin
+                temp_child = child_in;  // start with input
+                // Probabilistic check for all modes: mutation occurs only if LSFR_input[7:0] < mutation_rate
+                // This makes every mode probabilistic with probability ~ (mutation_rate / 256)
+                if (LSFR_input[7:0] < mutation_rate) begin
+                    case (mutation_mode)
+                        // Bit-Flip mutation (unchanged)
+                        3'b000: begin
+                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
+                                // Per-bit: use 4-bit slices from flip_mask for finer randomness (adjusted for 16-bit)
+                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 4)) begin  // Adjusted threshold for intensity
+                                    temp_child[i] = ~temp_child[i];
+                                end
+                            end
+                        end
+                        // Bit-Swap Mutation (now using effective_pos at module level)
+                        3'b001: begin
+                            // CHANGED: Initialize effective positions from combinational values
+                            effective_swap_pos1 = swap_pos1;
+                            effective_swap_pos2 = swap_pos2;
+
+                            // Edge case handler: if equal, regenerate using shifted LSFR bits
+                            if (effective_swap_pos1 == effective_swap_pos2) begin
+                                effective_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);  // Regenerate pos1
+                                effective_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH); // Regenerate pos2
+                                // If still equal (rare), skip to avoid no-op
+                                if (effective_swap_pos1 == effective_swap_pos2) begin
+                                    // Do nothing (edge case: no swap possible)
+                                end else begin
+                                    temp_child[effective_swap_pos1] <= child_in[effective_swap_pos2];
+                                    temp_child[effective_swap_pos2] <= child_in[effective_swap_pos1];
+                                end
+                            end else begin
+                                // Normal swap
+                                temp_child[effective_swap_pos1] <= child_in[effective_swap_pos2];
+                                temp_child[effective_swap_pos2] <= child_in[effective_swap_pos1];
+                            end
+                            // Extra swap if high rate (with edge handler, using effective_extra_pos)
+                            if (mutation_rate > LSFR_input[15:8]) begin
+                                effective_extra_pos1 = (effective_swap_pos1 + 1) % CHROMOSOME_WIDTH;
+                                effective_extra_pos2 = (effective_swap_pos2 + 2) % CHROMOSOME_WIDTH;
+                                if (effective_extra_pos1 == effective_extra_pos2) begin
+                                    // Edge handler: shift again to avoid equality
+                                    effective_extra_pos1 = (effective_extra_pos1 + 3) % CHROMOSOME_WIDTH;
+                                    effective_extra_pos2 = (effective_extra_pos2 + 4) % CHROMOSOME_WIDTH;
+                                    if (effective_extra_pos1 == effective_extra_pos2) begin
+                                        // Do nothing (edge case handler)
+                                    end else begin
+                                        temp_child[effective_extra_pos1] <= temp_child[effective_extra_pos2];
+                                        temp_child[effective_extra_pos2] <= temp_child[effective_extra_pos1];
+                                    end
+                                end else begin
+                                    // normal
+                                    temp_child[effective_extra_pos1] <= temp_child[effective_extra_pos2];
+                                    temp_child[effective_extra_pos2] <= temp_child[effective_extra_pos1];
+                                end
+                            end
+                        end
+                        // Inversion Mutation (unchanged)
+                        3'b010: begin
+                            // Edge case handler: if sorted_start == sorted_end (length 0 or 1), skip inversion
+                            if (sorted_start != sorted_end && (sorted_end - sorted_start >= 1)) begin
+                                for (int i = 0; i < (sorted_end - sorted_start + 1)/2; i++) begin
+                                    temp_child[sorted_start + i]       <= child_in[sorted_end - i];
+                                    temp_child[sorted_end - i]         <= child_in[sorted_start + i];
+                                end
+                            end else begin
+                                // Do nothing for single-bit or zero-length (edge case)
+                            end
+                        end
+                        // Scramble Mutation (now using scramble_pos arrays at module level)
+                        3'b011: begin
+                            // Simple scramble: XOR with mask
+                            temp_child = child_in ^ scramble_mask;
+                            // Add limited swaps for shuffling (e.g., 2 swaps) if rate high
+                            if (mutation_rate > 64) begin
+                                for (int i = 0; i < 2; i++) begin
+                                    // CHANGED: Initialize and handle edge cases using module-level arrays
+                                    scramble_pos1[i] = (LSFR_input[(i*4) % 16 +: 4]) % CHROMOSOME_WIDTH;
+                                    scramble_pos2[i] = (LSFR_input[(i*4 + 4) % 16 +: 4]) % CHROMOSOME_WIDTH;
+                                    // Edge case handler: if equal, shift pos2 by 1
+                                    if (scramble_pos1[i] == scramble_pos2[i]) begin
+                                        scramble_pos2[i] = (scramble_pos2[i] + 1) % CHROMOSOME_WIDTH;
+                                    end
+                                    if (scramble_pos1[i] != scramble_pos2[i]) begin
+                                        temp_child[scramble_pos1[i]] <= temp_child[scramble_pos2[i]];
+                                        temp_child[scramble_pos2[i]] <= temp_child[scramble_pos1[i]];
+                                    end
+                                end
+                            end
+                        end
+                        // Combined: Bit-Flip + Bit-Swap (now using effective_pos at module level)
+                        3'b100: begin
+                            // First apply Bit-Flip with half rate (unchanged)
+                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
+                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 5)) begin  // Adjusted for finer control
+                                    temp_child[i] = ~temp_child[i];
+                                end
+                            end
+                            // Then apply Bit-Swap with edge handler
+                            // CHANGED: Initialize effective positions from combinational values
+                            effective_swap_pos1 = swap_pos1;
+                            effective_swap_pos2 = swap_pos2;
+                            if (effective_swap_pos1 == effective_swap_pos2) begin
+                                effective_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);
+                                effective_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH);
+                            end
+                            if (effective_swap_pos1 != effective_swap_pos2) begin
+                                temp_child[effective_swap_pos1] <= temp_child[effective_swap_pos2];
+                                temp_child[effective_swap_pos2] <= temp_child[effective_swap_pos1];
+                            end
+                        end
+                        // Default: No mutation
+                        default: begin
+                            temp_child = child_in;
+                        end
+                    endcase
+                end else begin
+                    // If probabilistic check fails, no mutation
+                    temp_child = child_in;
+                end
+                child_out     <= temp_child;
+                mutation_done <= 1'b1;
+            end
+        end
+    end
+
+endmodule
+
+```
+
+log error in simulation:
+
+```tsx
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
+------------------------------------------------------------
+>>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
+Expected child_out=0x4d2d, but got 0x592d
+Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
+Inversion: sorted_start=8, sorted_end=14
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
+Expected child_out=0xcbd6, but got 0x4bd6
+Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
+Bit-Swap: pos1=15, pos2=4
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0x8b62, but got 0x8a36
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
+Inversion: sorted_start=1, sorted_end=9
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
+Expected child_out=0x293f, but got 0x193f
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
+Scramble: mask=0xecc2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
+Expected child_out=0x4acb, but got 0x4a6b
+Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
+Scramble: mask=0x8785
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x8681, but got 0x0b09
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
+Inversion: sorted_start=3, sorted_end=15
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0x888c, but got 0x488c
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
+Scramble: mask=0x8f9e
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
+Expected child_out=0xfb80, but got 0xf982
+Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
+Scramble: mask=0xe900
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
+Expected child_out=0x1667, but got 0x2667
+Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
+Inversion: sorted_start=12, sorted_end=13
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0xeb43, but got 0xea43
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
+Bit-Swap: pos1=8, pos2=6
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0xf272, but got 0xe2f2
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
+Scramble: mask=0x8c07
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
+Expected child_out=0x2570, but got 0x3a90
+Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
+Inversion: sorted_start=5, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
+Expected child_out=0xdfbc, but got 0xf7bc
+Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
+Scramble: mask=0xebdc
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x5a8f, but got 0x42bf
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
+Expected child_out=0xab86, but got 0xbb8a
+Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
+Bit-Swap: pos1=3, pos2=14
+------------------------------------------------------------
+Tests completed:         116, Errors:          15
+```
+
+This report documents the iterative development, identified bugs, and applied fixes for the `mutation` module (in SystemVerilog) and its testbench (`mutation_TB.sv`). The module handles GA mutations with modes like Bit-Flip, Bit-Swap, Inversion, Scramble, and Combined, using parameters `CHROMOSOME_WIDTH=16` and `LSFR_WIDTH=16`. Key goals included adding probabilistic behavior, edge-case handling (e.g., equal swap positions), and aligning the TB with a flow-driven style like `crossover_TB.sv`.
+
+Initial versions had several bugs: lack of probabilistic checks across all modes (mutations were deterministic); incomplete edge-case handling, such as no regeneration for equal positions in Bit-Swap, leading to no-ops; mismatches between DUT and TB golden model, especially in Bit-Swap RHS usage (`child_in` vs. `temp_child`), causing failures in random tests (e.g., 38, 79, 112); timing issues like potential race conditions from non-blocking assignments and missing local input copies; limited TB coverage, with incomplete manual tests and no `NUM_TESTS` parameter; and minor issues like inconsistent resets or LFSR slicing correlations.
+
+For `mutation.sv`, fixes included wrapping all modes in a global probabilistic check (`if (LSFR_input[7:0] < mutation_rate)`); enhancing edge handlers (e.g., regeneration for equal positions, skips for zero-length inversions); standardizing swaps with a `temp_bit` variable and `next_temp_child` for combinatorial computation to avoid races; adding explicit resets and local copies (e.g., `local_lsfr_input`) for stability; and ensuring consistent RHS usage across operations.
+
+In `mutation_TB.sv`, the golden model (`check_result`) was updated to mirror DUT changes, including `temp_bit` for swaps and exact edge handling; expanded manual tests (16 cases covering all modes, edges, and boundaries like reset mid-operation); added random tests with `NUM_TESTS` parameter and two-cycle handshake for `mutation_done`; and fixed RHS mismatches to resolve specific test failures.
+
+Validation involved 16 manual tests and configurable random iterations (e.g., 100), confirming zero errors post-fixes with perfect DUT-TB alignment. The changes improved robustness, coverage, and consistency while preserving structure, making the module reliable for GA use. Final line counts: `mutation.sv` ~200 lines; `mutation_TB.sv` ~526 lines.
+
+
+### synthesis
+
+clk 5ns
+
+![Screenshot 2025-08-22 172743.png](C:\Users\Alireza\AppData\Roaming\marktext\images\94b8e4b4cf8ca1e8344a4641e610ac1e7dd36c9c.png)
+
+![Screenshot 2025-08-22 172926.png](C:\Users\Alireza\AppData\Roaming\marktext\images\4476caf9599a7b172345352d3404bf79e70a76a1.png)
+
+![Screenshot 2025-08-22 172758.png](C:\Users\Alireza\AppData\Roaming\marktext\images\986949102ecd92a2bc58137d4321ece13c5c412a.png)
+
+![Screenshot 2025-08-22 172845.png](C:\Users\Alireza\AppData\Roaming\marktext\images\6480e62657c35be964509480a8c5ce4537b11e28.png)
+
+RTL
+
+![Screenshot 2025-08-22 173052.png](C:\Users\Alireza\AppData\Roaming\marktext\images\e1ac39b0fcfc1e504a63716b9203562231ddeb2a.png)
+
+![Screenshot 2025-08-22 173057.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a8525fc93741f638c93d1b39a5b768cffbaa3e0d.png)
+
+
+
+## selection
+
+```v
+
+------------------------------------------------------------
+ERROR @Time=683000: Test 114
+  Exp Parent      = f
+  DUT Parent      = f
+  Exp Done        = 1
+  DUT Done        = 0
+  Total Fitness   = 34e5
+  LSFR_input      = 4ce0
+  Roulette Pos    = 00000fe2
+  Fitness Sum     = 0000
+  Zero Total?     = 0
+  Fitness Values: 
+    [0] = 31dd
+    [1] = 141e
+    [2] = 330a
+    [3] = 0475
+    [4] = 2a57
+    [5] = 1434
+    [6] = 1b21
+    [7] = 1c34
+    [8] = 2852
+    [9] = 0e2c
+    [10] = 20aa
+    [11] = 12a9
+    [12] = 2260
+    [13] = 3bcb
+    [14] = 2edd
+    [15] = 0ab2
+------------------------------------------------------------
+Test finished. Ran 114 tests, errors = 114
+
+```
+
+# existing Problems
+
+- [ ]  crossover simulation 1 error
+
+- [ ]  fitness evaluator simulation error : right values but wrong error counting 
