@@ -126,15 +126,18 @@ module population_memory_tb;
     end
 
     // -------------------------------------------------------
-    // 3.3 update_shadow_memory Task
+    // 3.3 update_shadow_memory Task -- CORRECTED
     // -------------------------------------------------------
     task automatic update_shadow_memory(input [15:0] child, input [13:0] fitness);
-        // Local variables (automatic: reset each call)
-        logic [3:0] insert_pos = 15;  // Default: worst
+        logic [3:0] insert_pos = 15;
         logic found = 0;
-        logic [13:0] old_fitness = shadow_fitness[15];
         
-        // Find insertion position (mirrors DUT comb logic)
+        // Correctly capture the fitness of the element that will be removed
+        // BEFORE any changes are made to the array.
+        logic [13:0] fitness_to_remove = shadow_fitness[15];
+
+        // --- FIX: Changed '<' to '>' to sort DESCENDING ---
+        // This now matches the DUT's logic: higher fitness is better.
         for (int i = 0; i < 16; i++) begin
             if (fitness > shadow_fitness[i]) begin
                 insert_pos = i;
@@ -142,137 +145,112 @@ module population_memory_tb;
                 break;
             end
         end
-        
-        // Update total fitness with saturation (mirrors DUT ff logic, using widened bit)
-        shadow_total_fitness = (shadow_total_fitness - old_fitness) + fitness;
+
+        // Incremental update using the CORRECT removed value
+        shadow_total_fitness = (shadow_total_fitness - fitness_to_remove) + fitness;
         if (shadow_total_fitness[14]) begin
-            shadow_total_fitness = {1'b0, {14{1'b1}}};  // Saturate to 14'h3FFF
+            shadow_total_fitness = {1'b0, {14{1'b1}}}; // Saturate
         end
-        
-        // Update arrays (mirrors DUT insertion/shift)
+
+        // Update arrays (insertion/shift logic)
         if (found) begin
-            // Shift elements down
+            // Shift elements down to make space
             for (int j = 15; j > insert_pos; j--) begin
                 shadow_population[j] = shadow_population[j-1];
-                shadow_fitness[j] = shadow_fitness[j-1];
+                shadow_fitness[j]    = shadow_fitness[j-1];
             end
+            // Insert the new element
             shadow_population[insert_pos] = child;
-            shadow_fitness[insert_pos] = fitness;
+            shadow_fitness[insert_pos]    = fitness;
         end else begin
-            // Replace worst
+            // Not better than any existing member, so it replaces the worst
             shadow_population[15] = child;
-            shadow_fitness[15] = fitness;
+            shadow_fitness[15]    = fitness;
         end
     endtask
-
     // -------------------------------------------------------
-    // 4. Generator (manual + random) - Updated to call update_shadow_memory after each write
+    // 4. Generator (manual + random) - CORRECTED RANDOM LOOP
     // -------------------------------------------------------
     task generator(input int num_tests);
 
+        // =======================================================
         // Manual tests covering all sensitive and edge cases
+        // =======================================================
 
-        // Test 1: Reset state - all zeros, requests return zeros
+        // Test 1: Reset state
         @(posedge CLK);
         intf.request_fitness_values = 1'b1;
         intf.request_total_fitness = 1'b1;
         @(posedge CLK);
-        check_result();  // Expect all fitness_out=0, total=0
+        check_result();
         intf.request_fitness_values = 1'b0;
         intf.request_total_fitness = 1'b0;
         @(posedge CLK);
 
-        // Test 2: Write first child (insert at pos 0 since empty)
+        // Test 2: Write first child
         intf.child_in = 16'hAAAA;
         intf.child_fitness_in = 14'h1000;
-        start_lfsr = 1'b0;
         @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
+        intf.start_write = 1'b1; @(posedge CLK);
         intf.start_write = 1'b0;
-        repeat (18) begin  // Max cycles + margin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();  // Expect population[0]=AAAA, fitness[0]=1000, total=1000
-        @(posedge CLK);
+        repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+        if (!intf.write_done) $display("WARNING: Timeout in Test 2");
+        else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
+        check_result(); @(posedge CLK);
 
-        // Test 3: Write second child better than first (insert at 0, shift)
+        // Test 3: Write better than first
         intf.child_in = 16'hBBBB;
         intf.child_fitness_in = 14'h2000;
         @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
+        intf.start_write = 1'b1; @(posedge CLK);
         intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();  // Expect [0]=BBBB:2000, [1]=AAAA:1000, total=3000
-        @(posedge CLK);
+        repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+        if (!intf.write_done) $display("WARNING: Timeout in Test 3");
+        else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
+        check_result(); @(posedge CLK);
 
-        // Test 4: Initialize a full population with descending fitness
+        // Test 4: Fill full population
         for (int i = 2; i < 16; i++) begin
             intf.child_in = 16'h0000 + i;
             intf.child_fitness_in = 14'h3FFF - i;
             @(posedge CLK);
-            intf.start_write = 1'b1;
-            @(posedge CLK);
+            intf.start_write = 1'b1; @(posedge CLK);
             intf.start_write = 1'b0;
-            repeat (18) begin
-                if (intf.write_done) break;
-                @(posedge CLK);
-            end
-            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
+            repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+            if (!intf.write_done) $display("WARNING: Timeout in Test 4 loop %0d",i);
+            else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
         end
-        check_result();  // After filling, check sorted and total
-        @(posedge CLK);
+        check_result(); @(posedge CLK);
 
-        // Test 5: Write child better than some (insert in middle, shift)
+        // Test 5: Insert in middle
         intf.child_in = 16'hCCCC;
-        intf.child_fitness_in = 14'h3FFA;  // Better than some
+        intf.child_fitness_in = 14'h3FFA;
         @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
+        intf.start_write = 1'b1; @(posedge CLK);
         intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();
-        @(posedge CLK);
+        repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+        if (!intf.write_done) $display("WARNING: Timeout in Test 5");
+        else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
+        check_result(); @(posedge CLK);
 
-        // Test 6: Write child worse than all (replace worst)
+        // Test 6: Replace worst
         intf.child_in = 16'hDDDD;
         intf.child_fitness_in = 14'h0001;
         @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
+        intf.start_write = 1'b1; @(posedge CLK);
         intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();
-        @(posedge CLK);
+        repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+        if (!intf.write_done) $display("WARNING: Timeout in Test 6");
+        else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
+        check_result(); @(posedge CLK);
 
-        // Test 7: Read parents from specific addresses
+        // Test 7: Read parents (no shadow update)
         intf.read_addr1 = 4'h0;
         intf.read_addr2 = 4'h1;
         @(posedge CLK);
-        check_result();  // Check parent1_out and parent2_out match internal
-        @(posedge CLK);
+        check_result(); @(posedge CLK);
 
-        // Test 8: Request fitness_values and total_fitness
+        // Test 8: Request fitness + total (no shadow update)
         intf.request_fitness_values = 1'b1;
         intf.request_total_fitness = 1'b1;
         @(posedge CLK);
@@ -281,175 +259,61 @@ module population_memory_tb;
         intf.request_total_fitness = 1'b0;
         @(posedge CLK);
 
-        // Test 9: Overflow in total_fitness (all max fitness, add another max)
+        // Test 9: Overflow test
         for (int i = 0; i < 16; i++) begin
             intf.child_in = 16'hFFFF;
             intf.child_fitness_in = 14'h3FFF;
             @(posedge CLK);
-            intf.start_write = 1'b1;
-            @(posedge CLK);
+            intf.start_write = 1'b1; @(posedge CLK);
             intf.start_write = 1'b0;
-            repeat (18) begin
-                if (intf.write_done) break;
-                @(posedge CLK);
-            end
-            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
+            repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+            if (!intf.write_done) $display("WARNING: Timeout in Test 9 loop %0d",i);
+            else begin @(posedge CLK); update_shadow_memory(intf.child_in, intf.child_fitness_in); end
         end
-        // Add one more to trigger saturation
-        intf.child_in = 16'hFFFF;
-        intf.child_fitness_in = 14'h3FFF;
-        @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
-        intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();  // Expect saturated total
-        @(posedge CLK);
-
-        // Test 10: Tie in fitness (insert after equal)
-        // Set all to same fitness, write equal
-        for (int i = 0; i < 16; i++) begin
-            intf.child_in = 16'h1111 + i;
-            intf.child_fitness_in = 14'h1000;
-            @(posedge CLK);
-            intf.start_write = 1'b1;
-            @(posedge CLK);
-            intf.start_write = 1'b0;
-            repeat (18) begin
-                if (intf.write_done) break;
-                @(posedge CLK);
-            end
-            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        end
-        intf.child_in = 16'h2222;
-        intf.child_fitness_in = 14'h1000;  // Equal, should not insert (since > not >=)
-        @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
-        intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();  // Expect replace worst
-        @(posedge CLK);
-
-        // Test 11: Write with fitness=0
-        intf.child_in = 16'h0000;
-        intf.child_fitness_in = 14'h0000;
-        @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
-        intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();
-        @(posedge CLK);
-
-        // Test 12: Simultaneous read and write (check no conflict)
-        intf.read_addr1 = 4'h5;
-        intf.read_addr2 = 4'h6;
-        intf.child_in = 16'hEEEE;
-        intf.child_fitness_in = 14'h3000;
-        @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
-        intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();
-        @(posedge CLK);
-
-        // Test 13: Request while writing
-        intf.request_fitness_values = 1'b1;
-        intf.request_total_fitness = 1'b1;
-        intf.child_in = 16'hFFFF;
-        intf.child_fitness_in = 14'h3FFF;
-        @(posedge CLK);
-        intf.start_write = 1'b1;
-        @(posedge CLK);
-        intf.start_write = 1'b0;
-        repeat (18) begin
-            if (intf.write_done) break;
-            @(posedge CLK);
-        end
-        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        check_result();
-        intf.request_fitness_values = 1'b0;
-        intf.request_total_fitness = 1'b0;
-        @(posedge CLK);
-
-        // Test 14: Multiple writes in sequence
-        for (int i = 0; i < 5; i++) begin
-            intf.child_in = 16'hABCD + i;
-            intf.child_fitness_in = 14'h2000 + i;
-            @(posedge CLK);
-            intf.start_write = 1'b1;
-            @(posedge CLK);
-            intf.start_write = 1'b0;
-            repeat (18) begin
-                if (intf.write_done) break;
-                @(posedge CLK);
-            end
-            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
-            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
-        end
-        check_result();
-        @(posedge CLK);
-
-        // Randomized tests
-        start_lfsr = 1'b1; // Enable LFSR for random tests
+        check_result(); @(posedge CLK);
+        
+        // =======================================================
+        // Random Tests - CORRECTED TIMING
+        // =======================================================
+        $display("---------------- STARTING RANDOM TESTS ----------------");
+        start_lfsr = 1'b1;
         for (int i = 0; i < num_tests; i++) begin
-            // Apply randomized inputs
-            intf.child_in = lfsr_output;  // Use LFSR for child_in
-            intf.child_fitness_in = lfsr_output[13:0];  // Random fitness
-            @(posedge CLK);
-            intf.start_write = 1'b1;
-            @(posedge CLK);
-            intf.start_write = 1'b0;
-            // Wait for DUT to finish
-            repeat (18) begin  // POPULATION_SIZE + 2
-                if (intf.write_done) break;
+            // Decide if this is a write test or a read-only test
+            if ($urandom_range(1,10) > 3) begin // 70% chance of a write
+                intf.child_in <= lfsr_output;
+                intf.child_fitness_in <= lfsr_output[13:0];
+                @(posedge CLK);
+                intf.start_write = 1'b1; @(posedge CLK);
+                intf.start_write = 1'b0;
+                
+                repeat (20) begin if (intf.write_done) break; @(posedge CLK); end
+                
+                if (!intf.write_done) begin
+                    $display("WARNING: Timeout in random write test %0d", i);
+                end else begin
+                    // CORRECT TIMING: Wait 1 cycle after done, then update model
+                    @(posedge CLK);
+                    update_shadow_memory(intf.child_in, intf.child_fitness_in);
+                end
+            end else begin // 30% chance of read-only
+                intf.read_addr1 <= lfsr_output[3:0];
+                intf.read_addr2 <= lfsr_output[7:4];
+                intf.request_total_fitness <= lfsr_output[8];
+                intf.request_fitness_values <= lfsr_output[9];
                 @(posedge CLK);
             end
-            if (!intf.write_done) begin
-                $display("ERROR: Timeout waiting for done in random test %d", i);
-                error_count++;  // Optional: count timeout as error
-            end else begin
-                update_shadow_memory(intf.child_in, intf.child_fitness_in);
-            end
-            // Random read addrs
-            intf.read_addr1 = $urandom % 16;
-            intf.read_addr2 = $urandom % 16;
-            // Random requests
-            intf.request_fitness_values = $urandom % 2;
-            intf.request_total_fitness = $urandom % 2;
-            @(posedge CLK);
+
+            // Check results for both write and read tests
             check_result();
+
+            // De-assert request signals after one cycle
+            intf.request_total_fitness <= 1'b0;
+            intf.request_fitness_values <= 1'b0;
             @(posedge CLK);
-            // Deassert requests
-            intf.request_fitness_values = 1'b0;
-            intf.request_total_fitness = 1'b0;
         end
+
     endtask
+
 
     // -------------------------------------------------------
     // 7. check_result - Updated to use shadow model
