@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_3" LaunchPart="xc7s6cpga196-2" LaunchTime="1755878956">
   <File Type="PA-TCL" Name="selection.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="selection_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="selection_reports.tcl"/>
   <File Type="RDS-RDS" Name="selection.vds"/>
   <File Type="RDS-UTIL" Name="selection_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="selection_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="selection.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="selection_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="selection_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/imports/GA/selection.sv">
