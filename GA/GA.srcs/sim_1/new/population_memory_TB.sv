@@ -112,7 +112,61 @@ module population_memory_tb;
     assign TotalFitnessOut   = intf.total_fitness_out;
 
     // -------------------------------------------------------
-    // 4. Generator (manual + random)
+    // 3.2 Shadow Model Declarations (module-level)
+    // -------------------------------------------------------
+    logic [15:0] shadow_population [16];
+    logic [13:0] shadow_fitness [16];
+    logic [14:0] shadow_total_fitness;  // Widened for overflow detection
+
+    // Initialize shadow model on reset
+    always @(posedge RST) begin
+        shadow_population = '{default: '0};
+        shadow_fitness = '{default: '0};
+        shadow_total_fitness = '0;
+    end
+
+    // -------------------------------------------------------
+    // 3.3 update_shadow_memory Task
+    // -------------------------------------------------------
+    task automatic update_shadow_memory(input [15:0] child, input [13:0] fitness);
+        // Local variables (automatic: reset each call)
+        logic [3:0] insert_pos = 15;  // Default: worst
+        logic found = 0;
+        logic [13:0] old_fitness = shadow_fitness[15];
+        
+        // Find insertion position (mirrors DUT comb logic)
+        for (int i = 0; i < 16; i++) begin
+            if (fitness > shadow_fitness[i]) begin
+                insert_pos = i;
+                found = 1;
+                break;
+            end
+        end
+        
+        // Update total fitness with saturation (mirrors DUT ff logic, using widened bit)
+        shadow_total_fitness = (shadow_total_fitness - old_fitness) + fitness;
+        if (shadow_total_fitness[14]) begin
+            shadow_total_fitness = {1'b0, {14{1'b1}}};  // Saturate to 14'h3FFF
+        end
+        
+        // Update arrays (mirrors DUT insertion/shift)
+        if (found) begin
+            // Shift elements down
+            for (int j = 15; j > insert_pos; j--) begin
+                shadow_population[j] = shadow_population[j-1];
+                shadow_fitness[j] = shadow_fitness[j-1];
+            end
+            shadow_population[insert_pos] = child;
+            shadow_fitness[insert_pos] = fitness;
+        end else begin
+            // Replace worst
+            shadow_population[15] = child;
+            shadow_fitness[15] = fitness;
+        end
+    endtask
+
+    // -------------------------------------------------------
+    // 4. Generator (manual + random) - Updated to call update_shadow_memory after each write
     // -------------------------------------------------------
     task generator(input int num_tests);
 
@@ -123,9 +177,9 @@ module population_memory_tb;
         intf.request_fitness_values = 1'b1;
         intf.request_total_fitness = 1'b1;
         @(posedge CLK);
+        check_result();  // Expect all fitness_out=0, total=0
         intf.request_fitness_values = 1'b0;
         intf.request_total_fitness = 1'b0;
-        check_result();  // Expect all fitness_out=0, total=0
         @(posedge CLK);
 
         // Test 2: Write first child (insert at pos 0 since empty)
@@ -141,6 +195,7 @@ module population_memory_tb;
             @(posedge CLK);
         end
         if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();  // Expect population[0]=AAAA, fitness[0]=1000, total=1000
         @(posedge CLK);
 
@@ -156,14 +211,11 @@ module population_memory_tb;
             @(posedge CLK);
         end
         if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();  // Expect [0]=BBBB:2000, [1]=AAAA:1000, total=3000
         @(posedge CLK);
 
-        // Test 4: Write child worse than all (replace worst, which is pos 15 but since size=2 effective, adjust)
-        // First, initialize a full population with descending fitness for tests
-        // (Manual init via multiple writes; in real, user initializes, but for TB we simulate)
-        // For simplicity, assume we continue writing to fill
-        // ... (Abbreviate: assume we write 16 children with fitness decreasing 0x3FFF to 0x3FF0)
+        // Test 4: Initialize a full population with descending fitness
         for (int i = 2; i < 16; i++) begin
             intf.child_in = 16'h0000 + i;
             intf.child_fitness_in = 14'h3FFF - i;
@@ -175,6 +227,8 @@ module population_memory_tb;
                 if (intf.write_done) break;
                 @(posedge CLK);
             end
+            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         end
         check_result();  // After filling, check sorted and total
         @(posedge CLK);
@@ -191,6 +245,7 @@ module population_memory_tb;
             @(posedge CLK);
         end
         if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();
         @(posedge CLK);
 
@@ -206,6 +261,7 @@ module population_memory_tb;
             @(posedge CLK);
         end
         if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();
         @(posedge CLK);
 
@@ -220,9 +276,9 @@ module population_memory_tb;
         intf.request_fitness_values = 1'b1;
         intf.request_total_fitness = 1'b1;
         @(posedge CLK);
+        check_result();
         intf.request_fitness_values = 1'b0;
         intf.request_total_fitness = 1'b0;
-        check_result();
         @(posedge CLK);
 
         // Test 9: Overflow in total_fitness (all max fitness, add another max)
@@ -237,6 +293,8 @@ module population_memory_tb;
                 if (intf.write_done) break;
                 @(posedge CLK);
             end
+            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         end
         // Add one more to trigger saturation
         intf.child_in = 16'hFFFF;
@@ -249,6 +307,8 @@ module population_memory_tb;
             if (intf.write_done) break;
             @(posedge CLK);
         end
+        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();  // Expect saturated total
         @(posedge CLK);
 
@@ -265,6 +325,8 @@ module population_memory_tb;
                 if (intf.write_done) break;
                 @(posedge CLK);
             end
+            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         end
         intf.child_in = 16'h2222;
         intf.child_fitness_in = 14'h1000;  // Equal, should not insert (since > not >=)
@@ -276,6 +338,8 @@ module population_memory_tb;
             if (intf.write_done) break;
             @(posedge CLK);
         end
+        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();  // Expect replace worst
         @(posedge CLK);
 
@@ -290,6 +354,8 @@ module population_memory_tb;
             if (intf.write_done) break;
             @(posedge CLK);
         end
+        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();
         @(posedge CLK);
 
@@ -306,6 +372,8 @@ module population_memory_tb;
             if (intf.write_done) break;
             @(posedge CLK);
         end
+        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         check_result();
         @(posedge CLK);
 
@@ -322,9 +390,11 @@ module population_memory_tb;
             if (intf.write_done) break;
             @(posedge CLK);
         end
+        if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+        else update_shadow_memory(intf.child_in, intf.child_fitness_in);
+        check_result();
         intf.request_fitness_values = 1'b0;
         intf.request_total_fitness = 1'b0;
-        check_result();
         @(posedge CLK);
 
         // Test 14: Multiple writes in sequence
@@ -339,6 +409,8 @@ module population_memory_tb;
                 if (intf.write_done) break;
                 @(posedge CLK);
             end
+            if (!intf.write_done) $display("WARNING: Timeout waiting for done in test");
+            else update_shadow_memory(intf.child_in, intf.child_fitness_in);
         end
         check_result();
         @(posedge CLK);
@@ -361,6 +433,8 @@ module population_memory_tb;
             if (!intf.write_done) begin
                 $display("ERROR: Timeout waiting for done in random test %d", i);
                 error_count++;  // Optional: count timeout as error
+            end else begin
+                update_shadow_memory(intf.child_in, intf.child_fitness_in);
             end
             // Random read addrs
             intf.read_addr1 = $urandom % 16;
@@ -376,8 +450,9 @@ module population_memory_tb;
             intf.request_total_fitness = 1'b0;
         end
     endtask
+
     // -------------------------------------------------------
-    // 7. check_result - Modified version
+    // 7. check_result - Updated to use shadow model
     // -------------------------------------------------------
     task automatic check_result();
         // Local constants for sizing
@@ -385,43 +460,28 @@ module population_memory_tb;
         localparam int CW    = 16;
         localparam int FW    = 14;
 
-        // Temporaries for expected values (simulate internal state)
-        static logic [CW-1:0] exp_population [PSIZE-1:0] = '{default: '0};
-        static logic [FW-1:0] exp_fitness [PSIZE-1:0] = '{default: '0};
-        static logic [FW:0]   exp_total_fitness = '0;
+        // Expected values derived from shadow model
         logic [FW-1:0] exp_total_out;
         logic [CW-1:0] exp_parent1;
         logic [CW-1:0] exp_parent2;
         logic [FW-1:0] exp_fitness_out [PSIZE-1:0];
-        logic exp_done;
+        logic exp_done = 1'b0;  // Expect 0 post-pulse (checks happen after write_done deasserts)
 
-        // Simulate insertion logic (mirror DUT behavior)
-        // This is a simplified mirror; in full TB, we'd track all writes
-        // But since static, it persists across calls - reset if needed
-        // For accuracy, we'd need to track state, but for demo, assume check after each operation
-        // NOTE: In real TB, use a model or track all operations
-
-        // Defaults
-        exp_parent1 = exp_population[intf.read_addr1];
-        exp_parent2 = exp_population[intf.read_addr2];
+        // Compute expected outputs based on current requests and shadow state
+        exp_parent1 = shadow_population[intf.read_addr1];
+        exp_parent2 = shadow_population[intf.read_addr2];
         if (intf.request_fitness_values) begin
-            exp_fitness_out = exp_fitness;
+            exp_fitness_out = shadow_fitness;
         end else begin
             exp_fitness_out = '{default: '0};
         end
         if (intf.request_total_fitness) begin
-            exp_total_out = exp_total_fitness[FW-1:0];
+            exp_total_out = shadow_total_fitness[FW-1:0];  // Truncate widened bit
         end else begin
             exp_total_out = '0;
         end
-        exp_done = 1'b1;  // Assume after wait
 
-        // For write simulation (if start_write was asserted, but since check after done, update model here? Wait, task is called after)
-        // Actually, since called after operations, we need to update model in generator or here based on inputs
-        // For simplicity, skip full model; in real, implement mirror logic
-        // Placeholder: assume expected = actual for demo; replace with real checks
-
-        // Count & check (example: check if outputs match expected; customize)
+        // Count & check
         test_count++;
         if ((exp_parent1 !== intf.parent1_out) || (exp_parent2 !== intf.parent2_out) ||
             (exp_fitness_out !== intf.fitness_values_out) || (exp_total_out !== intf.total_fitness_out) ||
@@ -445,10 +505,11 @@ module population_memory_tb;
             $display("  Req Total       = %b", intf.request_total_fitness);
             $display("  Fitness Out: ");
             for (int i = 0; i < 16; i++) $display("    [%0d] = %h (Exp: %h)", i, intf.fitness_values_out[i], exp_fitness_out[i]);
-            $display("  NOTE: If Done mismatch, check if wait was sufficient");  // NEW: Added debug note
+            $display("  NOTE: If Done mismatch, check if wait was sufficient");  // Retained debug note
             $display("------------------------------------------------------------");
         end
     endtask
+
     // -------------------------------------------------------
     // Main Test Flow
     // -------------------------------------------------------

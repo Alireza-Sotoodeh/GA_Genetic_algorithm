@@ -8,7 +8,7 @@ D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/cro
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv,1755808938,systemVerilog,,,,fitness_evaluator_if;fitness_evaluator_tb,,,,,,,,
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/lfsr_random_TB.sv,1755717981,systemVerilog,,,,lsfr_SudoRandom_TB;lsfr_random_if,,,,,,,,
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv,1755869610,systemVerilog,,,,mutation_if;mutation_tb,,,,,,,,
-,,,,,,population_memory_if;population_memory_tb,,,,,,,,
+D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv,1755946236,systemVerilog,,,,population_memory_if;population_memory_tb,,,,,,,,
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/selection_TB.sv,1755880365,systemVerilog,,,,selection_if;selection_tb,,,,,,,,
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/crossover.sv,1755797083,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv,,crossover,,,,,,,,
 D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/fitness_evaluator.sv,1755806738,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/fitness_evaluator_TB.sv,,fitness_evaluator,,,,,,,,

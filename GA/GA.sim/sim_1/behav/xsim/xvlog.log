@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module population_memory_tb
-ERROR: [VRFC 10-4982] syntax error near '[' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv:139]
-ERROR: [VRFC 10-2989] 'old_fitness_remove' is not declared [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv:140]
-ERROR: [VRFC 10-2989] 'old_fitness_remove' is not declared [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv:153]
-ERROR: [VRFC 10-2865] module 'population_memory_tb' ignored due to previous errors [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/population_memory_TB.sv:25]

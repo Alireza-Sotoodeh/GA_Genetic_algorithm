@@ -1,0 +1,1883 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+------------------------------------------------------------
+ERROR @Time=13000: Test 2
+  Exp Parent1     = aaaa
+  DUT Parent1     = aaaa
+  Exp Parent2     = aaaa
+  DUT Parent2     = aaaa
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = aaaa
+  Child Fitness   = 1000
+  Read Addr1      = 0
+  Read Addr2      = 0
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=21000: Test 3
+  Exp Parent1     = bbbb
+  DUT Parent1     = bbbb
+  Exp Parent2     = bbbb
+  DUT Parent2     = bbbb
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = bbbb
+  Child Fitness   = 2000
+  Read Addr1      = 0
+  Read Addr2      = 0
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=107000: Test 4
+  Exp Parent1     = 0002
+  DUT Parent1     = 0002
+  Exp Parent2     = 0002
+  DUT Parent2     = 0002
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = 000f
+  Child Fitness   = 3ff0
+  Read Addr1      = 0
+  Read Addr2      = 0
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=115000: Test 5
+  Exp Parent1     = 0002
+  DUT Parent1     = 0002
+  Exp Parent2     = 0002
+  DUT Parent2     = 0002
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = cccc
+  Child Fitness   = 3ffa
+  Read Addr1      = 0
+  Read Addr2      = 0
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=123000: Test 6
+  Exp Parent1     = 0002
+  DUT Parent1     = 0002
+  Exp Parent2     = 0002
+  DUT Parent2     = 0002
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = dddd
+  Child Fitness   = 0001
+  Read Addr1      = 0
+  Read Addr2      = 0
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=131000: Test 8
+  Exp Parent1     = 0002
+  DUT Parent1     = 0002
+  Exp Parent2     = 0003
+  DUT Parent2     = 0003
+  Exp Total       = 2000
+  DUT Total       = 2000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = dddd
+  Child Fitness   = 0001
+  Read Addr1      = 0
+  Read Addr2      = 1
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3ffd (Exp: 0001)
+    [1] = 3ffc (Exp: 3ff0)
+    [2] = 3ffb (Exp: 3ff1)
+    [3] = 3ffa (Exp: 3ff2)
+    [4] = 3ffa (Exp: 3ff3)
+    [5] = 3ff9 (Exp: 3ff4)
+    [6] = 3ff8 (Exp: 3ff5)
+    [7] = 3ff7 (Exp: 3ff6)
+    [8] = 3ff6 (Exp: 3ff7)
+    [9] = 3ff5 (Exp: 3ff8)
+    [10] = 3ff4 (Exp: 3ff9)
+    [11] = 3ff3 (Exp: 3ffa)
+    [12] = 3ff2 (Exp: 3ffa)
+    [13] = 3ff1 (Exp: 3ffb)
+    [14] = 3ff0 (Exp: 3ffc)
+    [15] = 0001 (Exp: 3ffd)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=235000: Test 9
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = ffff
+  Child Fitness   = 3fff
+  Read Addr1      = 0
+  Read Addr2      = 1
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=339000: Test 10
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = 2222
+  Child Fitness   = 1000
+  Read Addr1      = 0
+  Read Addr2      = 1
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=347000: Test 11
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = 0000
+  Child Fitness   = 0000
+  Read Addr1      = 0
+  Read Addr2      = 1
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=355000: Test 12
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = eeee
+  Child Fitness   = 3000
+  Read Addr1      = 5
+  Read Addr2      = 6
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=363000: Test 13
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3fff
+  DUT Total       = 3fff
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = ffff
+  Child Fitness   = 3fff
+  Read Addr1      = 5
+  Read Addr2      = 6
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3fff)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3fff (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=395000: Test 14
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 1
+  Child In        = abd1
+  Child Fitness   = 2004
+  Read Addr1      = 5
+  Read Addr2      = 6
+  Req Fitness     = 0
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 0000 (Exp: 0000)
+    [1] = 0000 (Exp: 0000)
+    [2] = 0000 (Exp: 0000)
+    [3] = 0000 (Exp: 0000)
+    [4] = 0000 (Exp: 0000)
+    [5] = 0000 (Exp: 0000)
+    [6] = 0000 (Exp: 0000)
+    [7] = 0000 (Exp: 0000)
+    [8] = 0000 (Exp: 0000)
+    [9] = 0000 (Exp: 0000)
+    [10] = 0000 (Exp: 0000)
+    [11] = 0000 (Exp: 0000)
+    [12] = 0000 (Exp: 0000)
+    [13] = 0000 (Exp: 0000)
+    [14] = 0000 (Exp: 0000)
+    [15] = 0000 (Exp: 0000)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=405000: Test 15
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = a835
+  Child Fitness   = 2835
+  Read Addr1      = 2
+  Read Addr2      = c
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2835)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2835 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=445000: Test 19
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3c32
+  DUT Total       = 3c32
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = fc32
+  Child Fitness   = 3c32
+  Read Addr1      = d
+  Read Addr2      = 2
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3c32)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3c32 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=465000: Test 21
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2b17
+  DUT Total       = 2b17
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6b17
+  Child Fitness   = 2b17
+  Read Addr1      = 0
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2b17)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2b17 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=485000: Test 23
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 8987
+  Child Fitness   = 0987
+  Read Addr1      = a
+  Read Addr2      = 1
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 0987)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0987 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=505000: Test 25
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 13d8
+  DUT Total       = 13d8
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = d3d8
+  Child Fitness   = 13d8
+  Read Addr1      = 3
+  Read Addr2      = 1
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 13d8)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 13d8 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=525000: Test 27
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 796e
+  Child Fitness   = 396e
+  Read Addr1      = e
+  Read Addr2      = d
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 396e)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 396e (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=545000: Test 29
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 00b2
+  DUT Total       = 00b2
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = c0b2
+  Child Fitness   = 00b2
+  Read Addr1      = d
+  Read Addr2      = 7
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 00b2)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 00b2 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=565000: Test 31
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = e9f3
+  Child Fitness   = 29f3
+  Read Addr1      = 6
+  Read Addr2      = 9
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 29f3)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 29f3 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=615000: Test 36
+  Exp Parent1     = 6ad9
+  DUT Parent1     = 6ad9
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6ad9
+  Child Fitness   = 2ad9
+  Read Addr1      = f
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2ad9)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2ad9 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=645000: Test 39
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = cd92
+  Child Fitness   = 0d92
+  Read Addr1      = 1
+  Read Addr2      = 8
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 0d92)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0d92 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=665000: Test 41
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0631
+  DUT Total       = 0631
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 0631
+  Child Fitness   = 0631
+  Read Addr1      = 3
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 0631)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0631 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=675000: Test 42
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2e48
+  DUT Total       = 2e48
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = ee48
+  Child Fitness   = 2e48
+  Read Addr1      = b
+  Read Addr2      = 7
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2e48)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2e48 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=715000: Test 46
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2875
+  DUT Total       = 2875
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 2875
+  Child Fitness   = 2875
+  Read Addr1      = 1
+  Read Addr2      = e
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2875)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2875 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=725000: Test 47
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = d4eb
+  Child Fitness   = 14eb
+  Read Addr1      = 0
+  Read Addr2      = 2
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 14eb)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 14eb (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=735000: Test 48
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2cf5
+  DUT Total       = 2cf5
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6cf5
+  Child Fitness   = 2cf5
+  Read Addr1      = 0
+  Read Addr2      = d
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2cf5)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2cf5 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=745000: Test 49
+  Exp Parent1     = 6336
+  DUT Parent1     = 6336
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2336
+  DUT Total       = 2336
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6336
+  Child Fitness   = 2336
+  Read Addr1      = f
+  Read Addr2      = 5
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2336)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2336 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=785000: Test 53
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 7a25
+  Child Fitness   = 3a25
+  Read Addr1      = 4
+  Read Addr2      = 9
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 3a25)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3a25 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=805000: Test 55
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = ecfd
+  Child Fitness   = 2cfd
+  Read Addr1      = 2
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2cfd)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2cfd (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=815000: Test 56
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3a2e
+  DUT Total       = 3a2e
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 3a2e
+  Child Fitness   = 3a2e
+  Read Addr1      = c
+  Read Addr2      = 9
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3a2e)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3a2e (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=825000: Test 57
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 2801
+  Child Fitness   = 2801
+  Read Addr1      = c
+  Read Addr2      = 2
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2801)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2801 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=835000: Test 58
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 1056
+  DUT Total       = 1056
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = d056
+  Child Fitness   = 1056
+  Read Addr1      = b
+  Read Addr2      = 6
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 1056)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 1056 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=845000: Test 59
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0398
+  DUT Total       = 0398
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 4398
+  Child Fitness   = 0398
+  Read Addr1      = 8
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 0398)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0398 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=865000: Test 61
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3664
+  DUT Total       = 3664
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 7664
+  Child Fitness   = 3664
+  Read Addr1      = a
+  Read Addr2      = a
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3664)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3664 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=875000: Test 62
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 33d1
+  DUT Total       = 33d1
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = b3d1
+  Child Fitness   = 33d1
+  Read Addr1      = 1
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 33d1)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 33d1 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=915000: Test 66
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 095e
+  DUT Total       = 095e
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = c95e
+  Child Fitness   = 095e
+  Read Addr1      = 8
+  Read Addr2      = 6
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 095e)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 095e (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=925000: Test 67
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = 2346
+  DUT Parent2     = 2346
+  Exp Total       = 2346
+  DUT Total       = 2346
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 2346
+  Child Fitness   = 2346
+  Read Addr1      = a
+  Read Addr2      = f
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2346)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2346 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=975000: Test 72
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 5426
+  Child Fitness   = 1426
+  Read Addr1      = 3
+  Read Addr2      = 4
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 1426)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 1426 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=995000: Test 74
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0615
+  DUT Total       = 0615
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = c615
+  Child Fitness   = 0615
+  Read Addr1      = 6
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 0615)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0615 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1015000: Test 76
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 22c0
+  Child Fitness   = 22c0
+  Read Addr1      = 0
+  Read Addr2      = b
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 22c0)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 22c0 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1045000: Test 79
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2347
+  DUT Total       = 2347
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = a347
+  Child Fitness   = 2347
+  Read Addr1      = d
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2347)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2347 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1075000: Test 82
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 526f
+  Child Fitness   = 126f
+  Read Addr1      = 6
+  Read Addr2      = 8
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 126f)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 126f (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1105000: Test 85
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 25af
+  DUT Total       = 25af
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = e5af
+  Child Fitness   = 25af
+  Read Addr1      = 3
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 25af)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 25af (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1135000: Test 88
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = 57e6
+  DUT Parent2     = 57e6
+  Exp Total       = 17e6
+  DUT Total       = 17e6
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 57e6
+  Child Fitness   = 17e6
+  Read Addr1      = 2
+  Read Addr2      = f
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 17e6)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 17e6 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1175000: Test 92
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 027c
+  DUT Total       = 027c
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 027c
+  Child Fitness   = 027c
+  Read Addr1      = 2
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 027c)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 027c (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1235000: Test 98
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 4c9d
+  Child Fitness   = 0c9d
+  Read Addr1      = 2
+  Read Addr2      = 0
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 0c9d)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 0c9d (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1245000: Test 99
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6d1a
+  Child Fitness   = 2d1a
+  Read Addr1      = 8
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2d1a)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2d1a (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1265000: Test 101
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3fd1
+  DUT Total       = 3fd1
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = bfd1
+  Child Fitness   = 3fd1
+  Read Addr1      = 6
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3fd1)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3fd1 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1275000: Test 102
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = fd5f
+  Child Fitness   = 3d5f
+  Read Addr1      = 6
+  Read Addr2      = 8
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 3d5f)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3d5f (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1285000: Test 103
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 2863
+  DUT Total       = 2863
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6863
+  Child Fitness   = 2863
+  Read Addr1      = b
+  Read Addr2      = a
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 2863)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 2863 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1295000: Test 104
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = de19
+  Child Fitness   = 1e19
+  Read Addr1      = 2
+  Read Addr2      = a
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 1e19)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 1e19 (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1305000: Test 105
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 3a1b
+  DUT Total       = 3a1b
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = fa1b
+  Child Fitness   = 3a1b
+  Read Addr1      = 5
+  Read Addr2      = 3
+  Req Fitness     = 1
+  Req Total       = 1
+  Fitness Out: 
+    [0] = 3fff (Exp: 3a1b)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3fff (Exp: 3fff)
+    [9] = 3fff (Exp: 3fff)
+    [10] = 3fff (Exp: 3fff)
+    [11] = 3fff (Exp: 3fff)
+    [12] = 3fff (Exp: 3fff)
+    [13] = 3fff (Exp: 3fff)
+    [14] = 3fff (Exp: 3fff)
+    [15] = 3a1b (Exp: 3fff)
+  NOTE: If Done mismatch, check if wait was sufficient
+------------------------------------------------------------
+------------------------------------------------------------
+ERROR @Time=1315000: Test 106
+  Exp Parent1     = ffff
+  DUT Parent1     = ffff
+  Exp Parent2     = ffff
+  DUT Parent2     = ffff
+  Exp Total       = 0000
+  DUT Total       = 0000
+  Exp Done        = 0
+  DUT Done        = 0
+  Child In        = 6958
+  Child Fitness   = 2958
+  Read Addr1      = d
+  Read Addr2      = d
+  Req Fitness     = 1
+  Req Total       = 0
+  Fitness Out: 
+    [0] = 3fff (Exp: 2958)
+    [1] = 3fff (Exp: 3fff)
+    [2] = 3fff (Exp: 3fff)
+    [3] = 3fff (Exp: 3fff)
+    [4] = 3fff (Exp: 3fff)
+    [5] = 3fff (Exp: 3fff)
+    [6] = 3fff (Exp: 3fff)
+    [7] = 3fff (Exp: 3fff)
+    [8] = 3ff
