@@ -6,7 +6,7 @@ module ga_top #(
 
     // Derived Parameters
     parameter ADDR_WIDTH = $clog2(POPULATION_SIZE),
-    parameter TOTAL_FIT_WIDTH = FITNESS_WIDTH + ADDR_WIDTH, // Safe width for total fitness
+    parameter TOTAL_FIT_WIDTH = FITNESS_WIDTH + $clog2(POPULATION_SIZE) + 1, // Fixed: Correct width calculation
     parameter LFSR_WIDTH = 16
 )(
     //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -87,21 +87,23 @@ module ga_top #(
     logic [CHROMOSOME_WIDTH-1:0] init_chromosome_in;
     logic [FITNESS_WIDTH-1:0]    init_fitness_in;
 
-
-    // Population Memory connections
+    // Population Memory connections - Fixed signal widths
     logic [CHROMOSOME_WIDTH-1:0] pop_mem_parent1_out, pop_mem_parent2_out;
     logic [FITNESS_WIDTH-1:0]    pop_mem_fitness_values_out [POPULATION_SIZE-1:0];
-    logic [TOTAL_FIT_WIDTH-1:0]  pop_mem_total_fitness_out;
+    logic [TOTAL_FIT_WIDTH-1:0]  pop_mem_total_fitness_out; // Fixed: Use correct width
 
     // LFSR connections
     logic start_lfsrs;
     logic [LFSR_WIDTH-1:0] rand_sel, rand_cross, rand_mut;
 
-    // Counters
+    // Counters and control flags
     logic [ADDR_WIDTH-1:0] init_counter;
     logic [31:0]           perfect_counter_reg;
     logic                  perfect_found_latch;
-
+    
+    // Pipeline control registers - Added for proper synchronization
+    logic                  eval_init_pending, eval_pipe_pending;
+    logic                  selection_valid, crossover_valid, mutation_valid;
 
 //======================================================================
 // Module Instantiations
@@ -113,12 +115,14 @@ module ga_top #(
         .clk(clk), .rst(rst), .start_lfsr(start_lfsrs),
         .load_seed(1'b0), .seed_in('0), .random_out(rand_sel)
     );
+    
     lfsr_SudoRandom #(
         .WIDTH1(LFSR_WIDTH), .defualtSeed1(16'hBEEF)
     ) lfsr_cross_inst (
         .clk(clk), .rst(rst), .start_lfsr(start_lfsrs),
         .load_seed(1'b0), .seed_in('0), .random_out(rand_cross)
     );
+    
     lfsr_SudoRandom #(
         .WIDTH1(LFSR_WIDTH), .defualtSeed1(16'hDEAD)
     ) lfsr_mut_inst (
@@ -128,12 +132,16 @@ module ga_top #(
 
     // --- GA Core Modules ---
     selection #(
-        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), .FITNESS_WIDTH(FITNESS_WIDTH),
-        .POPULATION_SIZE(POPULATION_SIZE), .LFSR_WIDTH(LFSR_WIDTH)
+        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
+        .FITNESS_WIDTH(FITNESS_WIDTH),
+        .POPULATION_SIZE(POPULATION_SIZE), 
+        .LFSR_WIDTH(LFSR_WIDTH)
     ) sel_inst (
-        .clk(clk), .rst(rst), .start_selection(start_select),
+        .clk(clk), 
+        .rst(rst), 
+        .start_selection(start_select),
         .fitness_values(pop_mem_fitness_values_out),
-        .total_fitness(pop_mem_total_fitness_out),
+        .total_fitness(pop_mem_total_fitness_out[FITNESS_WIDTH-1:0]), // Fixed: Use correct bits
         .lfsr_input(rand_sel),
         .selected_index1(p_selected_idx1),
         .selected_index2(p_selected_idx2),
@@ -141,10 +149,14 @@ module ga_top #(
     );
 
     crossover #(
-        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), .LSFR_WIDTH(LFSR_WIDTH)
+        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
+        .LSFR_WIDTH(LFSR_WIDTH)
     ) cross_inst (
-        .clk(clk), .rst(rst), .start_crossover(start_cross),
-        .parent1(p_parent1), .parent2(p_parent2),
+        .clk(clk), 
+        .rst(rst), 
+        .start_crossover(start_cross),
+        .parent1(p_parent1), 
+        .parent2(p_parent2),
         .crossover_mode(crossover_mode),
         .crossover_single_double(crossover_single_double),
         .crossover_Single_point(crossover_single_point),
@@ -158,9 +170,12 @@ module ga_top #(
     );
 
     mutation #(
-        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), .LSFR_WIDTH(LFSR_WIDTH)
+        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
+        .LSFR_WIDTH(LFSR_WIDTH)
     ) mut_inst (
-        .clk(clk), .rst(rst), .start_mutation(start_mutate),
+        .clk(clk), 
+        .rst(rst), 
+        .start_mutation(start_mutate),
         .child_in(p_child_crossed),
         .mutation_mode(mutation_mode),
         .mutation_rate(mutation_rate),
@@ -170,9 +185,11 @@ module ga_top #(
     );
 
     fitness_evaluator #(
-        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), .FITNESS_WIDTH(FITNESS_WIDTH)
+        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
+        .FITNESS_WIDTH(FITNESS_WIDTH)
     ) fit_eval_inst (
-        .clk(clk), .rst(rst),
+        .clk(clk), 
+        .rst(rst),
         .start_evaluation(start_eval_init || start_eval_pipe),
         .chromosome(start_eval_init ? init_chromosome_in : p_child_mutated),
         .fitness(p_child_fitness),
@@ -180,21 +197,25 @@ module ga_top #(
     );
 
     population_memory #(
-        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), .FITNESS_WIDTH(FITNESS_WIDTH),
+        .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
+        .FITNESS_WIDTH(FITNESS_WIDTH),
         .POPULATION_SIZE(POPULATION_SIZE)
     ) pop_mem_inst (
-        .clk(clk), .rst(rst), .start_write(start_pop_write),
+        .clk(clk), 
+        .rst(rst), 
+        .start_write(start_pop_write),
         .child_in(start_eval_init ? init_chromosome_in : p_child_mutated),
         .child_fitness_in(p_child_fitness),
-        .read_addr1(p_selected_idx1), .read_addr2(p_selected_idx2),
+        .read_addr1(p_selected_idx1), 
+        .read_addr2(p_selected_idx2),
         .request_fitness_values(req_fitness),
         .request_total_fitness(req_total_fitness),
-        .parent1_out(pop_mem_parent1_out), .parent2_out(pop_mem_parent2_out),
+        .parent1_out(pop_mem_parent1_out), 
+        .parent2_out(pop_mem_parent2_out),
         .fitness_values_out(pop_mem_fitness_values_out),
         .total_fitness_out(pop_mem_total_fitness_out),
         .write_done(pop_write_done)
     );
-
 
 //======================================================================
 // Main State Machine - Sequential Logic
@@ -219,11 +240,19 @@ module ga_top #(
             perfect_found_latch <= 1'b0;
             p_parent1 <= '0;
             p_parent2 <= '0;
+            
+            // Reset pipeline control flags
+            eval_init_pending <= 1'b0;
+            eval_pipe_pending <= 1'b0;
+            selection_valid <= 1'b0;
+            crossover_valid <= 1'b0;
+            mutation_valid <= 1'b0;
+            
         end else begin
             pipeline_state <= next_pipeline_state;
 
             // Counters update based on state
-            if (state == S_INIT && next_state == S_INIT && pop_write_done) begin
+            if (state == S_INIT && pop_write_done && init_counter < POPULATION_SIZE) begin
                 init_counter <= init_counter + 1;
             end
 
@@ -231,16 +260,33 @@ module ga_top #(
                 iteration_count <= iteration_count + 1;
             end
 
-            // Latch parents when selection is done
-            if (select_done) begin
+            // Latch parents when selection is done - Fixed timing
+            if (select_done && !selection_valid) begin
                 p_parent1 <= pop_mem_parent1_out;
                 p_parent2 <= pop_mem_parent2_out;
+                selection_valid <= 1'b1;
+            end else if (pipeline_state != P_SELECT && pipeline_state != P_CROSSOVER) begin
+                selection_valid <= 1'b0;
             end
+
+            // Pipeline validity tracking
+            if (cross_done) crossover_valid <= 1'b1;
+            else if (pipeline_state != P_CROSSOVER && pipeline_state != P_MUTATION) crossover_valid <= 1'b0;
+            
+            if (mutate_done) mutation_valid <= 1'b1;
+            else if (pipeline_state != P_MUTATION && pipeline_state != P_EVALUATE) mutation_valid <= 1'b0;
+
+            // Evaluation pending flags
+            if (start_eval_init) eval_init_pending <= 1'b1;
+            else if (eval_done && eval_init_pending) eval_init_pending <= 1'b0;
+            
+            if (start_eval_pipe) eval_pipe_pending <= 1'b1;
+            else if (eval_done && eval_pipe_pending) eval_pipe_pending <= 1'b0;
 
             // Latch perfect found status and counter
             if (perfect_found && !perfect_found_latch) begin
                 perfect_found_latch <= 1'b1;
-                perfect_counter_reg <= iteration_count + 1; // +1 because iter count hasn't ticked yet
+                perfect_counter_reg <= iteration_count + 1;
             end
         end
     end
@@ -261,75 +307,93 @@ module ga_top #(
         start_lfsrs = 1'b0;
         req_fitness = 1'b0;
         req_total_fitness = 1'b0;
-        init_chromosome_in = rand_mut; // Default to random for init
+        
+        // Fixed: Proper initialization chromosome handling
+        if (load_initial_population && state == S_INIT) begin
+            init_chromosome_in = data_in; // Use seeded value
+        end else begin
+            init_chromosome_in = rand_mut; // Use random value
+        end
 
         //----------- Main FSM Logic -----------
         case(state)
             S_IDLE: begin
                 if (start_ga) begin
                     next_state = S_INIT;
+                    start_lfsrs = 1'b1; // Start LFSRs immediately
                 end
             end
 
             S_INIT: begin
-                // This state auto-generates a random population
-                // It can be seeded by pulsing `load_initial_population`
-                if (load_initial_population) begin
-                   init_chromosome_in = data_in; // Override random with seed
+                start_lfsrs = 1'b1; // Keep LFSRs running
+                
+                // Fixed: Proper initialization sequence
+                if (!eval_init_pending && !eval_done) begin
+                    start_eval_init = 1'b1; // Start evaluation for current chromosome
+                end else if (eval_done && !pop_write_done) begin
+                    start_pop_write = 1'b1; // Start writing to population
                 end
 
-                start_eval_init = !eval_done && !pop_write_done; // Start eval for a new chromosome
-                start_pop_write = eval_done; // When eval is done, write to memory
-
-                if (init_counter == POPULATION_SIZE - 1 && pop_write_done) begin
+                // Transition when all chromosomes are initialized
+                if (init_counter >= POPULATION_SIZE - 1 && pop_write_done) begin
                     next_state = S_RUNNING;
-                    next_pipeline_state = P_SELECT; // Kick off the pipeline
+                    next_pipeline_state = P_SELECT;
                 end
             end
 
             S_RUNNING: begin
                 start_lfsrs = 1'b1; // Keep LFSRs running
-                req_fitness = 1'b1;
-                req_total_fitness = 1'b1;
+                req_fitness = 1'b1;  // Always request fitness values
+                req_total_fitness = 1'b1; // Always request total fitness
 
                 //----------- Pipeline FSM Logic -----------
                 case(pipeline_state)
                     P_SELECT: begin
-                        start_select = 1'b1;
-                        if (select_done) begin
+                        if (!select_done) begin
+                            start_select = 1'b1;
+                        end else if (select_done && selection_valid) begin
                             next_pipeline_state = P_CROSSOVER;
                         end
                     end
+                    
                     P_CROSSOVER: begin
-                        start_cross = 1'b1;
-                        if (cross_done) begin
+                        if (!cross_done && selection_valid) begin
+                            start_cross = 1'b1;
+                        end else if (cross_done && crossover_valid) begin
                             next_pipeline_state = P_MUTATION;
                         end
                     end
+                    
                     P_MUTATION: begin
-                        start_mutate = 1'b1;
-                        if (mutate_done) begin
+                        if (!mutate_done && crossover_valid) begin
+                            start_mutate = 1'b1;
+                        end else if (mutate_done && mutation_valid) begin
                             next_pipeline_state = P_EVALUATE;
                         end
                     end
+                    
                     P_EVALUATE: begin
-                        start_eval_pipe = 1'b1;
-                        if (eval_done) begin
+                        if (!eval_pipe_pending && !eval_done && mutation_valid) begin
+                            start_eval_pipe = 1'b1;
+                        end else if (eval_done && eval_pipe_pending) begin
                             next_pipeline_state = P_UPDATE;
                         end
                     end
+                    
                     P_UPDATE: begin
-                        start_pop_write = 1'b1;
-                        if (pop_write_done) begin
+                        if (!pop_write_done) begin
+                            start_pop_write = 1'b1;
+                        end else if (pop_write_done) begin
                             // Check termination conditions
-                            if (iteration_count >= target_iteration -1 || perfect_found) begin
+                            if (iteration_count >= target_iteration - 1 || perfect_found) begin
                                 next_state = S_DONE;
                                 next_pipeline_state = P_IDLE;
                             end else begin
-                                next_pipeline_state = P_SELECT; // Loop back
+                                next_pipeline_state = P_SELECT; // Continue to next generation
                             end
                         end
                     end
+                    
                     default: next_pipeline_state = P_IDLE;
                 endcase
             end
@@ -361,4 +425,3 @@ module ga_top #(
     assign number_of_chromosomes = POPULATION_SIZE[ADDR_WIDTH-1:0];
 
 endmodule
-
