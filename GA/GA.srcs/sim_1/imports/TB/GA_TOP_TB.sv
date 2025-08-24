@@ -150,12 +150,16 @@ module ga_top_tb;
 
             // --- Robust synchronization loop for loading initial population ---
             for (i = 0; i < 16; i = i + 1) begin
+                // Fixed: Wait for DUT ready (state INIT and counter == i), plus extra cycle for stability
                 wait (DUT.state == DUT.S_INIT && DUT.init_counter == i);
+                @(posedge CLK);  // Wait one more cycle to ensure stability
+                intf.data_in = population_mem[i];  // Set data_in first
+                @(posedge CLK);  // Allow DUT to see data_in
+                intf.load_initial_population = 1'b1;
                 @(posedge CLK);
-                intf.data_in <= population_mem[i];
-                intf.load_initial_population <= 1'b1;
-                @(posedge CLK);
-                intf.load_initial_population <= 1'b0;
+                intf.load_initial_population = 1'b0;
+                // Wait for write completion before next
+                wait (DUT.pop_write_done);
             end
 
             // Wait for the simulation to complete.
