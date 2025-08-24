@@ -29,8 +29,9 @@ module mutation #(
     output logic                               mutation_done;
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-    // Internal signals
-    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] temp_child;
+    // Internal signals (module-level for comb and reg separation)
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] temp_child;  // Retained as reg (if needed; appears unused but kept for compatibility)
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] comb_child;  // New: combinatorial next-state for child_out/temp_child
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] flip_mask;
     (* keep = "true" *) logic [3:0]                 swap_pos1, swap_pos2;
     (* keep = "true" *) logic [3:0]                 inv_start, inv_end;
@@ -38,7 +39,7 @@ module mutation #(
     (* keep = "true" *) logic [3:0]                 sorted_start, sorted_end;
 
     // =========================
-    // Combinational preparation
+    // Combinational preparation (existing always_comb retained)
     // =========================
     always_comb begin
         // Slice LSFR for random values (adjusted for 16-bit LSFR; reuse/overlap bits to fit all needs)
@@ -57,156 +58,140 @@ module mutation #(
     end
 
     // =========================
-    // Main mutation process
+    // Combinational mutation logic (moved from always_ff to always_comb for pure comb computation)
+    // =========================
+    always_comb begin
+        // Local variables for comb block (no inference of regs here)
+        logic temp_bit;  // Local temp for swaps
+        logic [3:0] local_swap_pos1;  // Local copy for modifications
+        logic [3:0] local_swap_pos2;  // Local copy for modifications
+
+        // Default: no mutation (pass through child_in)
+        comb_child = child_in;
+
+        // Only compute mutation if start_mutation is active (gate the entire comb logic)
+        // Note: This ensures comb_child is always defined, but actual registration happens in always_ff only on start
+        if (start_mutation) begin
+            // Probabilistic check: mutation occurs only if LSFR_input[7:0] < mutation_rate
+            if (LSFR_input[7:0] < mutation_rate) begin
+                case (mutation_mode)
+                    // Bit-Flip mutation
+                    3'b000: begin
+                        for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
+                            if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 4)) begin
+                                comb_child[i] = ~comb_child[i];
+                            end
+                        end
+                    end
+                    // Bit-Swap Mutation
+                    3'b001: begin
+                        local_swap_pos1 = swap_pos1;
+                        local_swap_pos2 = swap_pos2;
+                        if (local_swap_pos1 == local_swap_pos2) begin
+                            local_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);
+                            local_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH);
+                            if (local_swap_pos1 != local_swap_pos2) begin
+                                temp_bit = comb_child[local_swap_pos1];
+                                comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                                comb_child[local_swap_pos2] = temp_bit;
+                            end
+                        end else begin
+                            temp_bit = comb_child[local_swap_pos1];
+                            comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                            comb_child[local_swap_pos2] = temp_bit;
+                        end
+                        // Extra swap if high rate
+                        if (mutation_rate > LSFR_input[15:8]) begin
+                            local_swap_pos1 = (local_swap_pos1 + 1) % CHROMOSOME_WIDTH;
+                            local_swap_pos2 = (local_swap_pos2 + 2) % CHROMOSOME_WIDTH;
+                            if (local_swap_pos1 == local_swap_pos2) begin
+                                local_swap_pos1 = (local_swap_pos1 + 3) % CHROMOSOME_WIDTH;
+                                local_swap_pos2 = (local_swap_pos2 + 4) % CHROMOSOME_WIDTH;
+                                if (local_swap_pos1 != local_swap_pos2) begin
+                                    temp_bit = comb_child[local_swap_pos1];
+                                    comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                                    comb_child[local_swap_pos2] = temp_bit;
+                                end
+                            end else begin
+                                temp_bit = comb_child[local_swap_pos1];
+                                comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                                comb_child[local_swap_pos2] = temp_bit;
+                            end
+                        end
+                    end
+                    // Inversion Mutation
+                    3'b010: begin
+                        if (sorted_start != sorted_end && (sorted_end - sorted_start >= 1)) begin
+                            for (int i = 0; i < (sorted_end - sorted_start + 1)/2; i++) begin
+                                temp_bit = comb_child[sorted_start + i];
+                                comb_child[sorted_start + i] = comb_child[sorted_end - i];
+                                comb_child[sorted_end - i] = temp_bit;
+                            end
+                        end
+                    end
+                    // Scramble Mutation
+                    3'b011: begin
+                        comb_child = child_in ^ scramble_mask;
+                        if (mutation_rate > 64) begin
+                            for (int i = 0; i < 2; i++) begin
+                                local_swap_pos1 = (LSFR_input[(i*4) % 16 +: 4]) % CHROMOSOME_WIDTH;
+                                local_swap_pos2 = (LSFR_input[(i*4 + 4) % 16 +: 4]) % CHROMOSOME_WIDTH;
+                                if (local_swap_pos1 == local_swap_pos2) begin
+                                    local_swap_pos2 = (local_swap_pos2 + 1) % CHROMOSOME_WIDTH;
+                                end
+                                if (local_swap_pos1 != local_swap_pos2) begin
+                                    temp_bit = comb_child[local_swap_pos1];
+                                    comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                                    comb_child[local_swap_pos2] = temp_bit;
+                                end
+                            end
+                        end
+                    end
+                    // Combined: Bit-Flip + Bit-Swap
+                    3'b100: begin
+                        for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
+                            if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 5)) begin
+                                comb_child[i] = ~comb_child[i];
+                            end
+                        end
+                        local_swap_pos1 = swap_pos1;
+                        local_swap_pos2 = swap_pos2;
+                        if (local_swap_pos1 == local_swap_pos2) begin
+                            local_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);
+                            local_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH);
+                        end
+                        if (local_swap_pos1 != local_swap_pos2) begin
+                            temp_bit = comb_child[local_swap_pos1];
+                            comb_child[local_swap_pos1] = comb_child[local_swap_pos2];
+                            comb_child[local_swap_pos2] = temp_bit;
+                        end
+                    end
+                    // Default: No mutation (already set)
+                    default: begin
+                        comb_child = child_in;
+                    end
+                endcase
+            end else begin
+                comb_child = child_in;
+            end
+        end
+    end
+
+    // =========================
+    // Registered outputs (simplified always_ff with explicit handling)
     // =========================
     (* use_dsp = "no" *)
     always_ff @(posedge clk or posedge rst) begin
-        (* keep = "true" *) logic temp_bit;  // Local to avoid unused reg warning (moved to top of block)
-        (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] next_temp_child;  // Combinatorial next-state for temp_child
-        (* keep = "true" *) logic [3:0] local_swap_pos1;  // Local copy to avoid driving comb signal (moved to top)
-        (* keep = "true" *) logic [3:0] local_swap_pos2;  // Local copy to avoid driving comb signal (moved to top)
-        (* keep = "true" *) logic [LSFR_WIDTH-1:0] local_lsfr_input;  // Local copy to avoid multi-drive on input (e.g., bit[7])
-
         if (rst) begin
-            child_out      <= '0;
-            mutation_done  <= 1'b0;
-            temp_child     <= '0;  // Explicit reset for temp_child
-        end else begin
-            // Default: reset done (priority over set)
+            child_out     <= '0;
             mutation_done <= 1'b0;
-
-            // Local copy of input to avoid multi-drive warnings
-            local_lsfr_input = LSFR_input;
-
+            temp_child    <= '0;  // Explicit reset
+        end else begin
+            mutation_done <= 1'b0;  // Default reset (priority)
             if (start_mutation) begin
-                // Initialize next state
-                next_temp_child = child_in;  // start with input
-                // Probabilistic check for all modes: mutation occurs only if local_lsfr_input[7:0] < mutation_rate
-                // This makes every mode probabilistic with probability ~ (mutation_rate / 256)
-                if (local_lsfr_input[7:0] < mutation_rate) begin
-                    case (mutation_mode)
-                        // Bit-Flip mutation (already per-bit probabilistic, but wrapped in global prob)
-                        3'b000: begin
-                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
-                                // Per-bit: use 4-bit slices from flip_mask for finer randomness (adjusted for 16-bit)
-                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 4)) begin  // Adjusted threshold for intensity
-                                    next_temp_child[i] = ~next_temp_child[i];
-                                end
-                            end
-                        end
-                        // Bit-Swap Mutation (now probabilistic overall) - MODIFIED for consistency and safety
-                        3'b001: begin
-                            local_swap_pos1 = swap_pos1;
-                            local_swap_pos2 = swap_pos2;
-                            // Edge case handler: if swap_pos1 == swap_pos2, regenerate positions using shifted LSFR bits
-                            if (local_swap_pos1 == local_swap_pos2) begin
-                                local_swap_pos1 = (local_lsfr_input[11:8] % CHROMOSOME_WIDTH);  // Regenerate pos1
-                                local_swap_pos2 = (local_lsfr_input[15:12] % CHROMOSOME_WIDTH); // Regenerate pos2
-                                // If still equal (rare), skip to avoid no-op
-                                if (local_swap_pos1 == local_swap_pos2) begin
-                                    // Do nothing (edge case: no swap possible)
-                                end else begin
-                                    temp_bit = next_temp_child[local_swap_pos1];  // Use temp_bit for safe swap (consistent with temp_child)
-                                    next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                    next_temp_child[local_swap_pos2] = temp_bit;
-                                end
-                            end else begin
-                                // Normal swap
-                                temp_bit = next_temp_child[local_swap_pos1];  // Use temp_bit
-                                next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                next_temp_child[local_swap_pos2] = temp_bit;
-                            end
-                            // Extra swap if high rate (with edge handler)
-                            if (mutation_rate > local_lsfr_input[15:8]) begin
-                                local_swap_pos1 = (local_swap_pos1 + 1) % CHROMOSOME_WIDTH;
-                                local_swap_pos2 = (local_swap_pos2 + 2) % CHROMOSOME_WIDTH;
-                                if (local_swap_pos1 == local_swap_pos2) begin
-                                    // Edge handler: shift again to avoid equality
-                                    local_swap_pos1 = (local_swap_pos1 + 3) % CHROMOSOME_WIDTH;
-                                    local_swap_pos2 = (local_swap_pos2 + 4) % CHROMOSOME_WIDTH;
-                                    if (local_swap_pos1 == local_swap_pos2) begin
-                                        // Do nothing (edge case handler)
-                                    end else begin
-                                        temp_bit = next_temp_child[local_swap_pos1];
-                                        next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                        next_temp_child[local_swap_pos2] = temp_bit;
-                                    end
-                                end else begin
-                                    // normal
-                                    temp_bit = next_temp_child[local_swap_pos1];
-                                    next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                    next_temp_child[local_swap_pos2] = temp_bit;
-                                end
-                            end
-                        end
-                        // Inversion Mutation (now probabilistic) - MODIFIED with temp_bit for consistency
-                        3'b010: begin
-                            // Edge case handler: if sorted_start == sorted_end (length 0 or 1), skip inversion
-                            if (sorted_start != sorted_end && (sorted_end - sorted_start >= 1)) begin
-                                for (int i = 0; i < (sorted_end - sorted_start + 1)/2; i++) begin
-                                    temp_bit = next_temp_child[sorted_start + i];
-                                    next_temp_child[sorted_start + i] = next_temp_child[sorted_end - i];
-                                    next_temp_child[sorted_end - i] = temp_bit;
-                                end
-                            end else begin
-                                // Do nothing for single-bit or zero-length (edge case)
-                            end
-                        end
-                        // Scramble Mutation (now probabilistic) - MODIFIED with temp_bit for swaps
-                        3'b011: begin
-                            // Simple scramble: XOR with mask
-                            next_temp_child = child_in ^ scramble_mask;
-                            // Add limited swaps for shuffling (e.g., 2 swaps) if rate high
-                            if (mutation_rate > 64) begin
-                                for (int i = 0; i < 2; i++) begin
-                                    local_swap_pos1 = (local_lsfr_input[(i*4) % 16 +: 4]) % CHROMOSOME_WIDTH;  // Adjusted slicing for 16-bit
-                                    local_swap_pos2 = (local_lsfr_input[(i*4 + 4) % 16 +: 4]) % CHROMOSOME_WIDTH;
-                                    // Edge case handler: if equal, shift pos2 by 1
-                                    if (local_swap_pos1 == local_swap_pos2) begin
-                                        local_swap_pos2 = (local_swap_pos2 + 1) % CHROMOSOME_WIDTH;
-                                    end
-                                    if (local_swap_pos1 != local_swap_pos2) begin
-                                        temp_bit = next_temp_child[local_swap_pos1];
-                                        next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                        next_temp_child[local_swap_pos2] = temp_bit;
-                                    end
-                                end
-                            end
-                        end
-                        // Combined: Bit-Flip + Bit-Swap (now probabilistic overall) - MODIFIED with temp_bit
-                        3'b100: begin
-                            // First apply Bit-Flip with half rate
-                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
-                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 5)) begin  // Adjusted for finer control
-                                    next_temp_child[i] = ~next_temp_child[i];
-                                end
-                            end
-                            // Then apply Bit-Swap with edge handler
-                            local_swap_pos1 = swap_pos1;
-                            local_swap_pos2 = swap_pos2;
-                            if (local_swap_pos1 == local_swap_pos2) begin
-                                local_swap_pos1 = (local_lsfr_input[11:8] % CHROMOSOME_WIDTH);
-                                local_swap_pos2 = (local_lsfr_input[15:12] % CHROMOSOME_WIDTH);
-                            end
-                            if (local_swap_pos1 != local_swap_pos2) begin
-                                temp_bit = next_temp_child[local_swap_pos1];
-                                next_temp_child[local_swap_pos1] = next_temp_child[local_swap_pos2];
-                                next_temp_child[local_swap_pos2] = temp_bit;
-                            end
-                        end
-                        // Default: No mutation
-                        default: begin
-                            next_temp_child = child_in;
-                        end
-                    endcase
-                end else begin
-                    // If probabilistic check fails, no mutation
-                    next_temp_child = child_in;
-                end
-                // Assign next state (non-blocking)
-                temp_child    <= next_temp_child;
-                child_out     <= next_temp_child;
-                mutation_done <= 1'b1;  // Set only on completion (after default reset)
+                child_out     <= comb_child;
+                temp_child    <= comb_child;  // Retained (though appears unused)
+                mutation_done <= 1'b1;  // Set on completion
             end
         end
     end

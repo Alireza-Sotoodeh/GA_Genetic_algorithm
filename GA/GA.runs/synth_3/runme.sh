@@ -40,4 +40,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log selection.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source selection.tcl
+EAStep vivado -log mutation.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source mutation.tcl

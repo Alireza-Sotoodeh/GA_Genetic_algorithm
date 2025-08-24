@@ -1,388 +1,139 @@
 Vivado Simulator 2019.2
 Time resolution is 1 ps
+PASS: Reset test          16 handled correctly (done=0)
+PASS: child_out reset correctly
 ------------------------------------------------------------
-ERROR @Time=167000: Test 8
-  Exp Parent1     = 0002
-  DUT Parent1     = 0002
-  Exp Parent2     = 0003
-  DUT Parent2     = 0003
-  Exp Total       = 2000
-  DUT Total       = 2000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = dddd
-  Child Fitness   = 0001
-  Read Addr1      = 0
-  Read Addr2      = 1
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3ffd (Exp: 0001)
-    [1] = 3ffc (Exp: 3ff0)
-    [2] = 3ffb (Exp: 3ff1)
-    [3] = 3ffa (Exp: 3ff2)
-    [4] = 3ffa (Exp: 3ff3)
-    [5] = 3ff9 (Exp: 3ff4)
-    [6] = 3ff8 (Exp: 3ff5)
-    [7] = 3ff7 (Exp: 3ff6)
-    [8] = 3ff6 (Exp: 3ff7)
-    [9] = 3ff5 (Exp: 3ff8)
-    [10] = 3ff4 (Exp: 3ff9)
-    [11] = 3ff3 (Exp: 3ffa)
-    [12] = 3ff2 (Exp: 3ffa)
-    [13] = 3ff1 (Exp: 3ffb)
-    [14] = 3ff0 (Exp: 3ffc)
-    [15] = 0001 (Exp: 3ffd)
-  NOTE: If Done mismatch, check if wait was sufficient
-------------------------------------------------------------
----------------- STARTING RANDOM TESTS ----------------
-------------------------------------------------------------
-ERROR @Time=321000: Test 12
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 134c
-  DUT Total       = 134c
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 934c
-  Child Fitness   = 134c
-  Read Addr1      = c
-  Read Addr2      = c
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3fff (Exp: 134c)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 134c (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 17: Mode=10, child_in=0xce7a, mutation_rate=201, LSFR_input=0xc53e, mutation_done=1
+Expected child_out=0xd9da, but got 0xce7a
+Details: Probabilistic check passed (LSFR[7:0]=62  < rate=201)
+Inversion: sorted_start=5, sorted_end=12
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=325000: Test 13
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 134c
-  DUT Total       = 134c
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 934c
-  Child Fitness   = 134c
-  Read Addr1      = 3
-  Read Addr2      = 9
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3fff (Exp: 134c)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 134c (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 32: Mode=1, child_in=0x6378, mutation_rate=210, LSFR_input=0x446b, mutation_done=1
+Expected child_out=0x7a38, but got 0x6378
+Details: Probabilistic check passed (LSFR[7:0]=107  < rate=210)
+Bit-Swap: pos1=11, pos2=6
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=373000: Test 19
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0000
-  DUT Total       = 0000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 37ef
-  Child Fitness   = 37ef
-  Read Addr1      = 6
-  Read Addr2      = 6
-  Req Fitness     = 1
-  Req Total       = 0
-  Fitness Out: 
-    [0] = 3fff (Exp: 37ef)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 37ef (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 34: Mode=0, child_in=0x9244, mutation_rate=212, LSFR_input=0x315a, mutation_done=1
+Expected child_out=0x6dbb, but got 0x9244
+Details: Probabilistic check passed (LSFR[7:0]=90  < rate=212)
+Bit-Flip: flip_mask=0x315a
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=475000: Test 31
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0000
-  DUT Total       = 0000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = e9f3
-  Child Fitness   = 29f3
-  Read Addr1      = d
-  Read Addr2      = 4
-  Req Fitness     = 1
-  Req Total       = 0
-  Fitness Out: 
-    [0] = 3fff (Exp: 29f3)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 29f3 (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 36: Mode=100, child_in=0x9b49, mutation_rate=173, LSFR_input=0xfc32, mutation_done=1
+Expected child_out=0xa876, but got 0x9b49
+Details: Probabilistic check passed (LSFR[7:0]=50  < rate=173)
+Combined: flip_mask=0xfc32, pos1=2, pos2=3
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=533000: Test 38
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0000
-  DUT Total       = 0000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 72e6
-  Child Fitness   = 32e6
-  Read Addr1      = d
-  Read Addr2      = 9
-  Req Fitness     = 1
-  Req Total       = 0
-  Fitness Out: 
-    [0] = 3fff (Exp: 32e6)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 32e6 (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 42: Mode=11, child_in=0x0dab, mutation_rate=135, LSFR_input=0x912d, mutation_done=1
+Expected child_out=0xbc84, but got 0x0dab
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=135)
+Scramble: mask=0x912d
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=551000: Test 41
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0000
-  DUT Total       = 0000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 3443
-  Child Fitness   = 3443
-  Read Addr1      = 3
-  Read Addr2      = 8
-  Req Fitness     = 1
-  Req Total       = 0
-  Fitness Out: 
-    [0] = 3fff (Exp: 3443)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 3443 (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 43: Mode=11, child_in=0x7d3b, mutation_rate=228, LSFR_input=0xd9b6, mutation_done=1
+Expected child_out=0xa48d, but got 0x7d3b
+Details: Probabilistic check passed (LSFR[7:0]=182  < rate=228)
+Scramble: mask=0xd9b6
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=589000: Test 46
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 06d6
-  DUT Total       = 06d6
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = c6d6
-  Child Fitness   = 06d6
-  Read Addr1      = 6
-  Read Addr2      = 0
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3fff (Exp: 06d6)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 06d6 (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 61: Mode=11, child_in=0x7c81, mutation_rate=73, LSFR_input=0xb844, mutation_done=1
+Expected child_out=0xc4c5, but got 0x7c81
+Details: Probabilistic check passed (LSFR[7:0]=68  < rate=73)
+Scramble: mask=0xb844
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=963000: Test 87
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 2dce
-  DUT Total       = 2dce
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = adce
-  Child Fitness   = 2dce
-  Read Addr1      = 3
-  Read Addr2      = 1
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3fff (Exp: 2dce)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 2dce (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 67: Mode=0, child_in=0xa699, mutation_rate=135, LSFR_input=0xb94c, mutation_done=1
+Expected child_out=0x84bb, but got 0xa699
+Details: Probabilistic check passed (LSFR[7:0]=76  < rate=135)
+Bit-Flip: flip_mask=0xb94c
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=971000: Test 89
-  Exp Parent1     = adce
-  DUT Parent1     = adce
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0000
-  DUT Total       = 0000
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = adce
-  Child Fitness   = 2dce
-  Read Addr1      = f
-  Read Addr2      = 6
-  Req Fitness     = 1
-  Req Total       = 0
-  Fitness Out: 
-    [0] = 3fff (Exp: 2dce)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 2dce (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 69: Mode=0, child_in=0x8392, mutation_rate=164, LSFR_input=0x3f75, mutation_done=1
+Expected child_out=0x3829, but got 0x8392
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=164)
+Bit-Flip: flip_mask=0x3f75
 ------------------------------------------------------------
 ------------------------------------------------------------
-ERROR @Time=995000: Test 92
-  Exp Parent1     = ffff
-  DUT Parent1     = ffff
-  Exp Parent2     = ffff
-  DUT Parent2     = ffff
-  Exp Total       = 0d5b
-  DUT Total       = 0d5b
-  Exp Done        = 0
-  DUT Done        = 0
-  Child In        = 0d5b
-  Child Fitness   = 0d5b
-  Read Addr1      = b
-  Read Addr2      = 6
-  Req Fitness     = 1
-  Req Total       = 1
-  Fitness Out: 
-    [0] = 3fff (Exp: 0d5b)
-    [1] = 3fff (Exp: 3fff)
-    [2] = 3fff (Exp: 3fff)
-    [3] = 3fff (Exp: 3fff)
-    [4] = 3fff (Exp: 3fff)
-    [5] = 3fff (Exp: 3fff)
-    [6] = 3fff (Exp: 3fff)
-    [7] = 3fff (Exp: 3fff)
-    [8] = 3fff (Exp: 3fff)
-    [9] = 3fff (Exp: 3fff)
-    [10] = 3fff (Exp: 3fff)
-    [11] = 3fff (Exp: 3fff)
-    [12] = 3fff (Exp: 3fff)
-    [13] = 3fff (Exp: 3fff)
-    [14] = 3fff (Exp: 3fff)
-    [15] = 0d5b (Exp: 3fff)
-  NOTE: If Done mismatch, check if wait was sufficient
+>>>ERROR!! test 70: Mode=100, child_in=0x8219, mutation_rate=243, LSFR_input=0x8f9e, mutation_done=1
+Expected child_out=0xc019, but got 0x8219
+Details: Probabilistic check passed (LSFR[7:0]=158  < rate=243)
+Combined: flip_mask=0x8f9e, pos1=14, pos2=9
 ------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 72: Mode=0, child_in=0xa679, mutation_rate=144, LSFR_input=0xd201, mutation_done=1
+Expected child_out=0xd10e, but got 0xa679
+Details: Probabilistic check passed (LSFR[7:0]=1  < rate=144)
+Bit-Flip: flip_mask=0xd201
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 75: Mode=10, child_in=0x93d8, mutation_rate=107, LSFR_input=0x1314, mutation_done=1
+Expected child_out=0x93d2, but got 0x93d8
+Details: Probabilistic check passed (LSFR[7:0]=20  < rate=107)
+Inversion: sorted_start=1, sorted_end=3
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 79: Mode=0, child_in=0xdb6a, mutation_rate=210, LSFR_input=0x3a47, mutation_done=1
+Expected child_out=0x2495, but got 0xdb6a
+Details: Probabilistic check passed (LSFR[7:0]=71  < rate=210)
+Bit-Flip: flip_mask=0x3a47
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 80: Mode=1, child_in=0x899e, mutation_rate=189, LSFR_input=0x8c07, mutation_done=1
+Expected child_out=0x891f, but got 0x899e
+Details: Probabilistic check passed (LSFR[7:0]=7  < rate=189)
+Bit-Swap: pos1=7, pos2=0
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 81: Mode=11, child_in=0x1b35, mutation_rate=141, LSFR_input=0xc703, mutation_done=1
+Expected child_out=0xdc36, but got 0x1b35
+Details: Probabilistic check passed (LSFR[7:0]=3  < rate=141)
+Scramble: mask=0xc703
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 85: Mode=100, child_in=0x7100, mutation_rate=195, LSFR_input=0xa32d, mutation_done=1
+Expected child_out=0x3762, but got 0x7100
+Details: Probabilistic check passed (LSFR[7:0]=45  < rate=195)
+Combined: flip_mask=0xa32d, pos1=13, pos2=2
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 88: Mode=0, child_in=0x8f60, mutation_rate=213, LSFR_input=0xf838, mutation_done=1
+Expected child_out=0xf817, but got 0x8f60
+Details: Probabilistic check passed (LSFR[7:0]=56  < rate=213)
+Bit-Flip: flip_mask=0xf838
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 94: Mode=11, child_in=0x6778, mutation_rate=118, LSFR_input=0x604d, mutation_done=1
+Expected child_out=0x2734, but got 0x6778
+Details: Probabilistic check passed (LSFR[7:0]=77  < rate=118)
+Scramble: mask=0x604d
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 95: Mode=10, child_in=0x168e, mutation_rate=78, LSFR_input=0x3026, mutation_done=1
+Expected child_out=0x1687, but got 0x168e
+Details: Probabilistic check passed (LSFR[7:0]=38  < rate=78)
+Inversion: sorted_start=0, sorted_end=3
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 101: Mode=0, child_in=0xb1a3, mutation_rate=190, LSFR_input=0x5c3d, mutation_done=1
+Expected child_out=0x1b09, but got 0xb1a3
+Details: Probabilistic check passed (LSFR[7:0]=61  < rate=190)
+Bit-Flip: flip_mask=0x5c3d
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 103: Mode=0, child_in=0x1ec1, mutation_rate=100, LSFR_input=0xf64d, mutation_done=1
+Expected child_out=0x3ce3, but got 0x1ec1
+Details: Probabilistic check passed (LSFR[7:0]=77  < rate=100)
+Bit-Flip: flip_mask=0xf64d
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 105: Mode=10, child_in=0x6624, mutation_rate=146, LSFR_input=0x4c75, mutation_done=1
+Expected child_out=0x68c4, but got 0x6624
+Details: Probabilistic check passed (LSFR[7:0]=117  < rate=146)
+Inversion: sorted_start=4, sorted_end=12
+------------------------------------------------------------
+------------------------------------------------------------
+>>>ERROR!! test 108: Mode=0, child_in=0xf845, mutation_rate=144, LSFR_input=0x982c, mutation_done=1
+Expected child_out=0x9e23, but got 0x

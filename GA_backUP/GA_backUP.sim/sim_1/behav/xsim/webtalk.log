@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# Webtalk v2019.2 (64-bit)
+# SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
+# IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+# Start of session at: Sun Aug 24 15:21:52 2025
+# Process ID: 6404
+# Current directory: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA_backUP/GA_backUP.sim/sim_1/behav/xsim
+# Command line: wbtcv.exe -mode batch -source D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA_backUP/GA_backUP.sim/sim_1/behav/xsim/xsim.dir/mutation_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA_backUP/GA_backUP.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA_backUP/GA_backUP.sim/sim_1/behav/xsim\webtalk.jou
+#-----------------------------------------------------------
+source D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA_backUP/GA_backUP.sim/sim_1/behav/xsim/xsim.dir/mutation_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Sun Aug 24 15:21:53 2025...

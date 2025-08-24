@@ -1,0 +1,551 @@
+GA setting initial:
+crossover_mode          = xx
+crossover_single_double = x
+crossover_single_point  = x
+crossover_double_point1 = x
+crossover_double_point2 = x
+uniform_crossover_mask  = 0xxxxx
+uniform_random_enable   = x
+mutation_mode           = x
+mutation_rate           = x
+target_iteration        = x
+---------------------------------------------------
+stage0 done : (iteration 0)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage1 done : (iteration 1)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage2 done : (iteration 2)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage3 done : (iteration 3)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage4 done : (iteration 4)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage5 done : (iteration 5)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage6 done : (iteration 6)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage7 done : (iteration 7)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage8 done : (iteration 8)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage9 done : (iteration 9)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage10 done : (iteration 10)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage11 done : (iteration 11)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage12 done : (iteration 12)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage13 done : (iteration 13)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage14 done : (iteration 14)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage15 done : (iteration 15)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage16 done : (iteration 16)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage17 done : (iteration 17)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage18 done : (iteration 18)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
+---------------------------------------------------
+stage19 done : (iteration 19)
+Population memory:
+ idx 0: chr=0x48fd fit=9
+ idx 1: chr=0xxxxx fit=9
+ idx 2: chr=0x0 fit=0
+ idx 3: chr=0x0 fit=0
+ idx 4: chr=0x0 fit=0
+ idx 5: chr=0x0 fit=0
+ idx 6: chr=0x0 fit=0
+ idx 7: chr=0x0 fit=0
+ idx 8: chr=0x0 fit=0
+ idx 9: chr=0x0 fit=0
+ idx 10: chr=0x0 fit=0
+ idx 11: chr=0x0 fit=0
+ idx 12: chr=0x0 fit=0
+ idx 13: chr=0x0 fit=0
+ idx 14: chr=0x0 fit=0
+ idx 15: chr=0xxxxx fit=x
+Total fitness: x
+load_initial_population = 0
+data_in = 0xxxxx
+selected parent1 idx=0 chr=0x48fd
+selected parent2 idx=1 chr=0xxxxx
+output crossover = 0xxxxx
+child after mutation = 0xxxxx
+child fitness = x
