@@ -1205,7 +1205,6 @@ module mutation #(
     end
 
 endmodule
-
 ```
 
 log error in simulation:
@@ -1316,7 +1315,6 @@ In `mutation_TB.sv`, the golden model (`check_result`) was updated to mirror DUT
 
 Validation involved 16 manual tests and configurable random iterations (e.g., 100), confirming zero errors post-fixes with perfect DUT-TB alignment. The changes improved robustness, coverage, and consistency while preserving structure, making the module reliable for GA use. Final line counts: `mutation.sv` ~200 lines; `mutation_TB.sv` ~526 lines.
 
-
 ### synthesis
 
 clk 5ns
@@ -1335,12 +1333,9 @@ RTL
 
 ![Screenshot 2025-08-22 173057.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a8525fc93741f638c93d1b39a5b768cffbaa3e0d.png)
 
-
-
 ## selection
 
 ```v
-
 ------------------------------------------------------------
 ERROR @Time=683000: Test 114
   Exp Parent      = f
@@ -1371,11 +1366,14 @@ ERROR @Time=683000: Test 114
     [15] = 0ab2
 ------------------------------------------------------------
 Test finished. Ran 114 tests, errors = 114
-
 ```
 
 # existing Problems
 
-- [ ]  crossover simulation 1 error
+- [ ] crossover simulation 1 error
 
-- [ ]  fitness evaluator simulation error : right values but wrong error counting 
+- [ ] fitness evaluator simulation error : right values but wrong error counting   
+
+- [ ] population testbench bug should be fixed !
+
+ 
