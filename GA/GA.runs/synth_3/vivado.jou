@@ -2,11 +2,11 @@
 # Vivado v2019.2 (64-bit)
 # SW Build 2700185 on Thu Oct 24 18:46:05 MDT 2019
 # IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
-# Start of session at: Sun Aug 24 14:48:35 2025
-# Process ID: 15200
+# Start of session at: Sun Aug 24 15:54:02 2025
+# Process ID: 19100
 # Current directory: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3
-# Command line: vivado.exe -log mutation.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source mutation.tcl
-# Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3/mutation.vds
+# Command line: vivado.exe -log ga_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ga_top.tcl
+# Log file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3/ga_top.vds
 # Journal file: D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_3\vivado.jou
 #-----------------------------------------------------------
-source mutation.tcl -notrace
+source ga_top.tcl -notrace
