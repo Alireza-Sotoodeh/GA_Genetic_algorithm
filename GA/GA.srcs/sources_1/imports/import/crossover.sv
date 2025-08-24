@@ -1,7 +1,7 @@
 (* keep_hierarchy = "yes" *)
 module crossover #(
 	parameter CHROMOSOME_WIDTH = 16,
-	parameter LSFR_WIDTH = 16
+	parameter LFSR_WIDTH = 16
 )(
     clk,
     rst,
@@ -10,12 +10,12 @@ module crossover #(
     parent2,
     crossover_mode,
     crossover_single_double,
-    crossover_Single_point,
+    crossover_single_point,
     crossover_double_point1,
     crossover_double_point2,
     mask_uniform,
     uniform_random_enable,
-    LSFR_input,
+    LFSR_input,
     child,
     crossover_done
 );
@@ -28,12 +28,12 @@ module crossover #(
     input  logic [CHROMOSOME_WIDTH-1:0] 		parent2;
     input  logic [1:0] 							crossover_mode;             	// 0: fixed, 1: float, 2: uniform
     input  logic       							crossover_single_double;    	// 0: single, 1: double
-    input  logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_Single_point;
+    input  logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_single_point;
     input  logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_double_point1;
     input  logic [$clog2(CHROMOSOME_WIDTH):0] 	crossover_double_point2;
     input  logic [CHROMOSOME_WIDTH-1:0] 		mask_uniform; 					// for uniform crossover
     input  logic                                uniform_random_enable;          // 1 to enable lsfr input
-	input  logic [LSFR_WIDTH-1:0] 				LSFR_input;
+	input  logic [LFSR_WIDTH-1:0] 				LFSR_input;
 	
     // outputs
     (* use_dsp = "no" *)
@@ -56,9 +56,9 @@ module crossover #(
     always_comb begin
         // Slice LSFR for random points (float mode)
         localparam PWIDTH = $clog2(CHROMOSOME_WIDTH);
-        sp_rand  = LSFR_input[PWIDTH-1:0];
-        dp1_rand = LSFR_input[(2*PWIDTH)-1:PWIDTH];
-        dp2_rand = LSFR_input[(3*PWIDTH)-1:(2*PWIDTH)];
+        sp_rand  = LFSR_input[PWIDTH-1:0];
+        dp1_rand = LFSR_input[(2*PWIDTH)-1:PWIDTH];
+        dp2_rand = LFSR_input[(3*PWIDTH)-1:(2*PWIDTH)];
 
         // ---- Sort double points ----
 		(* keep = "true", lut1 = "yes" *)
@@ -75,10 +75,10 @@ module crossover #(
 
         // Generate masks 
         // Fixed: single
-        mask_single_fixed = (crossover_Single_point == 0) ? '0 :
-                            (crossover_Single_point >= CHROMOSOME_WIDTH) ? 
+        mask_single_fixed = (crossover_single_point == 0) ? '0 :
+                            (crossover_single_point >= CHROMOSOME_WIDTH) ? 
                               {CHROMOSOME_WIDTH{1'b1}} :
-                              ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - crossover_Single_point));
+                              ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - crossover_single_point));
 
         // Fixed: double
         if (crossover_double_point1 == crossover_double_point2) begin
@@ -103,7 +103,7 @@ module crossover #(
         end
 
         // Uniform mask selection
-        active_uniform_mask = uniform_random_enable ? LSFR_input[CHROMOSOME_WIDTH-1:0]
+        active_uniform_mask = uniform_random_enable ? LFSR_input[CHROMOSOME_WIDTH-1:0]
                                                     : mask_uniform;
     end
 
