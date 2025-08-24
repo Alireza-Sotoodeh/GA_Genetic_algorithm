@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="ga_top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="ga_top" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="101600000fs"></ZoomStartTime>
+      <ZoomEndTime time="107365001fs"></ZoomEndTime>
+      <Cursor1Time time="106400000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="330"></NameColumnWidth>
+      <ValueColumnWidth column_width="378"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="65" />
+   <wvobject fp_name="/ga_top/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_ga" type="logic">
+      <obj_property name="ElementShortName">start_ga</obj_property>
+      <obj_property name="ObjectShortName">start_ga</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/load_initial_population" type="logic">
+      <obj_property name="ElementShortName">load_initial_population</obj_property>
+      <obj_property name="ObjectShortName">load_initial_population</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossover_mode" type="array">
+      <obj_property name="ElementShortName">crossover_mode[1:0]</obj_property>
+      <obj_property name="ObjectShortName">crossover_mode[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossover_single_double" type="logic">
+      <obj_property name="ElementShortName">crossover_single_double</obj_property>
+      <obj_property name="ObjectShortName">crossover_single_double</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossover_single_point" type="array">
+      <obj_property name="ElementShortName">crossover_single_point[4:0]</obj_property>
+      <obj_property name="ObjectShortName">crossover_single_point[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossover_double_point1" type="array">
+      <obj_property name="ElementShortName">crossover_double_point1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">crossover_double_point1[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossover_double_point2" type="array">
+      <obj_property name="ElementShortName">crossover_double_point2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">crossover_double_point2[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/uniform_crossover_mask" type="array">
+      <obj_property name="ElementShortName">uniform_crossover_mask[15:0]</obj_property>
+      <obj_property name="ObjectShortName">uniform_crossover_mask[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/uniform_random_enable" type="logic">
+      <obj_property name="ElementShortName">uniform_random_enable</obj_property>
+      <obj_property name="ObjectShortName">uniform_random_enable</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider668">
+      <obj_property name="label">mutation</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/mutation_mode" type="array">
+      <obj_property name="ElementShortName">mutation_mode[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mutation_mode[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/mutation_rate" type="array">
+      <obj_property name="ElementShortName">mutation_rate[7:0]</obj_property>
+      <obj_property name="ObjectShortName">mutation_rate[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/target_iteration" type="array">
+      <obj_property name="ElementShortName">target_iteration[31:0]</obj_property>
+      <obj_property name="ObjectShortName">target_iteration[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider667">
+      <obj_property name="label">outputs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/busy" type="logic">
+      <obj_property name="ElementShortName">busy</obj_property>
+      <obj_property name="ObjectShortName">busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/done" type="logic">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/perfect_found" type="logic">
+      <obj_property name="ElementShortName">perfect_found</obj_property>
+      <obj_property name="ObjectShortName">perfect_found</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/best_chromosome" type="array">
+      <obj_property name="ElementShortName">best_chromosome[15:0]</obj_property>
+      <obj_property name="ObjectShortName">best_chromosome[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/best_fitness" type="array">
+      <obj_property name="ElementShortName">best_fitness[13:0]</obj_property>
+      <obj_property name="ObjectShortName">best_fitness[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/iteration_count" type="array">
+      <obj_property name="ElementShortName">iteration_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">iteration_count[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/crossovers_to_perfect" type="array">
+      <obj_property name="ElementShortName">crossovers_to_perfect[31:0]</obj_property>
+      <obj_property name="ObjectShortName">crossovers_to_perfect[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/number_of_chromosomes" type="array">
+      <obj_property name="ElementShortName">number_of_chromosomes[3:0]</obj_property>
+      <obj_property name="ObjectShortName">number_of_chromosomes[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/state" type="array">
+      <obj_property name="ElementShortName">state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">state[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pipeline_state" type="array">
+      <obj_property name="ElementShortName">pipeline_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">pipeline_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/next_pipeline_state" type="array">
+      <obj_property name="ElementShortName">next_pipeline_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">next_pipeline_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_select" type="logic">
+      <obj_property name="ElementShortName">start_select</obj_property>
+      <obj_property name="ObjectShortName">start_select</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/select_done" type="logic">
+      <obj_property name="ElementShortName">select_done</obj_property>
+      <obj_property name="ObjectShortName">select_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_cross" type="logic">
+      <obj_property name="ElementShortName">start_cross</obj_property>
+      <obj_property name="ObjectShortName">start_cross</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/cross_done" type="logic">
+      <obj_property name="ElementShortName">cross_done</obj_property>
+      <obj_property name="ObjectShortName">cross_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_mutate" type="logic">
+      <obj_property name="ElementShortName">start_mutate</obj_property>
+      <obj_property name="ObjectShortName">start_mutate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/mutate_done" type="logic">
+      <obj_property name="ElementShortName">mutate_done</obj_property>
+      <obj_property name="ObjectShortName">mutate_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_eval_init" type="logic">
+      <obj_property name="ElementShortName">start_eval_init</obj_property>
+      <obj_property name="ObjectShortName">start_eval_init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_eval_pipe" type="logic">
+      <obj_property name="ElementShortName">start_eval_pipe</obj_property>
+      <obj_property name="ObjectShortName">start_eval_pipe</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/eval_done" type="logic">
+      <obj_property name="ElementShortName">eval_done</obj_property>
+      <obj_property name="ObjectShortName">eval_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_pop_write" type="logic">
+      <obj_property name="ElementShortName">start_pop_write</obj_property>
+      <obj_property name="ObjectShortName">start_pop_write</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pop_write_done" type="logic">
+      <obj_property name="ElementShortName">pop_write_done</obj_property>
+      <obj_property name="ObjectShortName">pop_write_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/req_fitness" type="logic">
+      <obj_property name="ElementShortName">req_fitness</obj_property>
+      <obj_property name="ObjectShortName">req_fitness</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/req_total_fitness" type="logic">
+      <obj_property name="ElementShortName">req_total_fitness</obj_property>
+      <obj_property name="ObjectShortName">req_total_fitness</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_selected_idx1" type="array">
+      <obj_property name="ElementShortName">p_selected_idx1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">p_selected_idx1[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_selected_idx2" type="array">
+      <obj_property name="ElementShortName">p_selected_idx2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">p_selected_idx2[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_parent1" type="array">
+      <obj_property name="ElementShortName">p_parent1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_parent1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_parent2" type="array">
+      <obj_property name="ElementShortName">p_parent2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_parent2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_child_crossed" type="array">
+      <obj_property name="ElementShortName">p_child_crossed[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_crossed[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_child_mutated" type="array">
+      <obj_property name="ElementShortName">p_child_mutated[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_mutated[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/p_child_fitness" type="array">
+      <obj_property name="ElementShortName">p_child_fitness[13:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_fitness[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/init_chromosome_in" type="array">
+      <obj_property name="ElementShortName">init_chromosome_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">init_chromosome_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/init_fitness_in" type="array">
+      <obj_property name="ElementShortName">init_fitness_in[13:0]</obj_property>
+      <obj_property name="ObjectShortName">init_fitness_in[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pop_mem_parent1_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_parent1_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_parent1_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pop_mem_parent2_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_parent2_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_parent2_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pop_mem_fitness_values_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_fitness_values_out[15:0][13:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_fitness_values_out[15:0][13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/pop_mem_total_fitness_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_total_fitness_out[13:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_total_fitness_out[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/start_lfsrs" type="logic">
+      <obj_property name="ElementShortName">start_lfsrs</obj_property>
+      <obj_property name="ObjectShortName">start_lfsrs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/rand_sel" type="array">
+      <obj_property name="ElementShortName">rand_sel[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_sel[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/rand_cross" type="array">
+      <obj_property name="ElementShortName">rand_cross[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_cross[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/rand_mut" type="array">
+      <obj_property name="ElementShortName">rand_mut[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_mut[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/init_counter" type="array">
+      <obj_property name="ElementShortName">init_counter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">init_counter[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/perfect_counter_reg" type="array">
+      <obj_property name="ElementShortName">perfect_counter_reg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">perfect_counter_reg[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/perfect_found_latch" type="logic">
+      <obj_property name="ElementShortName">perfect_found_latch</obj_property>
+      <obj_property name="ObjectShortName">perfect_found_latch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/eval_init_pending" type="logic">
+      <obj_property name="ElementShortName">eval_init_pending</obj_property>
+      <obj_property name="ObjectShortName">eval_init_pending</obj_property>
+   </wvobject>
+   <wvobject fp_name="/ga_top/eval_pipe_pending" type="logic">
+      <obj_property name="ElementShortName">eval_pipe_pending</obj_property>
+      <obj_property name="ObjectShortName">eval_pipe_pending</obj_property>
+   </wvobject>
+</wave_config>

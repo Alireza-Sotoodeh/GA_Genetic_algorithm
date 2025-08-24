@@ -21,9 +21,9 @@ module ga_top #(
     // Crossover Parameters
     input  logic [1:0]                          crossover_mode,
     input  logic                                crossover_single_double,
-    input  logic [ADDR_WIDTH-1:0]               crossover_single_point,
-    input  logic [ADDR_WIDTH-1:0]               crossover_double_point1,
-    input  logic [ADDR_WIDTH-1:0]               crossover_double_point2,
+    input  logic [$clog2(CHROMOSOME_WIDTH):0]   crossover_single_point,
+    input  logic [$clog2(CHROMOSOME_WIDTH):0]   crossover_double_point1,
+    input  logic [$clog2(CHROMOSOME_WIDTH):0]   crossover_double_point2,
     input  logic [CHROMOSOME_WIDTH-1:0]         uniform_crossover_mask,
     input  logic                                uniform_random_enable,
 
@@ -64,10 +64,10 @@ module ga_top #(
     typedef enum logic [2:0] {
         P_IDLE      = 3'b000,
         P_SELECT    = 3'b001,
-        P_CROSSOVER = 3'b010,
-        P_MUTATION  = 3'b011,
-        P_EVALUATE  = 3'b100,
-        P_UPDATE    = 3'b101
+        P_CROSSOVER = 3'b011,
+        P_MUTATION  = 3'b100,
+        P_EVALUATE  = 3'b101,
+        P_UPDATE    = 3'b110
     } pipeline_state_t;
     pipeline_state_t pipeline_state, next_pipeline_state;
         
@@ -88,7 +88,6 @@ module ga_top #(
     logic [CHROMOSOME_WIDTH-1:0] p_child_crossed, p_child_mutated;
     logic [FITNESS_WIDTH-1:0]    p_child_fitness;
     logic [CHROMOSOME_WIDTH-1:0] init_chromosome_in;
-    logic [FITNESS_WIDTH-1:0]    init_fitness_in;
 
     // Population Memory connections - Fixed signal widths
     logic [CHROMOSOME_WIDTH-1:0] pop_mem_parent1_out, pop_mem_parent2_out;
@@ -152,7 +151,7 @@ module ga_top #(
 
     crossover #(
         .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
-        .LSFR_WIDTH(LFSR_WIDTH)
+        .LFSR_WIDTH(LFSR_WIDTH)
     ) cross_inst (
         .clk(clk), 
         .rst(rst), 
@@ -161,10 +160,10 @@ module ga_top #(
         .parent2(p_parent2),
         .crossover_mode(crossover_mode),
         .crossover_single_double(crossover_single_double),
-        .crossover_Single_point(crossover_single_point),
+        .crossover_single_point(crossover_single_point),
         .crossover_double_point1(crossover_double_point1),
         .crossover_double_point2(crossover_double_point2),
-        .LSFR_input(rand_cross),
+        .LFSR_input(rand_cross),
         .mask_uniform(uniform_crossover_mask),
         .uniform_random_enable(uniform_random_enable),
         .child(p_child_crossed),
@@ -259,12 +258,6 @@ module ga_top #(
                 iteration_count <= iteration_count + 1;
             end
 
-            // Latch parents when selection is done - Fixed timing
-            if (select_done) begin
-                p_parent1 <= pop_mem_parent1_out;
-                p_parent2 <= pop_mem_parent2_out;
-            end
-
             // Evaluation pending flags
             if (start_eval_init) eval_init_pending <= 1'b1;
             else if (eval_done && eval_init_pending) eval_init_pending <= 1'b0;
@@ -303,6 +296,12 @@ module ga_top #(
         end else begin
             init_chromosome_in = rand_mut; // Use random value
         end
+        
+        if (select_done) begin
+            p_parent1 <= pop_mem_parent1_out;
+            p_parent2 <= pop_mem_parent2_out;
+        end
+
 
         //----------- Main FSM Logic -----------
         case(state)
@@ -344,7 +343,7 @@ module ga_top #(
                             next_pipeline_state = P_CROSSOVER;
                         end
                     end
-                    
+
                     P_CROSSOVER: begin
                         if (!cross_done) begin
                             start_cross = 1'b1;
