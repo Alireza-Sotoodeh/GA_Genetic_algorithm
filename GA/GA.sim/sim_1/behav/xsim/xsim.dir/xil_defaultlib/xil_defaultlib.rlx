@@ -1,8 +1,0 @@
-0.6
-2019.2
-Oct 24 2019
-19:01:44
-D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.sim/sim_1/behav/xsim/glbl.v,1571945291,verilog,,,,glbl,,,,,,,,
-D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv,1755869610,systemVerilog,,,,mutation_if;mutation_tb,,,,,,,,
-D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/lfsr_random.sv,1755798217,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv,,lfsr_SudoRandom,,,,,,,,
-D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA/mutation.sv,1756037437,systemVerilog,,D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/mutation_TB.sv,,mutation,,,,,,,,
