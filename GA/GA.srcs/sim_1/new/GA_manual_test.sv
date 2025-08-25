@@ -78,19 +78,11 @@ module GA_top_manual_tb;
         .number_of_chromosomes(number_of_chromosomes)
     );
     
-    //show enum in testbench 
-    typedef GA_top_manual_tb.dut.state_t          state_t;
-    typedef GA_top_manual_tb.dut.pipeline_state_t pipeline_state_t;
-        state_t tb_state;
-        state_t tb_next_state;
-        pipeline_state_t tb_pipeline_state;
-        pipeline_state_t tb_next_pipeline_state;
-        
     // Example: tie TB wires to internal DUT signals
-    assign tb_state              = dut.state;
-    assign tb_next_state         = dut.next_state;
-    assign tb_pipeline_state     = dut.pipeline_state;
-    assign tb_next_pipeline_state= dut.next_pipeline_state;
+    assign state                   = GA_top_manual_tb.dut.state;
+    assign next_state              = GA_top_manual_tb.dut.next_state;
+    assign pipeline_state          = GA_top_manual_tb.dut.pipeline_state;
+    assign next_pipeline_state     = GA_top_manual_tb.dut.next_pipeline_state;
     assign start_select            = GA_top_manual_tb.dut.start_select;
     assign select_done             = GA_top_manual_tb.dut.select_done;
     assign start_cross             = GA_top_manual_tb.dut.start_cross;
@@ -155,14 +147,11 @@ initial begin
     init_data[15] = 16'b0000010000001000; // 0x0408
     // Wait until reset is released
     @(negedge rst);
-
+    load_initial_population = 1;
     // Load each chromosome, one per clock cycle
     for (i = 0; i < 16; i = i + 1) begin
         @(posedge clk);
         data_in = init_data[i];
-        load_initial_population = 1'b1;
-        @(posedge clk);
-        load_initial_population = 1'b0;
         @(negedge eval_init_pending);
     end
 end
@@ -185,6 +174,77 @@ end
         #100;
         rst = 0;
         start_ga = 1;
-
+        
     end
+    
+
+// Clock cycle counter for logging
+integer clk_counter;
+initial clk_counter = 0;
+always @(posedge clk) clk_counter <= clk_counter + 1;
+
+integer log_file;
+integer i;
+
+initial begin
+    log_file = $fopen("manual_test_ga.csv", "w");
+    if (log_file == 0) begin
+        $display("Error opening log file!");
+        $finish;
+    end
+
+    // ---------- Header (This part was already correct) ----------
+    $fwrite(log_file, "clk (Clock), clk_counter (Cycle), rst, start_ga, load_initial_population, data_in, ");
+    $fwrite(log_file, "target_iteration, busy, done, perfect_found, best_chromosome, best_fitness, iteration_count, crossovers_to_perfect, data_out, ");
+    $fwrite(log_file, "number_of_chromosomes, state, next_state, pipeline_state, next_pipeline_state, ");
+    $fwrite(log_file, "start_select, select_done, start_cross, cross_done, start_mutate, mutate_done, start_eval_init, start_eval_pipe, eval_done, ");
+    $fwrite(log_file, "start_pop_write, pop_write_done, req_fitness, req_total_fitness, ");
+    $fwrite(log_file, "p_selected_idx1, p_selected_idx2, p_parent1, p_parent2, p_child_crossed, p_child_mutated, p_child_fitness, ");
+    $fwrite(log_file, "pop_mem_parent1_out, pop_mem_parent2_out, ");
+    for (i = 0; i < 16; i = i + 1)
+        $fwrite(log_file, "pop_mem_fitness_values_out[%0d], ", i);
+    $fwrite(log_file, "pop_mem_total_fitness_out, start_lfsrs, rand_sel, rand_cross, rand_mut, ");
+    $fwrite(log_file, "init_counter, perfect_counter_reg, perfect_found_latch, eval_init_pending, eval_pipe_pending, init_chromosome_in");
+    $fdisplay(log_file, "");
+end
+
+// ---------- Data Logging (With the fix applied) ----------
+always @(posedge clk) begin
+    // First group
+    $fwrite(log_file, "%b,%0d,%b,%b,%b,%h,", clk, clk_counter, rst, start_ga, load_initial_population, data_in);
+    $fwrite(log_file, "%0d,%b,%b,%b,%h,%0d,%0d,%0d,%h,", target_iteration, busy, done, perfect_found, best_chromosome, best_fitness, iteration_count, crossovers_to_perfect, data_out);
+    
+    // CORRECTED LINE: Added one more %b at the end for req_total_fitness
+    $fwrite(log_file, "%0d,%0d,%0d,%0d,%0d,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,", 
+        number_of_chromosomes, state, next_state, pipeline_state, next_pipeline_state,
+        start_select, select_done, start_cross, cross_done, start_mutate, mutate_done,
+        start_eval_init, start_eval_pipe, eval_done, start_pop_write, pop_write_done,
+        req_fitness, req_total_fitness);
+
+    // Parent and child info
+    $fwrite(log_file, "%0d,%0d,%h,%h,%h,%h,%0d,%h,%h,", 
+        p_selected_idx1, p_selected_idx2,
+        p_parent1, p_parent2, p_child_crossed, p_child_mutated, p_child_fitness,
+        pop_mem_parent1_out, pop_mem_parent2_out);
+
+    // Fitness values
+    for (i = 0; i < 16; i = i + 1) begin
+        $fwrite(log_file, "%0d,", pop_mem_fitness_values_out[i]);
+    end
+
+    // Remaining signals (last field has no trailing comma)
+    $fwrite(log_file, "%0d,%b,%h,%h,%h,%0d,%0d,%b,%b,%b,%h",
+        pop_mem_total_fitness_out, start_lfsrs, rand_sel, rand_cross, rand_mut,
+        init_counter, perfect_counter_reg, perfect_found_latch, eval_init_pending, eval_pipe_pending, init_chromosome_in);
+
+    $fdisplay(log_file, ""); // End of line
+end
+
+// ---------- Close file ----------
+final begin
+    $fclose(log_file);
+end
+
+    
 endmodule
+
