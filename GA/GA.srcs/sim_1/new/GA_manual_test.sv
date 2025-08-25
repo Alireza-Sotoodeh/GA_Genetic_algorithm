@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module GA_top_manual_tb;
+module GA_top_manual_test;
 
     reg clk;
     reg rst;
