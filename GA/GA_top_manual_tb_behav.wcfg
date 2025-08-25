@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="GA_top_manual_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="GA_top_manual_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="853001fs"></ZoomEndTime>
+      <Cursor1Time time="56000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="330"></NameColumnWidth>
+      <ValueColumnWidth column_width="282"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="59" />
+   <wvobject fp_name="/GA_top_manual_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_ga" type="logic">
+      <obj_property name="ElementShortName">start_ga</obj_property>
+      <obj_property name="ObjectShortName">start_ga</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/load_initial_population" type="logic">
+      <obj_property name="ElementShortName">load_initial_population</obj_property>
+      <obj_property name="ObjectShortName">load_initial_population</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group213" type="group">
+      <obj_property name="label">Crossover</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/GA_top_manual_tb/crossover_mode" type="array">
+         <obj_property name="ElementShortName">crossover_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">crossover_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/crossover_single_double" type="logic">
+         <obj_property name="ElementShortName">crossover_single_double</obj_property>
+         <obj_property name="ObjectShortName">crossover_single_double</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/crossover_single_point" type="array">
+         <obj_property name="ElementShortName">crossover_single_point[4:0]</obj_property>
+         <obj_property name="ObjectShortName">crossover_single_point[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/crossover_double_point1" type="array">
+         <obj_property name="ElementShortName">crossover_double_point1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">crossover_double_point1[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/crossover_double_point2" type="array">
+         <obj_property name="ElementShortName">crossover_double_point2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">crossover_double_point2[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/uniform_crossover_mask" type="array">
+         <obj_property name="ElementShortName">uniform_crossover_mask[15:0]</obj_property>
+         <obj_property name="ObjectShortName">uniform_crossover_mask[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/uniform_random_enable" type="logic">
+         <obj_property name="ElementShortName">uniform_random_enable</obj_property>
+         <obj_property name="ObjectShortName">uniform_random_enable</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group214" type="group">
+      <obj_property name="label">mutation</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/GA_top_manual_tb/mutation_mode" type="array">
+         <obj_property name="ElementShortName">mutation_mode[2:0]</obj_property>
+         <obj_property name="ObjectShortName">mutation_mode[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/mutation_rate" type="array">
+         <obj_property name="ElementShortName">mutation_rate[7:0]</obj_property>
+         <obj_property name="ObjectShortName">mutation_rate[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/target_iteration" type="array">
+      <obj_property name="ElementShortName">target_iteration[31:0]</obj_property>
+      <obj_property name="ObjectShortName">target_iteration[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider215">
+      <obj_property name="label">output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/busy" type="logic">
+      <obj_property name="ElementShortName">busy</obj_property>
+      <obj_property name="ObjectShortName">busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/done" type="logic">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/perfect_found" type="logic">
+      <obj_property name="ElementShortName">perfect_found</obj_property>
+      <obj_property name="ObjectShortName">perfect_found</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/best_chromosome" type="array">
+      <obj_property name="ElementShortName">best_chromosome[15:0]</obj_property>
+      <obj_property name="ObjectShortName">best_chromosome[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/best_fitness" type="array">
+      <obj_property name="ElementShortName">best_fitness[13:0]</obj_property>
+      <obj_property name="ObjectShortName">best_fitness[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/iteration_count" type="array">
+      <obj_property name="ElementShortName">iteration_count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">iteration_count[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/crossovers_to_perfect" type="array">
+      <obj_property name="ElementShortName">crossovers_to_perfect[31:0]</obj_property>
+      <obj_property name="ObjectShortName">crossovers_to_perfect[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/number_of_chromosomes" type="array">
+      <obj_property name="ElementShortName">number_of_chromosomes[3:0]</obj_property>
+      <obj_property name="ObjectShortName">number_of_chromosomes[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider217">
+      <obj_property name="label">States</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#FF0000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/state" type="array">
+      <obj_property name="ElementShortName">state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">state[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/next_state" type="array">
+      <obj_property name="ElementShortName">next_state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">next_state[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pipeline_state" type="array">
+      <obj_property name="ElementShortName">pipeline_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">pipeline_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/next_pipeline_state" type="array">
+      <obj_property name="ElementShortName">next_pipeline_state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">next_pipeline_state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_select" type="logic">
+      <obj_property name="ElementShortName">start_select</obj_property>
+      <obj_property name="ObjectShortName">start_select</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/select_done" type="logic">
+      <obj_property name="ElementShortName">select_done</obj_property>
+      <obj_property name="ObjectShortName">select_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_cross" type="logic">
+      <obj_property name="ElementShortName">start_cross</obj_property>
+      <obj_property name="ObjectShortName">start_cross</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/cross_done" type="logic">
+      <obj_property name="ElementShortName">cross_done</obj_property>
+      <obj_property name="ObjectShortName">cross_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_mutate" type="logic">
+      <obj_property name="ElementShortName">start_mutate</obj_property>
+      <obj_property name="ObjectShortName">start_mutate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/mutate_done" type="logic">
+      <obj_property name="ElementShortName">mutate_done</obj_property>
+      <obj_property name="ObjectShortName">mutate_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_eval_init" type="logic">
+      <obj_property name="ElementShortName">start_eval_init</obj_property>
+      <obj_property name="ObjectShortName">start_eval_init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_eval_pipe" type="logic">
+      <obj_property name="ElementShortName">start_eval_pipe</obj_property>
+      <obj_property name="ObjectShortName">start_eval_pipe</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/eval_done" type="logic">
+      <obj_property name="ElementShortName">eval_done</obj_property>
+      <obj_property name="ObjectShortName">eval_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_pop_write" type="logic">
+      <obj_property name="ElementShortName">start_pop_write</obj_property>
+      <obj_property name="ObjectShortName">start_pop_write</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pop_write_done" type="logic">
+      <obj_property name="ElementShortName">pop_write_done</obj_property>
+      <obj_property name="ObjectShortName">pop_write_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/req_fitness" type="logic">
+      <obj_property name="ElementShortName">req_fitness</obj_property>
+      <obj_property name="ObjectShortName">req_fitness</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/req_total_fitness" type="logic">
+      <obj_property name="ElementShortName">req_total_fitness</obj_property>
+      <obj_property name="ObjectShortName">req_total_fitness</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider218">
+      <obj_property name="label">Chromosome</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#FFFF00</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_selected_idx1" type="array">
+      <obj_property name="ElementShortName">p_selected_idx1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">p_selected_idx1[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_selected_idx2" type="array">
+      <obj_property name="ElementShortName">p_selected_idx2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">p_selected_idx2[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_parent1" type="array">
+      <obj_property name="ElementShortName">p_parent1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_parent1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_parent2" type="array">
+      <obj_property name="ElementShortName">p_parent2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_parent2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_child_crossed" type="array">
+      <obj_property name="ElementShortName">p_child_crossed[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_crossed[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_child_mutated" type="array">
+      <obj_property name="ElementShortName">p_child_mutated[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_mutated[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_child_fitness" type="array">
+      <obj_property name="ElementShortName">p_child_fitness[13:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_fitness[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pop_mem_parent1_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_parent1_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_parent1_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pop_mem_parent2_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_parent2_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_parent2_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pop_mem_fitness_values_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_fitness_values_out[15:0][13:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_fitness_values_out[15:0][13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/pop_mem_total_fitness_out" type="array">
+      <obj_property name="ElementShortName">pop_mem_total_fitness_out[13:0]</obj_property>
+      <obj_property name="ObjectShortName">pop_mem_total_fitness_out[13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/start_lfsrs" type="logic">
+      <obj_property name="ElementShortName">start_lfsrs</obj_property>
+      <obj_property name="ObjectShortName">start_lfsrs</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/rand_sel" type="array">
+      <obj_property name="ElementShortName">rand_sel[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_sel[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/rand_cross" type="array">
+      <obj_property name="ElementShortName">rand_cross[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_cross[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/rand_mut" type="array">
+      <obj_property name="ElementShortName">rand_mut[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_mut[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/init_counter" type="array">
+      <obj_property name="ElementShortName">init_counter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">init_counter[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/perfect_counter_reg" type="array">
+      <obj_property name="ElementShortName">perfect_counter_reg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">perfect_counter_reg[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/perfect_found_latch" type="logic">
+      <obj_property name="ElementShortName">perfect_found_latch</obj_property>
+      <obj_property name="ObjectShortName">perfect_found_latch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/eval_init_pending" type="logic">
+      <obj_property name="ElementShortName">eval_init_pending</obj_property>
+      <obj_property name="ObjectShortName">eval_init_pending</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/eval_pipe_pending" type="logic">
+      <obj_property name="ElementShortName">eval_pipe_pending</obj_property>
+      <obj_property name="ObjectShortName">eval_pipe_pending</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/init_chromosome_in" type="array">
+      <obj_property name="ElementShortName">init_chromosome_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">init_chromosome_in[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/init_data" type="array">
+      <obj_property name="ElementShortName">init_data[0:16][15:0]</obj_property>
+      <obj_property name="ObjectShortName">init_data[0:16][15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
