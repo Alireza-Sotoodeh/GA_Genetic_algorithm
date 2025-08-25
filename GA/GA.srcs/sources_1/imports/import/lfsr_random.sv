@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 (* keep_hierarchy = "yes" *) //to prevent from begin changed by optimizer
 module lfsr_SudoRandom #(
     parameter WIDTH1 = 16, 

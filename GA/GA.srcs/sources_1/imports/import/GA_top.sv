@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module ga_top #(
     // General GA Parameters
     parameter CHROMOSOME_WIDTH = 16,
@@ -64,10 +66,10 @@ module ga_top #(
     typedef enum logic [2:0] {
         P_IDLE      = 3'b000,
         P_SELECT    = 3'b001,
-        P_CROSSOVER = 3'b011,
-        P_MUTATION  = 3'b100,
-        P_EVALUATE  = 3'b101,
-        P_UPDATE    = 3'b110
+        P_CROSSOVER = 3'b010,
+        P_MUTATION  = 3'b011,
+        P_EVALUATE  = 3'b100,
+        P_UPDATE    = 3'b101
     } pipeline_state_t;
     pipeline_state_t pipeline_state, next_pipeline_state;
         

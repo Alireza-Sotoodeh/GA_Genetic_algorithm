@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 (* keep_hierarchy = "yes" *)
 module mutation #(
     parameter CHROMOSOME_WIDTH = 16,

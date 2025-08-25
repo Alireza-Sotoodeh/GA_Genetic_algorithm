@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module population_memory #(
     parameter CHROMOSOME_WIDTH = 16,
     parameter FITNESS_WIDTH = 14,
