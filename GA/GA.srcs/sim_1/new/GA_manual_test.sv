@@ -125,37 +125,7 @@ module GA_top_manual_tb;
         forever #50 clk = ~clk;
     end
 //```````````````````````````````````````````````````````````````````````````
-    integer i;
-reg [15:0] init_data [0:16]; 
 
-initial begin
-    init_data[0]  = 16'b0000000000000001; // 0x0001
-    init_data[1]  = 16'b0000100000000010; // 0x0802
-    init_data[2]  = 16'b0000000000000100; // 0x0004
-    init_data[3]  = 16'b0000000000001000; // 0x0008
-    init_data[4]  = 16'b1000000000100001; // 0x8021
-    init_data[5]  = 16'b0000000000000000; // 0x0000
-    init_data[6]  = 16'b0000000000000100; // 0x0004
-    init_data[7]  = 16'b0000000000001000; // 0x0008
-    init_data[8]  = 16'b0001000000000001; // 0x1001
-    init_data[9]  = 16'b0000000000000010; // 0x0002
-    init_data[10] = 16'b0000010000000100; // 0x0404
-    init_data[11] = 16'b0000000000001000; // 0x0008
-    init_data[12] = 16'b0001000010000001; // 0x1081
-    init_data[13] = 16'b0000000001000010; // 0x0042
-    init_data[14] = 16'b0010000000000100; // 0x2004
-    init_data[15] = 16'b0000010000001000; // 0x0408
-    // Wait until reset is released
-    @(negedge rst);
-    load_initial_population = 1;
-    // Load each chromosome, one per clock cycle
-    for (i = 0; i < 16; i = i + 1) begin
-        @(posedge clk);
-        data_in = init_data[i];
-        @(negedge eval_init_pending);
-    end
-end
-//```````````````````````````````````````````````````````````````````````````
     initial begin
         rst = 1;
         start_ga = 0;
@@ -171,10 +141,11 @@ end
         mutation_mode = 3'b000;
         mutation_rate = 64;
         target_iteration = 300;
-        #100;
+        @(negedge clk)
         rst = 0;
         start_ga = 1;
-        
+        load_initial_population = 1;
+        data_in = 4'h0001;
     end
     
 
