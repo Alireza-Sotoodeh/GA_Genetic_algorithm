@@ -107,7 +107,7 @@ module ga_top #(
     
     // Pipeline control registers - Added for proper synchronization
     logic                  eval_init_pending, eval_pipe_pending;
-
+    logic first_init;  // New flag to detect first initialization for reducing overhead
 //======================================================================
 // Module Instantiations
 //======================================================================
@@ -247,7 +247,7 @@ module ga_top #(
             // Reset pipeline control flags
             eval_init_pending <= 1'b0;
             eval_pipe_pending <= 1'b0;
-            
+            first_init <= 1'b1; // Set to 1 at reset, to handle first init specially
         end else begin
             pipeline_state <= next_pipeline_state;
 
@@ -261,9 +261,19 @@ module ga_top #(
             end
 
             // Evaluation pending flags
-            if (start_eval_init) eval_init_pending <= 1'b1;
-            else if (eval_done && eval_init_pending) eval_init_pending <= 1'b0;
+            //initial(Modified for faster reset on first init)
+            if (eval_done && eval_init_pending) begin
+                eval_init_pending <= 1'b0;  // Always reset when done, to prevent stuck-high
+            end else if (start_eval_init) begin
+                eval_init_pending <= 1'b1;
+            end
             
+             // Clear first_init immediately after first start_eval_init asserts (prevents loop)
+            if (start_eval_init && first_init) begin
+                first_init <= 1'b0;  // Clear flag right after first use, to avoid repeated fast path
+            end
+            
+            // pipeline 
             if (start_eval_pipe) eval_pipe_pending <= 1'b1;
             else if (eval_done && eval_pipe_pending) eval_pipe_pending <= 1'b0;
 
@@ -317,11 +327,13 @@ module ga_top #(
             S_INIT: begin
                 start_lfsrs = 1'b1; // Keep LFSRs running
                 
-                // Fixed: Proper initialization sequence
-                if (!eval_init_pending && !eval_done) begin
-                    start_eval_init = 1'b1; // Start evaluation for current chromosome
-                end else if (eval_done && !pop_write_done) begin
-                    start_pop_write = 1'b1; // Start writing to population
+                // Modified: Proper initialization sequence with fast path for first chromosome
+                if (init_counter < POPULATION_SIZE) begin
+                    if ((init_counter == 0 && first_init) || (init_counter > 0 && !eval_init_pending && !eval_done)) begin
+                        start_eval_init = 1'b1; // Start evaluation: Fast for first, normal for others
+                    end else if (eval_done && !pop_write_done) begin
+                        start_pop_write = 1'b1; // Start writing to population
+                    end
                 end
 
                 // Transition when all chromosomes are initialized
