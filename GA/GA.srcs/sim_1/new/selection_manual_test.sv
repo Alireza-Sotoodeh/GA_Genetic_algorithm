@@ -211,6 +211,7 @@ module selection_manual_tb;
         $fwrite(log_file, "%h,%h,%0d,%0d,%b,%b,%0d,%0d",
                 roulette_pos1, roulette_pos2, fitness_sum1, fitness_sum2,
                 total_fitness_zero, selecting, selected_index1_comb, selected_index2_comb);
+        $fdisplay(log_file, ""); // End of line
     end
 
     final $fclose(log_file);
