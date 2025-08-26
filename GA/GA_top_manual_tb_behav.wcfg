@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="1718001fs"></ZoomEndTime>
-      <Cursor1Time time="1338000fs"></Cursor1Time>
+      <ZoomEndTime time="17300001fs"></ZoomEndTime>
+      <Cursor1Time time="1000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="330"></NameColumnWidth>
-      <ValueColumnWidth column_width="276"></ValueColumnWidth>
+      <ValueColumnWidth column_width="270"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="60" />
+   <WVObjectSize size="59" />
    <wvobject fp_name="/GA_top_manual_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -309,11 +309,6 @@
    <wvobject fp_name="/GA_top_manual_tb/init_chromosome_in" type="array">
       <obj_property name="ElementShortName">init_chromosome_in[15:0]</obj_property>
       <obj_property name="ObjectShortName">init_chromosome_in[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/GA_top_manual_tb/init_data" type="array">
-      <obj_property name="ElementShortName">init_data[0:16][15:0]</obj_property>
-      <obj_property name="ObjectShortName">init_data[0:16][15:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

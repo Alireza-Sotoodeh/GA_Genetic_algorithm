@@ -131,8 +131,8 @@ module GA_top_manual_tb;
         start_ga = 0;
         load_initial_population = 0;
         data_in = 0;
-        crossover_mode = 2'b00;
-        crossover_single_double = 1'b0;
+        crossover_mode = 2'b01;
+        crossover_single_double = 1'b1;
         crossover_single_point = 4'b1000;
         crossover_double_point1 = 0;
         crossover_double_point2 = 0;
@@ -140,12 +140,15 @@ module GA_top_manual_tb;
         uniform_random_enable = 0;
         mutation_mode = 3'b000;
         mutation_rate = 64;
-        target_iteration = 300;
+        target_iteration = 100;
         @(negedge clk)
         rst = 0;
         start_ga = 1;
         load_initial_population = 1;
         data_in = 4'h0001;
+        @(next_pipeline_state!=00);
+        load_initial_population = 0;
+        data_in = 4'h0000;
     end
     
 
