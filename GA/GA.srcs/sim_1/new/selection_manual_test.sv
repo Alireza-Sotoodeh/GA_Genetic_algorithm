@@ -24,19 +24,18 @@ module selection_manual_tb;
     reg clk, rst;
     reg start_selection;
     reg [FITNESS_WIDTH-1:0] fitness_values [POPULATION_SIZE-1:0];
-    reg [FITNESS_WIDTH-1:0] total_fitness;
+    reg [FITNESS_WIDTH + ADDR_WIDTH -1:0] total_fitness;  // Increased width to match sum
     wire [LFSR_WIDTH-1:0]   lfsr_input;
 
     wire [ADDR_WIDTH-1:0]   selected_index1;
     wire [ADDR_WIDTH-1:0]   selected_index2;
     wire selection_done;
 
-    // Internal DUT signals (tapped hierarchically)
-    wire [FITNESS_WIDTH+LFSR_WIDTH-1:0] roulette_pos1, roulette_pos2;
-    wire [FITNESS_WIDTH-1:0] fitness_sum1, fitness_sum2;
+    // Internal DUT signals (tapped hierarchically, corrected to match actual DUT signals)
+    wire [FITNESS_WIDTH + LFSR_WIDTH -1:0] roulette_pos1, roulette_pos2;  // Match increased width
     wire total_fitness_zero;
-    wire selecting;
     wire [ADDR_WIDTH-1:0] selected_index1_comb, selected_index2_comb;
+    wire selecting; // To tap internal selecting flag for debugging
 
     // =========================================================================
     // LFSR instance for random generation
@@ -72,7 +71,7 @@ module selection_manual_tb;
         .rst(rst),
         .start_selection(start_selection),
         .fitness_values(fitness_values),
-        .total_fitness(total_fitness),
+        .total_fitness(total_fitness[FITNESS_WIDTH-1:0]),  // Truncate to match DUT input width
         .lfsr_input(lfsr_input),
         .selected_index1(selected_index1),
         .selected_index2(selected_index2),
@@ -80,16 +79,15 @@ module selection_manual_tb;
     );
 
     // =========================================================================
-    // Tap DUT internal signals (like GA_manual_test.sv)
+    // Tap DUT internal signals (corrected to existing signals only)
     // =========================================================================
     assign roulette_pos1        = dut.roulette_pos1;
     assign roulette_pos2        = dut.roulette_pos2;
-    assign fitness_sum1         = dut.fitness_sum1;
-    assign fitness_sum2         = dut.fitness_sum2;
     assign total_fitness_zero   = dut.total_fitness_zero;
-    assign selecting            = dut.selecting;
     assign selected_index1_comb = dut.selected_index1_comb;
     assign selected_index2_comb = dut.selected_index2_comb;
+    assign selecting            = dut.selecting; // Tap internal selecting for debugging
+
     // =========================================================================
     // Clock generation + counter
     // =========================================================================
@@ -152,17 +150,97 @@ module selection_manual_tb;
         pulse_selection();
 
         // ------------------------------
-        // Multiple random trials
+        // New Test 4: Single high fitness at end
         // ------------------------------
-        repeat (10) begin
+        for (int i = 0; i < POPULATION_SIZE - 1; i++) fitness_values[i] = 14'd1;
+        fitness_values[POPULATION_SIZE - 1] = 14'd100;
+        total_fitness = 14'(100 + (POPULATION_SIZE - 1));
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 5: Two high fitness values
+        // ------------------------------
+        fitness_values[0] = 14'd50;
+        fitness_values[1] = 14'd50;
+        for (int i = 2; i < POPULATION_SIZE; i++) fitness_values[i] = 14'd1;
+        total_fitness = 14'(50 + 50 + (POPULATION_SIZE - 2));
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 6: All fitness zero except one
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = 0;
+        fitness_values[5] = 14'd10;
+        total_fitness = 14'd10;
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 7: Maximum fitness values (near overflow)
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = {FITNESS_WIDTH{1'b1}}; // Max value
+        total_fitness = sum_fitness(); // Use function to handle potential overflow
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 8: Alternating high and low fitness
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) begin
+            fitness_values[i] = (i % 2 == 0) ? 14'd20 : 14'd1;
+        end
+        total_fitness = sum_fitness();
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 9: Increasing fitness gradient
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = 14'(i + 1);
+        total_fitness = sum_fitness();
+        pulse_selection();
+
+        // ------------------------------
+        // New Test 10: Decreasing fitness gradient
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = 14'(POPULATION_SIZE - i);
+        total_fitness = sum_fitness();
+        pulse_selection();
+
+        // ------------------------------
+        // Multiple random trials (reduced to 20 for faster simulation during debug)
+        // ------------------------------
+        repeat (20) begin
             // Advance LFSR for new lfsr_input
             start_lfsr = 1; @(posedge clk);
             start_lfsr = 0; @(posedge clk);
-            // Fill random-ish fitness pattern
-            for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = random_out[i % LFSR_WIDTH] ? 14'd10 : 14'd1;
+            // Fill random-ish fitness pattern with more variety
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
+                // Generate more varied fitness: 0 to 100 based on random_out bits
+                fitness_values[i] = (random_out[i % LFSR_WIDTH] ? 14'(random_out[7:0] % 100) : 14'd0);
+            end
             total_fitness = sum_fitness();
             pulse_selection();
         end
+
+        // ------------------------------
+        // Additional edge case: lfsr_input = 0 (force low value)
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = 14'd1;
+        total_fitness = 14'(POPULATION_SIZE);
+        // Advance minimally to get potentially low lfsr_input
+        start_lfsr = 1; @(posedge clk);
+        start_lfsr = 0; @(posedge clk);
+        pulse_selection();
+
+        // ------------------------------
+        // Additional edge case: lfsr_input max value
+        // ------------------------------
+        for (int i = 0; i < POPULATION_SIZE; i++) fitness_values[i] = 14'd1;
+        total_fitness = 14'(POPULATION_SIZE);
+        // Advance LFSR multiple times to get high values
+        repeat (10) begin
+            start_lfsr = 1; @(posedge clk);
+            start_lfsr = 0; @(posedge clk);
+        end
+        pulse_selection();
 
         #500 $finish;
     end
@@ -173,20 +251,30 @@ module selection_manual_tb;
         start_selection = 1;
         @(posedge clk);
         start_selection = 0;
-        @(posedge selection_done);
+        // Wait for selection_done or timeout to prevent hangs
+        fork
+            begin
+                while (!selection_done) @(posedge clk);  // Poll every cycle to catch short pulses
+            end
+            begin
+                #20000; // Increased timeout to 20us (200 * 100ns = 20000ns)
+                $display("WARNING: Selection timeout! Current selecting: %b, total_fitness: %0d", selecting, total_fitness);
+            end
+        join_any
     end
     endtask
 
-    function automatic [FITNESS_WIDTH-1:0] sum_fitness;
-        automatic int s = 0;
+    function automatic [FITNESS_WIDTH + ADDR_WIDTH -1:0] sum_fitness;  // Increased return width, no truncate
+        automatic logic [31:0] s = 0;  // Use 32-bit for safe sum
         for (int i = 0; i < POPULATION_SIZE; i++) s += fitness_values[i];
-        return s;
+        return s[FITNESS_WIDTH + ADDR_WIDTH -1:0];
     endfunction
 
     // =========================================================================
-    // CSV Logging
+    // CSV Logging (enhanced with test labels, removed non-existing signals)
     // =========================================================================
     integer log_file, j;
+    integer test_num = 0;
     initial begin
         log_file = $fopen("selection_test.csv", "w");
         if (!log_file) begin
@@ -194,24 +282,29 @@ module selection_manual_tb;
             $finish;
         end
 
-        // Header
-        $fwrite(log_file, "clk_counter,clk,rst,start_selection,");
+        // Header (updated to remove fitness_sum1/2, added selecting)
+        $fwrite(log_file, "test_num,clk_counter,clk,rst,start_selection,");
         for (j = 0; j < POPULATION_SIZE; j++)
             $fwrite(log_file, "fitness_values[%0d],", j);
         $fwrite(log_file, "total_fitness,lfsr_input,selected_index1,selected_index2,selection_done,");
-        $fwrite(log_file, "roulette_pos1,roulette_pos2,fitness_sum1,fitness_sum2,total_fitness_zero,selecting,selected_index1_comb,selected_index2_comb");
+        $fwrite(log_file, "roulette_pos1,roulette_pos2,total_fitness_zero,selected_index1_comb,selected_index2_comb,selecting");
+        $fdisplay(log_file, ""); // End of line
     end
 
     always @(posedge clk) begin
-        // Main row
-        $fwrite(log_file, "%0d,%b,%b,%b,", clk_counter, clk, rst, start_selection);
+        // Main row (updated to match header)
+        $fwrite(log_file, "%0d,%0d,%b,%b,%b,", test_num, clk_counter, clk, rst, start_selection);
         for (j = 0; j < POPULATION_SIZE; j++)
             $fwrite(log_file, "%0d,", fitness_values[j]);
-        $fwrite(log_file, "%0d,%h,%0d,%0d,%b,", total_fitness, lfsr_input, selected_index1, selected_index2, selection_done);
-        $fwrite(log_file, "%h,%h,%0d,%0d,%b,%b,%0d,%0d",
-                roulette_pos1, roulette_pos2, fitness_sum1, fitness_sum2,
-                total_fitness_zero, selecting, selected_index1_comb, selected_index2_comb);
+        $fwrite(log_file, "%h,%h,%0d,%0d,%b,", total_fitness, lfsr_input, selected_index1, selected_index2, selection_done); // total_fitness as %h for wider value
+        $fwrite(log_file, "%h,%h,%b,%0d,%0d,%b",
+                roulette_pos1, roulette_pos2, total_fitness_zero, selected_index1_comb, selected_index2_comb, selecting);
         $fdisplay(log_file, ""); // End of line
+    end
+
+    // Increment test_num after each pulse_selection
+    always @(posedge selection_done) begin  // Changed to posedge to catch rising edge
+        test_num <= test_num + 1;
     end
 
     final $fclose(log_file);
