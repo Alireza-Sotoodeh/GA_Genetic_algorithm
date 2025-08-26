@@ -71,6 +71,7 @@ module population_memory #(
         end else begin
             fitness_values_out = '{default: '0};
         end
+        //fitness_values_out = fitness_values;
         if (request_total_fitness) begin
             total_fitness_out = internal_total_fitness[FITNESS_WIDTH-1:0];  // Truncate if overflowed
         end else begin
