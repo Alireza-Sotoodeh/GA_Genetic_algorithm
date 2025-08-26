@@ -6,7 +6,7 @@
 <Project Version="7" Minor="44" Path="D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="3a9d6305264a48c49d6bc57ecfe7aa05"/>
+    <Option Name="Id" Val="e4445bfc33f147ed92219c4d1dd8cc70"/>
     <Option Name="Part" Val="xc7s15cpga196-2"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -18,7 +18,6 @@
     <Option Name="CompiledLibDirRiviera" Val="$PCACHEDIR/compile_simlib/riviera"/>
     <Option Name="CompiledLibDirActivehdl" Val="$PCACHEDIR/compile_simlib/activehdl"/>
     <Option Name="BoardPart" Val=""/>
-    <Option Name="SourceMgmtMode" Val="DisplayOnly"/>
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
@@ -30,7 +29,7 @@
     <Option Name="IPUserFilesDir" Val="$PIPUSERFILESDIR"/>
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
-    <Option Name="WTXSimLaunchSim" Val="107"/>
+    <Option Name="WTXSimLaunchSim" Val="0"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -59,64 +58,64 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sources_1/imports/import/crossover.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/crossover.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/crossover.sv"/>
-          <Attr Name="ImportTime" Val="1755805769"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/crossover.sv"/>
+          <Attr Name="ImportTime" Val="1756135489"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/fitness_evaluator.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/fitness_evaluator.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/fitness_evaluator.sv"/>
-          <Attr Name="ImportTime" Val="1755806738"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/fitness_evaluator.sv"/>
+          <Attr Name="ImportTime" Val="1756135492"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/lfsr_random.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/lfsr_random.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/lfsr_random.sv"/>
-          <Attr Name="ImportTime" Val="1755798217"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/lfsr_random.sv"/>
+          <Attr Name="ImportTime" Val="1756135485"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/mutation.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/mutation.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/mutation.sv"/>
-          <Attr Name="ImportTime" Val="1756037437"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/mutation.sv"/>
+          <Attr Name="ImportTime" Val="1756135491"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/population_memory.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/population_memory.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/population_memory.sv"/>
-          <Attr Name="ImportTime" Val="1756042954"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/population_memory.sv"/>
+          <Attr Name="ImportTime" Val="1756135448"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/selection.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/selection.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/selection.sv"/>
-          <Attr Name="ImportTime" Val="1755935173"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/selection.sv"/>
+          <Attr Name="ImportTime" Val="1756190943"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/import/GA_top.sv">
+      <File Path="$PSRCDIR/sources_1/imports/GA_code/GA_top.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/GA_top.sv"/>
-          <Attr Name="ImportTime" Val="1756043497"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/GA_top.sv"/>
+          <Attr Name="ImportTime" Val="1756198800"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -130,8 +129,10 @@
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
       <Filter Type="Constrs"/>
-      <File Path="$PSRCDIR/constrs_1/new/CLK.xdc">
+      <File Path="$PSRCDIR/constrs_1/imports/Clk_costrain/CLK.xdc">
         <FileInfo>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/Clk_costrain/CLK.xdc"/>
+          <Attr Name="ImportTime" Val="1756044181"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
         </FileInfo>
@@ -141,26 +142,9 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
-      <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sim_1/imports/TB/GA_TOP_TB.sv">
-        <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/GA_TOP_TB.sv"/>
-          <Attr Name="ImportTime" Val="1756041980"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sim_1/new/GA_manual_test.sv">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/crossover_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/crossover_TB.sv"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/crossover_TB.sv"/>
           <Attr Name="ImportTime" Val="1755798289"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -169,7 +153,8 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/fitness_evaluator_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/fitness_evaluator_TB.sv"/>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/fitness_evaluator_TB.sv"/>
           <Attr Name="ImportTime" Val="1755808938"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -178,7 +163,8 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/lfsr_random_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/lfsr_random_TB.sv"/>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/lfsr_random_TB.sv"/>
           <Attr Name="ImportTime" Val="1755777242"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -187,7 +173,8 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/mutation_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/mutation_TB.sv"/>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/mutation_TB.sv"/>
           <Attr Name="ImportTime" Val="1755869610"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -196,7 +183,8 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/population_memory_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/population_memory_TB.sv"/>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/population_memory_TB.sv"/>
           <Attr Name="ImportTime" Val="1755960759"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -205,43 +193,33 @@
       </File>
       <File Path="$PSRCDIR/sim_1/imports/TB/selection_TB.sv">
         <FileInfo>
-          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/import/TB/selection_TB.sv"/>
-          <Attr Name="ImportTime" Val="1755937121"/>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/selection_TB.sv"/>
+          <Attr Name="ImportTime" Val="1756192729"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sim_1/new/selection_manual_test.sv">
+      <File Path="$PSRCDIR/sim_1/imports/TB/selection_manual_test.sv">
         <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/TB/selection_manual_test.sv"/>
+          <Attr Name="ImportTime" Val="1756187856"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/ga_top_simulation.wcfg">
-        <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/GA_top_manual_tb_behav.wcfg">
-        <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="selection_manual_tb"/>
+        <Option Name="TopModule" Val="crossover_tb"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
+        <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
         <Option Name="SelectedSimModel" Val="rtl"/>
         <Option Name="SrcSet" Val="sources_1"/>
-        <Option Name="XSimWcfgFile" Val="$PPRDIR/ga_top_behav.wcfg"/>
-        <Option Name="XSimWcfgFile" Val="$PPRDIR/ga_top_simulation.wcfg"/>
-        <Option Name="XSimWcfgFile" Val="$PPRDIR/GA_top_manual_tb_behav.wcfg"/>
       </Config>
     </FileSet>
     <FileSet Name="utils_1" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
@@ -272,7 +250,9 @@
   <Runs Version="1" Minor="11">
     <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7s15cpga196-2" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019"/>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
         <Step Id="synth_design"/>
       </Strategy>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2019"/>
@@ -281,7 +261,9 @@
     </Run>
     <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7s15cpga196-2" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2019"/>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2019">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
