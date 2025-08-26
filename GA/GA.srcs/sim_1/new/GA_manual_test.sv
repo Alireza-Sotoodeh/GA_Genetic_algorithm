@@ -212,10 +212,17 @@ always @(posedge clk) begin
 end
 
 // ---------- Close file ----------
-final begin
-    $fclose(log_file);
+always @(posedge clk) begin
+    if (done) begin
+        $display("** GA Done at t=%0t, iterations=%0d, best=0x%0h fitness=%0d",
+                 $time, iteration_count, best_chromosome, best_fitness);
+        #100 $finish;
+        $stop;
+    end
 end
 
+final begin
+$fclose(log_file); end
     
 endmodule
 

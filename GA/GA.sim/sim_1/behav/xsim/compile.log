@@ -15,7 +15,7 @@ INFO: [VRFC 10-311] analyzing module ga_top
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/TB/GA_TOP_TB.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module ga_top_tb
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/new/GA_manual_test.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module GA_top_manual_test
+INFO: [VRFC 10-311] analyzing module GA_top_manual_tb
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/TB/crossover_TB.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module crossover_tb
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/TB/fitness_evaluator_TB.sv" into library xil_defaultlib
