@@ -43,16 +43,19 @@ module selection #(
     // Combinational preparation (like crossover: prepare two different roulette positions and comb selection)
     // =========================
     always_comb begin
-    automatic logic found1 = 1'b0;
-    automatic logic found2 = 1'b0;
+        automatic logic found1 = 1'b0;
+        automatic logic found2 = 1'b0;
         // Detect zero total fitness
         total_fitness_zero = (total_fitness == '0);
-        
         
         // Generate two different positions (use lfsr_input split/modified for difference)
         if (total_fitness_zero) begin
             roulette_pos1 = lfsr_input % POPULATION_SIZE;  // Uniform random index
             roulette_pos2 = (lfsr_input ^ (lfsr_input >> (LFSR_WIDTH/2))) % POPULATION_SIZE;  // XOR for difference (ensure != pos1)
+            selected_index1_comb = roulette_pos1[ADDR_WIDTH-1:0];
+            selected_index2_comb = roulette_pos2[ADDR_WIDTH-1:0];
+            fitness_sum1 = '0;
+            fitness_sum2 = '0;
         end else begin
             // Wide multiplication for scaling (avoid overflow)
             logic [(FITNESS_WIDTH + LFSR_WIDTH)-1:0] product1, product2;
@@ -60,33 +63,31 @@ module selection #(
             roulette_pos1 = product1 >> LFSR_WIDTH;  // Scale down
             product2 = (lfsr_input ^ (lfsr_input >> 8)) * total_fitness;  // Modify for second different value
             roulette_pos2 = product2 >> LFSR_WIDTH;
-        end
 
-        // Comb loop for selection1 (unrollable, single-cycle, using flag instead of break)
-        fitness_sum1 = '0;
-        selected_index1_comb = '0;
-        
-        for (int i = 0; i < POPULATION_SIZE; i++) begin
-            if (!found1 && (fitness_sum1 + fitness_values[i] > roulette_pos1)) begin
-                selected_index1_comb = i[ADDR_WIDTH-1:0];
-                found1 = 1'b1;
+            // Comb loop for selection1 (unrollable, single-cycle, using flag instead of break)
+            fitness_sum1 = '0;
+            selected_index1_comb = '0;
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
+                if (!found1 && (fitness_sum1 + fitness_values[i] > roulette_pos1)) begin
+                    selected_index1_comb = i[ADDR_WIDTH-1:0];
+                    found1 = 1'b1;
+                end
+                fitness_sum1 += fitness_values[i];
             end
-            fitness_sum1 += fitness_values[i];
-        end
-        if (!found1) selected_index1_comb = POPULATION_SIZE - 1;  // Edge: last
+            if (!found1) selected_index1_comb = POPULATION_SIZE - 1;  // Edge: last
 
-        // Comb loop for selection2 (parallel)
-        fitness_sum2 = '0;
-        selected_index2_comb = '0;
-        
-        for (int i = 0; i < POPULATION_SIZE; i++) begin
-            if (!found2 && (fitness_sum2 + fitness_values[i] > roulette_pos2)) begin
-                selected_index2_comb = i[ADDR_WIDTH-1:0];
-                found2 = 1'b1;
+            // Comb loop for selection2 (parallel)
+            fitness_sum2 = '0;
+            selected_index2_comb = '0;
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
+                if (!found2 && (fitness_sum2 + fitness_values[i] > roulette_pos2)) begin
+                    selected_index2_comb = i[ADDR_WIDTH-1:0];
+                    found2 = 1'b1;
+                end
+                fitness_sum2 += fitness_values[i];
             end
-            fitness_sum2 += fitness_values[i];
+            if (!found2) selected_index2_comb = POPULATION_SIZE - 1;
         end
-        if (!found2) selected_index2_comb = POPULATION_SIZE - 1;
 
         // Ensure different indices (re-assign if same; simple: swap with next if equal)
         if (selected_index1_comb == selected_index2_comb) begin
