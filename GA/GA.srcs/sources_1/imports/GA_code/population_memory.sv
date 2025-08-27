@@ -52,10 +52,6 @@ module population_memory #(
     (* keep = "true" *) logic [FITNESS_WIDTH-1:0] old_fitness_remove; // Comb: Fitness of worst to remove
     logic                  writing;                // Internal flag like crossover (for two-cycle handshake)
 
-
-
-
-
     // =========================
     // Combinational preparation (like crossover: prepare reads, insertion logic, and requests)
     // =========================
