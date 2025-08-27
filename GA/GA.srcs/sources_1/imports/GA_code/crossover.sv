@@ -51,7 +51,8 @@ module crossover #(
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_fixed, mask_double_fixed;
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_float, mask_double_float;
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] active_uniform_mask;
-
+    logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_fixed; 
+    logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_double_p1, parent2_shifted_double_p2;
     // =========================
     // Combinational preparation
     // =========================
@@ -75,19 +76,23 @@ module crossover #(
 		(* keep = "true", lut1 = "yes" *)
         p2_float = (dp1_rand < dp2_rand) ? dp2_rand : dp1_rand;
 
+        
         // Generate masks 
         // Fixed: single
         mask_single_fixed = (crossover_single_point == 0) ? '0 :
                             (crossover_single_point >= CHROMOSOME_WIDTH) ? 
                               {CHROMOSOME_WIDTH{1'b1}} :
                               ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - crossover_single_point));
-
+        parent2_shifted_fixed = (parent2<<crossover_single_point);
+        
         // Fixed: double
         if (crossover_double_point1 == crossover_double_point2) begin
             mask_double_fixed = mask_single_fixed; // same as single if identical
         end else begin
-            mask_double_fixed = ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - p2_fixed))
+            mask_double_fixed = ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - p2_fixed-1))
                               ^ ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - p1_fixed));
+            parent2_shifted_double_p2 = (parent2<< (p2_fixed+1));
+            parent2_shifted_double_p1 = (parent2>>  (CHROMOSOME_WIDTH-p1_fixed-1));                  
         end
 
         // Float: single
@@ -124,9 +129,9 @@ module crossover #(
                     // Fixed
                     2'b00: begin
                         if (!crossover_single_double) begin
-                            child <= (parent2 & ~mask_single_fixed) | (parent1 & mask_single_fixed);
+                            child <= (parent2_shifted_fixed & ~mask_single_fixed) | (parent1 & mask_single_fixed);
                         end else begin
-                            child <= (parent1 & mask_double_fixed) | (parent2 & ~mask_double_fixed);
+                            child <= (parent1 & mask_double_fixed) | (parent2_shifted_double_p2)| (parent2_shifted_double_p1);
                         end
                         crossover_done <= 1'b1;
                     end
