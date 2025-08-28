@@ -143,12 +143,12 @@ module GA_top_manual_tb;
     endfunction
 
         logic [15:0] allowed_vals [0:5] = {
-            16'h0000,
+            16'h0300,
             16'h0101,
             16'h0010,
-            16'h2000,
+            16'h2001,
             16'h0003,
-            16'h0004
+            16'h3004
         };
         int idx = 0;
 
@@ -158,8 +158,8 @@ module GA_top_manual_tb;
         start_ga = 0;
         load_initial_population = 0;
         data_in = 0;
-        crossover_mode = 2'b00;
-        crossover_single_double = 1'b0;
+        crossover_mode = 2'b01;
+        crossover_single_double = 1'b1;
         crossover_single_point = 8;
         crossover_double_point1 = 0;
         crossover_double_point2 = 0;
@@ -178,7 +178,7 @@ module GA_top_manual_tb;
         @(posedge load_data_now); // Wait for GA to signal readiness
         @(negedge clk); // Synchronize data_in update with clock
         idx = $urandom_range(5, 0);
-        data_in = allowed_vals[idx]; // Set the seeded chromosome
+        data_in = allowed_vals[idx]; // Set the seeded chromosome16'h0001;
     end
     @(negedge clk);
     load_initial_population = 0;
@@ -264,16 +264,15 @@ end
 
 // ---------- Close file ----------
 always @(posedge clk) begin
-    if (done) begin
-        $display("** GA Done at t=%0t, iterations=%0d, best=0x%0h fitness=%0d",
+    if (perfect_found) begin
+        $display("** GA found perfect at t=%0t, iterations=%0d, best=0x%0h fitness=%0d",
                  $time, iteration_count, best_chromosome, best_fitness);
-        #100 $finish;
         $stop;
     end
 end
 
 final begin
 $fclose(log_file); end
-    
+   
 endmodule
 
