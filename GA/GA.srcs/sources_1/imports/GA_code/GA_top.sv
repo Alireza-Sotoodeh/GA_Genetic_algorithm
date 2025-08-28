@@ -40,6 +40,7 @@ module ga_top #(
     // Status & Results Outputs
     output logic                                busy,                   // GA is currently running
     output logic                                done,                   // GA has finished
+    output logic                                load_data_now,          // Pulse indicating to load next chromosome
     output logic                                perfect_found,          // Flag for when the perfect chromosome is found
     output logic [CHROMOSOME_WIDTH-1:0]         best_chromosome,        // The best chromosome from the population
     output logic [FITNESS_WIDTH-1:0]            best_fitness,           // Fitness of the best chromosome
@@ -414,6 +415,9 @@ module ga_top #(
     assign best_chromosome = pop_mem_inst.population[0];
     assign best_fitness = pop_mem_inst.fitness_values[0];
 
+    // Pulse to signal readiness for the next initial chromosome
+    assign load_data_now = (state == S_INIT) && pop_write_done;
+    
     // Status signals
     assign busy = (state == S_INIT || state == S_RUNNING);
     assign done = (state == S_DONE);

@@ -116,9 +116,9 @@ module crossover_manual_tb;
         repeat (5) @(posedge clk);
         
         start_crossover = 1;
-        parent1 = 16'h0001;
-        parent2 = 16'h1000;
-        crossover_mode = 0;
+        parent1 = 16'hFFFF;
+        parent2 = 16'h0000;
+        crossover_mode = 1;
         crossover_single_double = 0;
         crossover_single_point = 8;
         crossover_double_point1 = 5;
