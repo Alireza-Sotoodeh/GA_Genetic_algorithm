@@ -108,12 +108,11 @@ module population_memory #(
                 // Cycle 1: Start write, set flag (prep done in comb)
                 writing <= 1'b1;
 			end else if (writing) begin
-                // Cycle 2: Perform insertion, update total_fitness incrementally, pulse done
-                // Incremental update: subtract removed (worst), add new (handles overflow by widening)
-                internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
+                // Cycle 2: Perform insertion only if beneficial, always pulse done
 
-                // Insertion: shift down from insert_pos to end, insert new, effectively remove worst
                 if (insert_found) begin
+                    // Insert and shift if better than some (unchanged)
+                    internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
                     for (int j = POPULATION_SIZE-1; j > insert_pos; j--) begin
                         population[j] <= population[j-1];
                         fitness_values[j] <= fitness_values[j-1];
@@ -121,9 +120,13 @@ module population_memory #(
                     population[insert_pos] <= child_in;
                     fitness_values[insert_pos] <= child_fitness_in;
                 end else begin
-                    // Not better than any: replace worst
-                    population[insert_pos] <= child_in;
-                    fitness_values[insert_pos] <= child_fitness_in;
+                    // Replace worst ONLY if child is strictly better (elitism)
+                    if (child_fitness_in > old_fitness_remove) begin
+                        internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
+                        population[insert_pos] <= child_in;
+                        fitness_values[insert_pos] <= child_fitness_in;
+                    end
+                    // Else: Discard child, no change to population or total_fitness
                 end
 
                 write_done <= 1'b1;
