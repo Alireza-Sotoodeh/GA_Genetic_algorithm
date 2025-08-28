@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5074166fs"></ZoomStartTime>
-      <ZoomEndTime time="5465167fs"></ZoomEndTime>
-      <Cursor1Time time="5400000fs"></Cursor1Time>
+      <ZoomStartTime time="785415fs"></ZoomStartTime>
+      <ZoomEndTime time="2563927fs"></ZoomEndTime>
+      <Cursor1Time time="1600000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="330"></NameColumnWidth>
-      <ValueColumnWidth column_width="282"></ValueColumnWidth>
+      <ValueColumnWidth column_width="876"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="97" />
+   <WVObjectSize size="98" />
    <wvobject fp_name="/GA_top_manual_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -116,6 +116,96 @@
    <wvobject fp_name="/GA_top_manual_tb/init_counter" type="array">
       <obj_property name="ElementShortName">init_counter[3:0]</obj_property>
       <obj_property name="ObjectShortName">init_counter[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population" type="array">
+      <obj_property name="ElementShortName">population[15:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">population[15:0][15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[15]" type="array">
+         <obj_property name="ElementShortName">[15][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[15][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[14]" type="array">
+         <obj_property name="ElementShortName">[14][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[14][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[13]" type="array">
+         <obj_property name="ElementShortName">[13][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[13][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[12]" type="array">
+         <obj_property name="ElementShortName">[12][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[12][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[11]" type="array">
+         <obj_property name="ElementShortName">[11][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[11][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[10]" type="array">
+         <obj_property name="ElementShortName">[10][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[10][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[9]" type="array">
+         <obj_property name="ElementShortName">[9][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[9][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[8]" type="array">
+         <obj_property name="ElementShortName">[8][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[8][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[7]" type="array">
+         <obj_property name="ElementShortName">[7][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[7][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[6]" type="array">
+         <obj_property name="ElementShortName">[6][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[6][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[5]" type="array">
+         <obj_property name="ElementShortName">[5][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[5][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[4]" type="array">
+         <obj_property name="ElementShortName">[4][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[4][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[3]" type="array">
+         <obj_property name="ElementShortName">[3][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[2]" type="array">
+         <obj_property name="ElementShortName">[2][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[1]" type="array">
+         <obj_property name="ElementShortName">[1][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population[0]" type="array">
+         <obj_property name="ElementShortName">[0][15:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/child_fitness_in" type="array">
+      <obj_property name="ElementShortName">child_fitness_in[13:0]</obj_property>
+      <obj_property name="ObjectShortName">child_fitness_in[13:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="divider" fp_name="divider215">
@@ -267,11 +357,6 @@
       <obj_property name="ElementShortName">p_child_mutated[15:0]</obj_property>
       <obj_property name="ObjectShortName">p_child_mutated[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/GA_top_manual_tb/p_child_fitness" type="array">
-      <obj_property name="ElementShortName">p_child_fitness[13:0]</obj_property>
-      <obj_property name="ObjectShortName">p_child_fitness[13:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/pop_mem_parent1_out" type="array">
       <obj_property name="ElementShortName">pop_mem_parent1_out[15:0]</obj_property>
       <obj_property name="ObjectShortName">pop_mem_parent1_out[15:0]</obj_property>
@@ -381,7 +466,6 @@
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population" type="array">
       <obj_property name="ElementShortName">population[15:0][15:0]</obj_property>
       <obj_property name="ObjectShortName">population[15:0][15:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/fitness_values" type="array">
