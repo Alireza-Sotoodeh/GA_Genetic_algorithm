@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5320152fs"></ZoomStartTime>
-      <ZoomEndTime time="5705153fs"></ZoomEndTime>
-      <Cursor1Time time="5530152fs"></Cursor1Time>
+      <ZoomStartTime time="5074166fs"></ZoomStartTime>
+      <ZoomEndTime time="5465167fs"></ZoomEndTime>
+      <Cursor1Time time="5400000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="330"></NameColumnWidth>
-      <ValueColumnWidth column_width="288"></ValueColumnWidth>
+      <ValueColumnWidth column_width="282"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="97" />
    <wvobject fp_name="/GA_top_manual_tb/clk" type="logic">
@@ -367,6 +367,8 @@
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/fitness_values_out" type="array">
       <obj_property name="ElementShortName">fitness_values_out[15:0][13:0]</obj_property>
       <obj_property name="ObjectShortName">fitness_values_out[15:0][13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/total_fitness_out" type="array">
       <obj_property name="ElementShortName">total_fitness_out[13:0]</obj_property>
@@ -385,6 +387,7 @@
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/fitness_values" type="array">
       <obj_property name="ElementShortName">fitness_values[15:0][13:0]</obj_property>
       <obj_property name="ObjectShortName">fitness_values[15:0][13:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/internal_total_fitness" type="array">
       <obj_property name="ElementShortName">internal_total_fitness[14:0]</obj_property>
