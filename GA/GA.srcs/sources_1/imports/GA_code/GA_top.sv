@@ -1,23 +1,32 @@
 `timescale 1ns/1ps
-
+/***************************************************************************************************
+*  File Name   : GA_top.sv
+*  Author      : Alireza Sotoodeh
+*  Instructor  : Dr. Ali Mahani
+*  Date        : 2025-08
+*  Module Type : Genetic Algorithm - Top Level
+*
+*  Description:
+*    Coordinates the GA pipeline: selection, crossover, mutation, fitness evaluation,
+*    and population update. Includes LFSR-based randomness and control FSMs for
+*    initialization, iteration, and termination.
+***************************************************************************************************/
+(* keep_hierarchy = "yes" *)
 module ga_top #(
-    // General GA Parameters
     parameter CHROMOSOME_WIDTH = 16,
     parameter FITNESS_WIDTH = 14,
     parameter MAX_POP_SIZE = 100,
     parameter ADDR_WIDTH = $clog2(MAX_POP_SIZE),
     parameter LFSR_WIDTH = 16
 )(
-    //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    // Control & Clocking
+    //'''''''''''''''''''''''''''''''''''Inputs'''''''''''''''''''''''''''''''''''
+
     input  logic                                clk,
     input  logic                                rst,
-    input  logic                                start_ga, // Pulse to start the entire GA process
+    input  logic                                start_ga, 
     input  logic [ADDR_WIDTH-1:0]               population_size,
-
-    // Initial Population Seeding (Optional)
-    input  logic                                load_initial_population,    // Pulse to load one seed chromosome
-    input  logic [CHROMOSOME_WIDTH-1:0]         data_in,                 // The seed chromosome to load
+    input  logic                                load_initial_population,    
+    input  logic [CHROMOSOME_WIDTH-1:0]         data_in,                 
 
     // Crossover Parameters
     input  logic [1:0]                          crossover_mode,
@@ -33,19 +42,18 @@ module ga_top #(
     input  logic [7:0]                          mutation_rate,
 
     // Termination Condition
-    input  logic [31:0]                         target_iteration, // How many generations to run
+    input  logic [31:0]                         target_iteration, 
 
-    //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    //'''''''''''''''''''''''''''''''''''Outputs'''''''''''''''''''''''''''''''''''
     // Status & Results Outputs
-    output logic                                busy,                   // GA is currently running
-    output logic                                done,                   // GA has finished
+    output logic                                busy,                   
+    output logic                                done,                   
     output logic                                load_data_now,          // Pulse indicating to load next chromosome
-    output logic                                perfect_found,          // Flag for when the perfect chromosome is found
-    output logic [CHROMOSOME_WIDTH-1:0]         best_chromosome,        // The best chromosome from the population
-    output logic [FITNESS_WIDTH-1:0]            best_fitness,           // Fitness of the best chromosome
+    output logic                                perfect_found,          
+    output logic [CHROMOSOME_WIDTH-1:0]         best_chromosome,        
+    output logic [FITNESS_WIDTH-1:0]            best_fitness,           
     output logic [31:0]                         iteration_count,        // Current generation number
     output logic [31:0]                         crossovers_to_perfect,  // Generations it took to find the perfect solution
-    // Legacy outputs from original request
     output logic [CHROMOSOME_WIDTH-1:0]         data_out,
     output logic [ADDR_WIDTH-1:0]               number_of_chromosomes
 );
@@ -62,7 +70,7 @@ module ga_top #(
     } state_t;
     state_t state, next_state;
 
-    // Pipeline FSM States (controls the main GA loop)
+    // Pipeline FSM States 
     typedef enum logic [2:0] {
         P_IDLE      = 3'b000,
         P_SELECT    = 3'b001,

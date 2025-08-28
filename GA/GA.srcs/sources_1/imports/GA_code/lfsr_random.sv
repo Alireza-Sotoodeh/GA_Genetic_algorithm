@@ -1,6 +1,16 @@
 `timescale 1ns/1ps
-
-(* keep_hierarchy = "yes" *) //to prevent from begin changed by optimizer
+/***************************************************************************************************
+*  File Name   : lfsr_random_TB.sv
+*  Author      : Alireza Sotoodeh
+*  Instructor  : Dr. Ali Mahani
+*  Date        : 2025-08
+*  Module Type : Testbench - LFSR Sudo-Random Number Generator
+*
+*  Description:
+*    Verifies the LFSR module by generating pseudo-random outputs, loading seeds,
+*    and checking sequential outputs in simulation. used a Whitening for more randomness.
+***************************************************************************************************/
+(* keep_hierarchy = "yes" *) 
 module lfsr_SudoRandom #(
     parameter WIDTH1 = 16, 
     parameter WIDTH2 = 15, 
@@ -22,19 +32,17 @@ module lfsr_SudoRandom #(
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     //inputs
     input  logic                   clk;
-    input  logic                   rst;           // high active rst
-    input  logic                   start_lfsr;    // step enable
-    input  logic [WIDTH1+WIDTH2+WIDTH3+WIDTH4-1:0] seed_in; // single seed input and max = 288230376151711743
-    input  logic                   load_seed;     // reseed all LFSRs
+    input  logic                   rst;           
+    input  logic                   start_lfsr;    
+    input  logic [WIDTH1+WIDTH2+WIDTH3+WIDTH4-1:0] seed_in; // 58 bit max = 288230376151711743
+    input  logic                   load_seed;    
     
     //outputs
     output logic [WIDTH1-1:0]      random_out;     // final whitened output
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-	//============================================================
-	// define logics 
-    //============================================================
-    // Use SRL16E for efficient shift register implementation
+
+	// Internal signals
     (* srl_style = "srl" *)          // SRL LUTs for compact implementation
     (* shreg_extract = "yes" *)      // Extract as shift registers
     (* keep = "true" *)              // Prevent optimization
@@ -55,33 +63,37 @@ module lfsr_SudoRandom #(
     (* keep = "true" *)
     logic [WIDTH4-1:0] lfsr4;
 
-    // Feedback logic - optimize with LUTs
+    // Feedback logic 
     (* keep = "true" *)
     (* lut1 = "yes" *)               // Pack into single LUTs
     logic fb1, fb2, fb3, fb4;
 
     // Combined output logic
-    (* use_dsp = "no" *)           // DON'T use DSP
+    (* use_dsp = "no" *)           	// DON'T use DSP
     (* keep = "true" *)
     logic [WIDTH1-1:0] combined;
-	//============================================================
+	
+	//====================================================================
 	// Primitive polynomials for maximum period (width_independency_space)
-    //============================================================
+    //====================================================================
     assign fb1 = lfsr1[WIDTH1-1] ^ lfsr1[WIDTH1-3] ^ lfsr1[WIDTH1-4] ^ lfsr1[WIDTH1-6];       // x^16 + x^14 + x^13 + x^11 
     assign fb2 = lfsr2[WIDTH2-1] ^ lfsr2[WIDTH2-2] ^ lfsr2[WIDTH2-4] ^ lfsr2[WIDTH2-5];       // x^15 + x^14 + x^12 + x^10  
     assign fb3 = lfsr3[WIDTH3-1] ^ lfsr3[WIDTH3-3] ^ lfsr3[WIDTH3-5] ^ lfsr3[WIDTH3-7];       // x^14 + x^12 + x^10 + x^8
     assign fb4 = lfsr4[WIDTH4-1] ^ lfsr4[WIDTH4-2] ^ lfsr4[WIDTH4-4] ^ lfsr4[WIDTH4-5];       // x^13 + x^12 + x^10 + x^9 
-
-    // Shift registers update
+	
+    // ============================
+	// (Sequential part)
+    // Main lfsr_SudoRandom process 
+    // ============================
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
-            // default non-zero seeds
+            // default: load non-zero seeds
             lfsr1 <= defualtSeed1;
             lfsr2 <= defualtSeed2;
             lfsr3 <= defualtSeed3;
             lfsr4 <= defualtSeed4;
         end else if (load_seed) begin
-            // Slice the single seed 
+            // Slice the single seed (58 bit input seed)
             lfsr1 <= seed_in[WIDTH1+WIDTH2+WIDTH3+WIDTH4-1 : WIDTH2+WIDTH3+WIDTH4];
             lfsr2 <= seed_in[WIDTH2+WIDTH3+WIDTH4-1 : WIDTH3+WIDTH4];
             lfsr3 <= seed_in[WIDTH3+WIDTH4-1 : WIDTH4];
@@ -93,12 +105,18 @@ module lfsr_SudoRandom #(
             lfsr4 <= {fb4, lfsr4[WIDTH4-1:1]};
         end
     end
-
+	
+	
+	// =============================
+    // Combinational part for output 
+    // =============================
+	
     // Combine all LFSRs via XOR  (by default first num would be A835 hex)
     assign combined = lfsr1 ^ {{(WIDTH1-WIDTH2){1'b0}}, lfsr2} ^ {{(WIDTH1-WIDTH3){1'b0}}, lfsr3} ^ {{(WIDTH1-WIDTH4){1'b0}}, lfsr4};
 
-    // Whitening: XOR with shifted versions
+    // Whitening: XOR with shifted versions (for more random output)
     always_comb begin
         random_out = combined  ^ (combined >> 7) ^ (combined << 3);
     end
+	
 endmodule

@@ -1,4 +1,15 @@
 `timescale 1ns/1ps
+/***************************************************************************************************
+*  File Name   : crossover.sv
+*  Author      : Alireza Sotoodeh
+*  Instructor  : Dr. Ali Mahani
+*  Date        : 2025-08
+*  Module Type : Genetic Algorithm - Crossover Unit
+*
+*  Description:
+*    Generates offspring chromosomes from two parents using fixed, floating, or uniform crossover.
+*    Supports single- and double-point variations with optional LFSR driver for randomness.
+***************************************************************************************************/
 
 (* keep_hierarchy = "yes" *)
 module crossover #(
@@ -59,14 +70,17 @@ module crossover #(
     // =========================
     // Combinational preparation
     // =========================
+	// creating mask for different mode due to constant error 
     always_comb begin
+	
         // Slice LSFR for random points (float mode)
         localparam PWIDTH = $clog2(CHROMOSOME_WIDTH);
         sp_rand  = LFSR_input[PWIDTH-1:0];
         dp1_rand = LFSR_input[(2*PWIDTH)-1:PWIDTH];
         dp2_rand = LFSR_input[(3*PWIDTH)-1:(2*PWIDTH)];
 
-        // ---- Sort double points ----
+        // -------- Sort double points --------
+		// fixed 
 		(* keep = "true", lut1 = "yes" *)
         p1_fixed = (crossover_double_point1 < crossover_double_point2) 
                    ? crossover_double_point1 : crossover_double_point2;
@@ -80,7 +94,7 @@ module crossover #(
         p2_float = (dp1_rand < dp2_rand) ? dp2_rand : dp1_rand;
 
         
-        // Generate masks 
+        // -------- mask Generator -------- 
         // Fixed: single
         mask_single_fixed = (crossover_single_point == 0) ? '0 :
                             (crossover_single_point >= CHROMOSOME_WIDTH) ? 
@@ -120,8 +134,9 @@ module crossover #(
                                                     : mask_uniform;
     end
 
-    // =========================
-    // Main crossover process
+    // ========================= 
+	// (Sequential part)
+    // Main crossover process 
     // =========================
     (* use_dsp = "no" *)
     always_ff @(posedge clk or posedge rst) begin
