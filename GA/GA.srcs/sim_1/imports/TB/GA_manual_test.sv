@@ -1,16 +1,20 @@
 `timescale 1ns/1ps
 module GA_top_manual_tb;
-
+    
+    localparam CHROMOSOME_WIDTH_TB    = 16;
+    localparam FITNESS_WIDTH_TB       = 14;
+    
+    
     reg clk;
     reg rst;
     reg start_ga;
     reg load_initial_population;
-    reg [15:0] data_in;
+    reg [CHROMOSOME_WIDTH_TB-1:0] data_in;
     reg [1:0] crossover_mode;
     reg crossover_single_double;
-    reg [$clog2(16):0] crossover_single_point;
-    reg [$clog2(16):0] crossover_double_point1;
-    reg [$clog2(16):0] crossover_double_point2;
+    reg [$clog2(CHROMOSOME_WIDTH_TB):0] crossover_single_point;
+    reg [$clog2(CHROMOSOME_WIDTH_TB):0] crossover_double_point1;
+    reg [$clog2(CHROMOSOME_WIDTH_TB):0] crossover_double_point2;
     reg [15:0] uniform_crossover_mask;
     reg uniform_random_enable;
     reg [2:0] mutation_mode;
@@ -20,11 +24,12 @@ module GA_top_manual_tb;
     wire busy;
     wire done;
     wire perfect_found;
-    wire [15:0] best_chromosome;
-    wire [13:0] best_fitness;
+    wire [CHROMOSOME_WIDTH_TB-1:0] best_chromosome;
+    wire [FITNESS_WIDTH_TB-1:0] best_fitness;
     wire [31:0] iteration_count;
+    wire load_data_now;
     wire [31:0] crossovers_to_perfect;
-    wire [15:0] data_out;
+    wire [CHROMOSOME_WIDTH_TB-1:0] data_out;
     wire [3:0]  number_of_chromosomes;
 
     wire [1:0] state, next_state;
@@ -69,6 +74,7 @@ module GA_top_manual_tb;
         .target_iteration(target_iteration),
         .busy(busy),
         .done(done),
+        .load_data_now(load_data_now),
         .perfect_found(perfect_found),
         .best_chromosome(best_chromosome),
         .best_fitness(best_fitness),
@@ -125,6 +131,24 @@ module GA_top_manual_tb;
         forever #50 clk = ~clk;
     end
 //```````````````````````````````````````````````````````````````````````````
+    function automatic int count_ones(input logic [CHROMOSOME_WIDTH_TB-1:0] value);
+        int cnt = 0;
+        for (int b = 0; b < CHROMOSOME_WIDTH_TB; b++) begin
+            if (value[b]) cnt++;
+        end
+        return cnt;
+    endfunction
+
+        logic [15:0] allowed_vals [0:5] = {
+            16'h0000,
+            16'h0101,
+            16'h0010,
+            16'h2000,
+            16'h0003,
+            16'h0004
+        };
+        int idx = 0;
+
 
     initial begin
         rst = 1;
@@ -147,9 +171,14 @@ module GA_top_manual_tb;
         start_ga = 1;
         load_initial_population = 1;
         data_in = 4'h0001;
-        @(next_pipeline_state!=00);
-        load_initial_population = 0;
-        data_in = 4'h0000;
+        for (int i = 0; i < 16; i++) begin
+        @(posedge load_data_now); // Wait for GA to signal readiness
+        @(negedge clk); // Synchronize data_in update with clock
+        idx = $urandom_range(5, 0);
+        data_in = allowed_vals[idx]; // Set the seeded chromosome
+    end
+    @(negedge clk);
+    load_initial_population = 0;
     end
     
 
