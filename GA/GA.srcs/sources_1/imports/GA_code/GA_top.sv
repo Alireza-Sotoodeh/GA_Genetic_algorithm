@@ -4,9 +4,7 @@ module ga_top #(
     // General GA Parameters
     parameter CHROMOSOME_WIDTH = 16,
     parameter FITNESS_WIDTH = 14,
-    parameter POPULATION_SIZE = 16,
-
-    // Derived Parameters
+    parameter POPULATION_SIZE = 100,
     parameter ADDR_WIDTH = $clog2(POPULATION_SIZE),
     parameter LFSR_WIDTH = 16
 )(
@@ -17,7 +15,7 @@ module ga_top #(
     input  logic                                start_ga, // Pulse to start the entire GA process
 
     // Initial Population Seeding (Optional)
-    input  logic                                load_initial_population, // Pulse to load one seed chromosome
+    input  logic                                load_initial_population,    // Pulse to load one seed chromosome
     input  logic [CHROMOSOME_WIDTH-1:0]         data_in,                 // The seed chromosome to load
 
     // Crossover Parameters
