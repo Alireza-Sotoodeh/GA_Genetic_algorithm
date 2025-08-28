@@ -3,8 +3,8 @@
 module population_memory #(
     parameter CHROMOSOME_WIDTH = 16,
     parameter FITNESS_WIDTH = 14,
-    parameter MAX_POP_SIZE = 100,
-    parameter ADDR_WIDTH = $clog2(MAX_POP_SIZE)
+    parameter POPULATION_SIZE = 16,
+    parameter ADDR_WIDTH = $clog2(POPULATION_SIZE)
 )(
     clk,
     rst,
@@ -19,8 +19,7 @@ module population_memory #(
     parent2_out,                
     fitness_values_out,         
     total_fitness_out,          
-    write_done,
-    population_size                 
+    write_done                 
 );
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     // Inputs
@@ -33,19 +32,18 @@ module population_memory #(
     input  logic [ADDR_WIDTH-1:0]               read_addr2;
     input  logic                                request_fitness_values;
     input  logic                                request_total_fitness;
-    input  logic [ADDR_WIDTH-1:0]               population_size;
 
     // Outputs
     output logic [CHROMOSOME_WIDTH-1:0]         parent1_out;
     output logic [CHROMOSOME_WIDTH-1:0]         parent2_out;
-    output logic [FITNESS_WIDTH-1:0]            fitness_values_out [MAX_POP_SIZE-1:0];
+    output logic [FITNESS_WIDTH-1:0]            fitness_values_out [POPULATION_SIZE-1:0];
     output logic [FITNESS_WIDTH-1:0]            total_fitness_out;
     output logic                                write_done;
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     // Internal storage: arrays for chromosomes and fitness (kept sorted descending by fitness)
-    (* ram_style = "block" *) logic [CHROMOSOME_WIDTH-1:0] population [MAX_POP_SIZE-1:0];
-    (* ram_style = "block" *) logic [FITNESS_WIDTH-1:0]    fitness_values [MAX_POP_SIZE-1:0];
+    (* ram_style = "block" *) logic [CHROMOSOME_WIDTH-1:0] population [POPULATION_SIZE-1:0];
+    (* ram_style = "block" *) logic [FITNESS_WIDTH-1:0]    fitness_values [POPULATION_SIZE-1:0];
     logic [FITNESS_WIDTH:0]                      internal_total_fitness;  // Accumulator (widened by 1 bit to handle overflow detection)
 
     // Pipeline internals (to prevent read/write conflicts, enable simultaneous operations)
@@ -69,18 +67,20 @@ module population_memory #(
         end else begin
             fitness_values_out = '{default: '0};
         end
+        //fitness_values_out = fitness_values;
         if (request_total_fitness) begin
             total_fitness_out = internal_total_fitness[FITNESS_WIDTH-1:0];  // Truncate if overflowed
         end else begin
             total_fitness_out = '0;
         end
 
-        // Prepare insertion (linear search for insert_pos, O(N) ok for small sizes)
-        insert_pos = population_size - 1;  // Default: replace worst
+        // Prepare insertion (linear search for insert_pos, assuming small POPULATION_SIZE=16, O(N) ok)
+        // Assume sorted descending: fitness_values[0] highest, [POPULATION_SIZE-1] lowest
+        insert_pos = POPULATION_SIZE - 1;  // Default: replace worst
         insert_found = 1'b0;
-        old_fitness_remove = (population_size > 0) ? fitness_values[population_size-1] : '0;  // Worst by default
-        for (int i = 0; i < MAX_POP_SIZE; i++) begin
-            if (i < population_size && child_fitness_in > fitness_values[i]) begin
+        old_fitness_remove = fitness_values[POPULATION_SIZE-1];  // Worst by default
+        for (int i = 0; i < POPULATION_SIZE; i++) begin
+            if (child_fitness_in > fitness_values[i]) begin
                 insert_pos = i[ADDR_WIDTH-1:0];
                 insert_found = 1'b1;
                 break;  // Insert here, will shift rest down
@@ -94,7 +94,7 @@ module population_memory #(
     (* use_dsp = "no" *)
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
-            for (int i = 0; i < MAX_POP_SIZE; i++) begin
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
                 population[i] <= '0;
                 fitness_values[i] <= '0;
             end
@@ -104,35 +104,36 @@ module population_memory #(
         end else begin
             // Default: Deassert done for one-cycle pulse
             write_done <= 1'b0;
-            if (start_write && !writing) begin
+			if (start_write && !writing) begin
                 // Cycle 1: Start write, set flag (prep done in comb)
                 writing <= 1'b1;
-            end else if (writing) begin
+			end else if (writing) begin
                 // Cycle 2: Perform insertion only if beneficial, always pulse done
+
                 if (insert_found) begin
-                    // Insert and shift if better than some
+                    // Insert and shift if better than some (unchanged)
                     internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
-                    for (int j = MAX_POP_SIZE-1; j >= 0; j--) begin
-                        if (j > insert_pos && j < population_size) begin
-                            population[j] <= population[j-1];
-                            fitness_values[j] <= fitness_values[j-1];
-                        end
+                    for (int j = POPULATION_SIZE-1; j > insert_pos; j--) begin
+                        population[j] <= population[j-1];
+                        fitness_values[j] <= fitness_values[j-1];
                     end
                     population[insert_pos] <= child_in;
                     fitness_values[insert_pos] <= child_fitness_in;
                 end else begin
                     // Replace worst ONLY if child is strictly better (elitism)
-                    if (child_fitness_in > old_fitness_remove && population_size > 0) begin
+                    if (child_fitness_in > old_fitness_remove) begin
                         internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
                         population[insert_pos] <= child_in;
                         fitness_values[insert_pos] <= child_fitness_in;
                     end
                     // Else: Discard child, no change to population or total_fitness
                 end
+
                 write_done <= 1'b1;
                 writing <= 1'b0;
             end
-            // Handle potential issues (e.g., overflow): if widened bit set, saturate
+
+            // Handle potential issues (e.g., overflow): if widened bit set, saturate (optional, can assert error)
             if (internal_total_fitness[FITNESS_WIDTH]) begin
                 internal_total_fitness <= {1'b0, {FITNESS_WIDTH{1'b1}}};  // Saturate to max
             end

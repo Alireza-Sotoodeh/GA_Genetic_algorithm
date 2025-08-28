@@ -3,8 +3,8 @@
 module selection #(
     parameter CHROMOSOME_WIDTH = 16,
     parameter FITNESS_WIDTH = 14,
-    parameter MAX_POP_SIZE = 100,
-    parameter ADDR_WIDTH = $clog2(MAX_POP_SIZE),
+    parameter POPULATION_SIZE = 16,
+    parameter ADDR_WIDTH = $clog2(POPULATION_SIZE),
     parameter LFSR_WIDTH = 16      // For random input, matches crossover
 )(
     clk,
@@ -15,18 +15,16 @@ module selection #(
     lfsr_input,                 // External random like crossover
     selected_index1,            // Output index1 for parent1 (to population_memory read_addr1)
     selected_index2,            // Output index2 for parent2 (to population_memory read_addr2)
-    selection_done,
-    population_size
+    selection_done
 );
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     // Inputs (similar to crossover style)
     input  logic                                clk;
     input  logic                                rst;  // Active-high like crossover
     input  logic                                start_selection;
-    input  logic [FITNESS_WIDTH-1:0]            fitness_values [MAX_POP_SIZE-1:0];
+    input  logic [FITNESS_WIDTH-1:0]            fitness_values [POPULATION_SIZE-1:0];
     input  logic [FITNESS_WIDTH-1:0]            total_fitness;
     input  logic [LFSR_WIDTH-1:0]               lfsr_input;  // External random
-    input  logic [ADDR_WIDTH-1:0]               population_size;
 
     // Outputs
     output logic [ADDR_WIDTH-1:0]               selected_index1;
@@ -52,8 +50,8 @@ module selection #(
         
         // Generate two different positions (use lfsr_input split/modified for difference)
         if (total_fitness_zero) begin
-            roulette_pos1 = lfsr_input % population_size;  // Uniform random index
-            roulette_pos2 = (lfsr_input ^ (lfsr_input >> (LFSR_WIDTH/2))) % population_size;  // XOR for difference (ensure != pos1)
+            roulette_pos1 = lfsr_input % POPULATION_SIZE;  // Uniform random index
+            roulette_pos2 = (lfsr_input ^ (lfsr_input >> (LFSR_WIDTH/2))) % POPULATION_SIZE;  // XOR for difference (ensure != pos1)
             selected_index1_comb = roulette_pos1[ADDR_WIDTH-1:0];
             selected_index2_comb = roulette_pos2[ADDR_WIDTH-1:0];
             fitness_sum1 = '0;
@@ -69,31 +67,31 @@ module selection #(
             // Comb loop for selection1 (unrollable, single-cycle, using flag instead of break)
             fitness_sum1 = '0;
             selected_index1_comb = '0;
-            for (int i = 0; i < MAX_POP_SIZE; i++) begin
-                if (i < population_size && !found1 && (fitness_sum1 + fitness_values[i] > roulette_pos1)) begin
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
+                if (!found1 && (fitness_sum1 + fitness_values[i] > roulette_pos1)) begin
                     selected_index1_comb = i[ADDR_WIDTH-1:0];
                     found1 = 1'b1;
                 end
-                if (i < population_size) fitness_sum1 += fitness_values[i];
+                fitness_sum1 += fitness_values[i];
             end
-            if (!found1 && population_size > 0) selected_index1_comb = population_size - 1;  // Edge: last
+            if (!found1) selected_index1_comb = POPULATION_SIZE - 1;  // Edge: last
 
             // Comb loop for selection2 (parallel)
             fitness_sum2 = '0;
             selected_index2_comb = '0;
-            for (int i = 0; i < MAX_POP_SIZE; i++) begin
-                if (i < population_size && !found2 && (fitness_sum2 + fitness_values[i] > roulette_pos2)) begin
+            for (int i = 0; i < POPULATION_SIZE; i++) begin
+                if (!found2 && (fitness_sum2 + fitness_values[i] > roulette_pos2)) begin
                     selected_index2_comb = i[ADDR_WIDTH-1:0];
                     found2 = 1'b1;
                 end
-                if (i < population_size) fitness_sum2 += fitness_values[i];
+                fitness_sum2 += fitness_values[i];
             end
-            if (!found2 && population_size > 0) selected_index2_comb = population_size - 1;
+            if (!found2) selected_index2_comb = POPULATION_SIZE - 1;
         end
 
         // Ensure different indices (re-assign if same; simple: swap with next if equal)
-        if (selected_index1_comb == selected_index2_comb && population_size > 1) begin
-            selected_index2_comb = (selected_index2_comb + 1) % population_size;
+        if (selected_index1_comb == selected_index2_comb) begin
+            selected_index2_comb = (selected_index2_comb + 1) % POPULATION_SIZE;
         end
     end
 

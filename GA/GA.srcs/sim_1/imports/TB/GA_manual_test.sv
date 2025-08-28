@@ -16,6 +16,7 @@ module GA_top_manual_tb;
     reg clk;
     reg rst;
     reg start_ga;
+    reg [ADDR_WIDTH_TB-1:0] population_size;
     reg load_initial_population;
     reg [CHROMOSOME_WIDTH_TB-1:0] data_in;
 
@@ -82,6 +83,7 @@ module GA_top_manual_tb;
         .clk(clk),
         .rst(rst),
         .start_ga(start_ga),
+        .population_size(population_size),
         .load_initial_population(load_initial_population),
         .data_in(data_in),
         .crossover_mode(crossover_mode),
@@ -191,6 +193,7 @@ module GA_top_manual_tb;
         start_ga = 0;
         load_initial_population = 0;
         data_in = 0;
+        population_size = 10;
         // GA control settings
         crossover_mode = 2'b01;
         crossover_single_double = 1'b1;
@@ -209,7 +212,7 @@ module GA_top_manual_tb;
         load_initial_population = 1;
         data_in = 4'h0001; //first data in
         // Load initial population one chromosome per handshake
-        for (int i = 0; i < POPULATION_SIZE_TB; i++) begin
+        for (int i = 0; i < population_size; i++) begin
         @(posedge load_data_now); // Wait for GA to signal readiness
         @(negedge clk); // Synchronize data_in update with clock
         idx = $urandom_range(5, 0);
