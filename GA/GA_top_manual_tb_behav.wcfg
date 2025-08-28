@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="9940001fs"></ZoomEndTime>
-      <Cursor1Time time="707350000fs"></Cursor1Time>
+      <ZoomStartTime time="11770833fs"></ZoomStartTime>
+      <ZoomEndTime time="16005834fs"></ZoomEndTime>
+      <Cursor1Time time="15300000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="330"></NameColumnWidth>
-      <ValueColumnWidth column_width="638"></ValueColumnWidth>
+      <ValueColumnWidth column_width="288"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="75" />
+   <WVObjectSize size="76" />
    <wvobject fp_name="/GA_top_manual_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -129,8 +129,8 @@
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population" type="array">
-      <obj_property name="ElementShortName">population[99:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">population[99:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">population[0:99][15:0]</obj_property>
+      <obj_property name="ObjectShortName">population[0:99][15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/child_fitness_in" type="array">
@@ -297,6 +297,11 @@
       <obj_property name="ElementShortName">p_child_mutated[15:0]</obj_property>
       <obj_property name="ObjectShortName">p_child_mutated[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/GA_top_manual_tb/p_child_mutated" type="array">
+      <obj_property name="ElementShortName">p_child_mutated[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_child_mutated[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/pop_mem_parent1_out" type="array">
       <obj_property name="ElementShortName">pop_mem_parent1_out[15:0]</obj_property>
       <obj_property name="ObjectShortName">pop_mem_parent1_out[15:0]</obj_property>
@@ -316,8 +321,8 @@
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population" type="array">
-      <obj_property name="ElementShortName">population[99:0][15:0]</obj_property>
-      <obj_property name="ObjectShortName">population[99:0][15:0]</obj_property>
+      <obj_property name="ElementShortName">population[0:99][15:0]</obj_property>
+      <obj_property name="ObjectShortName">population[0:99][15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="Reversed">false</obj_property>
    </wvobject>
@@ -449,13 +454,13 @@
          <obj_property name="ObjectShortName">write_done</obj_property>
       </wvobject>
       <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/population" type="array">
-         <obj_property name="ElementShortName">population[99:0][15:0]</obj_property>
-         <obj_property name="ObjectShortName">population[99:0][15:0]</obj_property>
+         <obj_property name="ElementShortName">population[0:99][15:0]</obj_property>
+         <obj_property name="ObjectShortName">population[0:99][15:0]</obj_property>
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/fitness_values" type="array">
-         <obj_property name="ElementShortName">fitness_values[99:0][13:0]</obj_property>
-         <obj_property name="ObjectShortName">fitness_values[99:0][13:0]</obj_property>
+         <obj_property name="ElementShortName">fitness_values[0:99][13:0]</obj_property>
+         <obj_property name="ObjectShortName">fitness_values[0:99][13:0]</obj_property>
          <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/internal_total_fitness" type="array">
@@ -474,10 +479,6 @@
       <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/old_fitness_remove" type="array">
          <obj_property name="ElementShortName">old_fitness_remove[13:0]</obj_property>
          <obj_property name="ObjectShortName">old_fitness_remove[13:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GA_top_manual_tb/dut/pop_mem_inst/writing" type="logic">
-         <obj_property name="ElementShortName">writing</obj_property>
-         <obj_property name="ObjectShortName">writing</obj_property>
       </wvobject>
    </wvobject>
    <wvobject type="divider" fp_name="divider319">
