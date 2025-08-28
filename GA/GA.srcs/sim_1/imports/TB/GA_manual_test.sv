@@ -54,7 +54,9 @@ module GA_top_manual_tb;
     wire [31:0] perfect_counter_reg;
     wire perfect_found_latch;
     wire eval_init_pending, eval_pipe_pending;
-
+    wire [CHROMOSOME_WIDTH_TB-1:0] pop_mem_chromosomes [15:0];  // Array for all chromosomes in population
+    wire [CHROMOSOME_WIDTH_TB-1:0] child_in_memory;
+    wire start_write_memory;
     // ==== DUT ====
     ga_top dut (
         .clk(clk),
@@ -123,8 +125,9 @@ module GA_top_manual_tb;
     assign perfect_found_latch     = GA_top_manual_tb.dut.perfect_found_latch;
     assign eval_init_pending       = GA_top_manual_tb.dut.eval_init_pending;
     assign eval_pipe_pending       = GA_top_manual_tb.dut.eval_pipe_pending;
-    
-
+    assign pop_mem_chromosomes     = GA_top_manual_tb.dut.pop_mem_inst.population;
+    assign child_in_memory         = GA_top_manual_tb.dut.pop_mem_inst.child_in;
+    assign start_write_memory      = GA_top_manual_tb.dut.pop_mem_inst.start_write;
 //```````````````````````````````````````````````````````````````````````````
     initial begin
         clk = 0;
@@ -197,7 +200,7 @@ initial begin
         $finish;
     end
 
-    // ---------- Header (This part was already correct) ----------
+    // ---------- Header (Updated to include child_in_memory and start_write_memory) ----------
     $fwrite(log_file, "clk (Clock), clk_counter (Cycle), rst, start_ga, load_initial_population, data_in, ");
     $fwrite(log_file, "target_iteration, busy, done, perfect_found, best_chromosome, best_fitness, iteration_count, crossovers_to_perfect, data_out, ");
     $fwrite(log_file, "number_of_chromosomes, state, next_state, pipeline_state, next_pipeline_state, ");
@@ -207,26 +210,31 @@ initial begin
     $fwrite(log_file, "pop_mem_parent1_out, pop_mem_parent2_out, ");
     for (i = 0; i < 16; i = i + 1)
         $fwrite(log_file, "pop_mem_fitness_values_out[%0d], ", i);
+    // Headers for population chromosomes (from previous change)
+    for (i = 0; i < 16; i = i + 1)
+        $fwrite(log_file, "pop_mem_chromosomes[%0d], ", i);
+    // New: Add headers for child_in_memory and start_write_memory
+    $fwrite(log_file, "child_in_memory, start_write_memory, ");
     $fwrite(log_file, "pop_mem_total_fitness_out, start_lfsrs, rand_sel, rand_cross, rand_mut, ");
     $fwrite(log_file, "init_counter, perfect_counter_reg, perfect_found_latch, eval_init_pending, eval_pipe_pending, init_chromosome_in");
     $fdisplay(log_file, "");
 end
 
-// ---------- Data Logging (With the fix applied) ----------
+// ---------- Data Logging (Updated to include child_in_memory and start_write_memory) ----------
 always @(posedge clk) begin
     // First group
     $fwrite(log_file, "%b,%0d,%b,%b,%b,%h,", clk, clk_counter, rst, start_ga, load_initial_population, data_in);
     $fwrite(log_file, "%0d,%b,%b,%b,%h,%0d,%0d,%0d,%h,", target_iteration, busy, done, perfect_found, best_chromosome, best_fitness, iteration_count, crossovers_to_perfect, data_out);
-    
+
     // CORRECTED LINE: Added one more %b at the end for req_total_fitness
-    $fwrite(log_file, "%0d,%0d,%0d,%0d,%0d,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,", 
+    $fwrite(log_file, "%0d,%0d,%0d,%0d,%0d,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b,",
         number_of_chromosomes, state, next_state, pipeline_state, next_pipeline_state,
         start_select, select_done, start_cross, cross_done, start_mutate, mutate_done,
         start_eval_init, start_eval_pipe, eval_done, start_pop_write, pop_write_done,
         req_fitness, req_total_fitness);
 
     // Parent and child info
-    $fwrite(log_file, "%0d,%0d,%h,%h,%h,%h,%0d,%h,%h,", 
+    $fwrite(log_file, "%0d,%0d,%h,%h,%h,%h,%0d,%h,%h,",
         p_selected_idx1, p_selected_idx2,
         p_parent1, p_parent2, p_child_crossed, p_child_mutated, p_child_fitness,
         pop_mem_parent1_out, pop_mem_parent2_out);
@@ -236,6 +244,14 @@ always @(posedge clk) begin
         $fwrite(log_file, "%0d,", pop_mem_fitness_values_out[i]);
     end
 
+    // Log population chromosomes (from previous change)
+    for (i = 0; i < 16; i = i + 1) begin
+        $fwrite(log_file, "%h,", pop_mem_chromosomes[i]);
+    end
+
+    // New: Log child_in_memory (hex) and start_write_memory (binary)
+    $fwrite(log_file, "%h,%b,", child_in_memory, start_write_memory);
+
     // Remaining signals (last field has no trailing comma)
     $fwrite(log_file, "%0d,%b,%h,%h,%h,%0d,%0d,%b,%b,%b,%h",
         pop_mem_total_fitness_out, start_lfsrs, rand_sel, rand_cross, rand_mut,
@@ -243,6 +259,8 @@ always @(posedge clk) begin
 
     $fdisplay(log_file, ""); // End of line
 end
+
+
 
 // ---------- Close file ----------
 always @(posedge clk) begin
