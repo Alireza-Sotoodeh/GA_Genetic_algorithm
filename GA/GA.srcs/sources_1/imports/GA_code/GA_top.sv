@@ -208,7 +208,7 @@ module ga_top #(
         .clk(clk), 
         .rst(rst), 
         .start_write(start_pop_write),
-        .child_in(start_eval_init ? init_chromosome_in : p_child_mutated),
+        .child_in((state == S_INIT) ? init_chromosome_in : p_child_mutated),
         .child_fitness_in(p_child_fitness),
         .read_addr1(p_selected_idx1), 
         .read_addr2(p_selected_idx2),
