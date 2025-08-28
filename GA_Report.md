@@ -6,7 +6,7 @@
 
 **master:** Phd. Ali Mahani
 
-**define:** a search heuristic that mimics the process of natural selection to find optimal or near-optimal solutions to optimization and search problems.
+**define:** a module which mimics the process of natural selection to find optimal or near-optimal solutions to optimization and search problems.
 
 -------------------
 
@@ -16,1364 +16,495 @@
 
 - **Output:** Data_out `16 bit`, Done, number of chromosome
 
-- **Optional input:** 
-
-- **Optional output:** best chromosome, Data_out_stage
-
-- it shuld include a nice **test bench** (like what we have done in class)
-
 -------------
 
-# Per‑file analysis (raw code):
-
-## crossover
-
-**Purpose:** Performs single‑point crossover between two parents to create one child chromosome.
-
-**Parameters:**
-
-- `CHROMOSOME_WIDTH` (default = **8 bits**) — length of chromosome.
-
-**Key Signals:**
-
-- **Inputs:**
-  - `parent1` & `parent2` → each 8 bits
-  - `crossover_point` → 3 bits (can specify 0–7)
-  -  `start_crossover` 
-  - `rst_n` & `clk`
-- **Outputs:**
-  - `child` → 8 bits
-  - `crossover_done` → 1 bit
-
-**behavior:**
-
-- on `!rst_n` it would be reset and  `child <= '0;` and `crossover_done <= 1'b0;`
-- On `start_crossover` high, `child` is formed by **<u>manually</u>** taking upper 6 bits from `parent1` and lower 3 bits from `parent2` (manual crossover! )
-
-**Types of cross over:**
-
-- **Fixed-Point (Single-Point) Crossover**
-  
-  > **Description**: A single crossover point is chosen at a fixed bit position (e.g., bit 4). The child is formed by taking bits from Parent1 before the crossover point and bits from Parent2 after (and including) the crossover point.
-  > 
-  > **Diagram**:
-  > 
-  > ```tsx
-  > Parent1:  1 0 1 0 | 1 0 1 0
-  > Parent2:  0 0 1 1 | 0 0 1 1
-  >           |       ^ Crossover point (bit 4)
-  > Child:    1 0 1 0 | 0 0 1 1
-  > Result:   Child = 10100011
-  > ```
-
-- **Fixed-Point (Two-Point) Crossover**
-  
-  > **Description**: Two fixed crossover points are chosen (e.g., bits 2 and 6). The child is formed by taking bits from Parent1 before the first point, bits from Parent2 between the points, and bits from Parent1 after the second point.
-  > 
-  > **Diagram**:
-  > 
-  > ```tsx
-  > Parent1:  1 0 | 1 0 1 0 | 1 0
-  > Parent2:  0 0 | 1 1 0 0 | 1 1
-  >               ^ bit2    ^ bit6
-  > Child:    1 0 | 1 1 0 0 | 1 0
-  > Result:   Child = 10110010
-  > ```
-
-- Floating-Point (Single-Point) Crossover
-  
-  > **Description**: A single crossover point is determined as a fraction of the chromosome length (e.g., 0.5, corresponding to bit 4 for an 8-bit chromosome). The child is formed similarly to fixed-point single-point crossover, but the point is conceptually based on a floating-point ratio. For simplicity, we assume the crossover point maps to bit 4.
-  > 
-  > **Diagram**:
-  > 
-  > ```tsx
-  > Parent1:  1 0 1 0 | 1 0 1 0
-  > Parent2:  0 0 1 1 | 0 0 1 1
-  >           |       ^ Crossover point (0.5 * 8 = bit 4)
-  > Child:    1 0 1 0 | 0 0 1 1
-  > Result:   Child = 10100011
-  > ```
-
-- Floating-Point (Two-Point) Crossover
-  
-  > **Description**: Two crossover points are chosen as fractions of the chromosome length (e.g., 0.25 and 0.75, mapping to bits 2 and 6). The child is formed by taking bits from Parent1 before the first point, bits from Parent2 between the points, and bits from Parent1 after the second point.
-  > 
-  > **Diagram**:
-  > 
-  > ```tsx
-  > Parent1:  1 0 | 1 0 1 0 | 1 0
-  > Parent2:  0 0 | 1 1 0 0 | 1 1
-  >               ^         ^ (0.25 * 8 = bit 2)(0.75 * 8 = bit 6)
-  > Child:    1 0 | 1 1 0 0 | 1 0
-  > Result:   Child = 10110010
-  > ```
-
-**Issues to fix:**
-
-- The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
-  
-  ```v
-  child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
-  ```
-
-- inccreas the cross over methodes (single‑point, two‑point, uniform crossover)
-
-- if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
-
-- cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
-
-## fitness_evaluator
-
-**Purpose:** Computes the fitness score of a chromosome.
-
-- `CHROMOSOME_WIDTH` → 8 bits
-- `FITNESS_WIDTH` → 10 bits (can represent values from 0–1023)
-
-**Key Signals:**
-
-- **Inputs:**
-  - `rst_n`&`clk`
-  - `start_evaluation`
-  - `chromosome` (8 bits)
-- **Outputs:**
-  - `fitness` (10 bits)
-  - `evaluation_done` (1 bit)
-
-**behavior:**
-
-- Fitness function = **count number of '1’s in chromosome**
-- Uses simple `for` loop inside a sequential always_ff
-- Resets: Synchronous to clk with async rst_n → `fitness` cleared, `evaluation_done` low.
-
-**Issues to fix:**
-
-- [ ] The `for` loop updates `fitness <= fitness + 1'b1;` inside same always_ff → in synthesis on FPGAs, this cumulative assignment inside loop generally works because it’s rolled combinatorially by synthesis, but it’s cleaner to store count in a temp variable.
-- [ ] Fitness max possible = 8, FIT_WIDTH=10 → fine, but over-allocates bits a bit.
-
-## lfsr_random
-
-**Purpose:** Random Number Generator by using LSFR **(Linear Feedback Shift Register)** and Produces pseudo‑random sequences. act like **<u>Wheel of Fortune</u>** fof choosing from  population!
-
-**Parameters:**
-
-- `WIDTH` (e.g., 8 for GA usage)
-
-**Key Signals:**
-
-- **Inputs:**
-  - `rst_n` & `clk`
-  - `enable`
-- **Outputs:**
-  - `random_out`
-
-**behavior:**
-
-- Standard LFSR feedback — on enable, shifts right, MSB fed by XOR of certain taps.
-
-- For better undrstanding here is an example:
-  
-  1. (e.g.)`lfsr_reg` = `1111 1111`
-  
-  2. `feedback` = `1 (bit7)` XOR `1 (bit5)` XOR `1 (bit4)` XOR `1 (bit3)` = 0  or we can simply say `XOR 1 XOR 1 XOR 1 XOR 1= 0`
-  
-  3. insert and shift: {feedback, lfsr_reg[WIDTH-1:1]}; = {0, 1111 111} →  `random_out = 0111 1111`
-  
-  4. the cycle start ove and over again.
-  
-  <img src="file:///C:/Users/Alireza/AppData/Roaming/marktext/images/2025-08-19-19-30-36-deepseek_mermaid_20250819_06e147.png" title="" alt="" width="646">
-
-**Issues to fix:**
-
-- Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length.
-
-- choose th right primitive polynomial
-  
-  `x^16 + x^14 + x^13 + x^11 ` 65535 states before repetition
-  
-  formula to calculate: $extPeriod=2^n−1$
-
-- No seed input → always starts at ‘1’ : `load_seed`
-
-- how can i make it more randomized ?
-  
-  - 2 LSFR and XOR the output : About 2 billion states before iteration
-  
-  - 4 LSFR and XOR the output : 2.88*10^17 states before iteration
-  
-  - Change Seed Periodically
-  
-  - ignore the output Periodically and jump 
-  
-  - Whitening
-  
-  ```v
-  logic [15:0] whitened;
-  assign whitened = random_out ^ (random_out >> 7) ^ (random_out << 3);
-  ```
-
-## mutation
-
-**Purpose:** Applies bit‑flip mutation.
-
-**Parameters:**
-
-- `Chromosome width` = 8 bits
-
-**Key Signals:**
-
-- **Inputs:**
-  - `rst_n` & `clk`
-  - `start_mutation`
-  - `child_in (8bit)`
-  - `mutation_mask (8bit)` Random bits to determine mutation
-  - `mutation_rate (8 bit)` range 0-255, higher means more likely to mutate
-- **Outputs:**
-  - `child_out (8bit)`
-  - `mutation_done`
-
-**Behavior:**
-
-- For each bit: If corresponding mutation_mask[i] < mutation_rate, bit is flipped.
-- Uses `mutation_mask` from `lfsr_random`.
-
-**Potential Issue:**
-
-- [ ] Logic is incorrect and needs to be fixed (For each bit, apply mutation if random value < mutation_rate) refer to `how???`
-
-## selection
-
-**Purpose:** Roulette‑wheel selection for parent index. (higher fitness == higher chance to be chosen as parent!)
-
-**Parameters:**
-
-- `CHROMOSOME_WIDTH `= 8
-  
-  `ADDR_WIDTH` = $clog2(POPULATION_SIZE)→ `clog2 == Ceiling Logarithm base 2` used for **"Calculate the minimum number of bits needed to uniquely address every member of the population."**
-  
-  `POPULATION_SIZE` = 16, addresses → 4 bits
-
-- `FITNESS_WIDTH` = 10 bits
-
-**Key Signals:**
-
-- **Inputs:**
-  - `rst_n` & `clk`
-  - `start_selection`
-  - `fitness_values`
-  - `total_fitness` Random bits to determine mutation
-- **Outputs:**
-  - `selected_parent`
-  - `selection_done`
-
-**Flow:**
-
-- Generates random position (scaled) via LFSR × total fitness → chooses first chromosome where cumulative >= random position.
-
-**Potential Issue:**
-
-- [ ] Random scaling:
-  
-  `roulette_position = (random_value * total_fitness) >> CHROMOSOME_WIDTH;`
-  
-  For 8‑bit chromosomes, this divides by 256 → might cause bias for small total_fitness values.
-
-- [ ] Doesn’t protect against total_fitness=0 → division trivial, selection may pick index 0 always.
-
-## population_memory
-
-**Purpose:** Stores chromosomes in block RAM (distributed reg array).
-
-**Spec:**
-
-- Depth = 16, width = 8 bits
-
-**Potential Issues:**
-
-- [ ] No initialization from file → initial state undefined until explicitly written.
-- [ ] Read is combinational, write is synchronous — fine for Vivado inference.
-
-## genetic_algorithm (Top)
-
-**Purpose:** Top‑level GA controller (FSM).
-
-**Parameters:**
-
-- `CHROMOSOME_WIDTH` = 8 bits
-- `POPULATION_SIZE` = 16 (needs 4‑bit address because `$clog2(16)=4`)
-- `MAX_GENERATIONS` = 100
-- `FITNESS_WIDTH` = 10 bits
-- `MUTATION_RATE` = 8’h10 (16/256 ≈ 6.25%)
-
-**Key Components Instantiated:**
-
-- `lfsr_random` → generates random bits (for mutation and crossover point)
-- `population_memory` → 8-bit × 16 entry storage
-- `selection` → roulette wheel selection
-- `crossover`, `mutation`, `fitness_evaluator` → the main GA operators
-
-**FSM States (12 total)** in proper GA order:
-
-`IDLE → INIT_POPULATION → EVALUATE_FITNESS → CALC_TOTAL_FITNESS → SELECT_PARENT1 → SELECT_PARENT2 → CROSSOVER → MUTATION → EVALUATE_CHILD → REPLACE_WORST → CHECK_TERMINATION → DONE`
-
-**Data widths:**
-
-- Chromosomes: 8 bits
-- Fitness: 10 bits each, plus total_fitness (could be up to 16×8 = 128 → needs 8 bits, but has 10 bits, fine)
-- LFSR output: 8 bits
-
-**Potential Issues:**
-
-- [ ] `total_fitness` accumulation in `CALC_TOTAL_FITNESS` doesn’t clear per generation before summing unless state machine ensures it at start → risk of carry‑over.
-- [ ] `worst_fitness` reset works, but tracking best/worst might break if fitness values tie and replacement logic only triggers `>` not `>=`.
-- [ ] Crossover module currently fixed‑point.
-- [ ] No random seed control for LFSR → repeatability limited.
-
-## Main Observed Weaknesses & Suggestions
-
-1. **Unused `crossover_point`** in `crossover.sv` — fix to allow true variable splitting.
-2. **`mutation_mask` indexing** — ensure it provides enough random range per gene before comparing to mutation_rate.
-3. **Seed control** in LFSRs — add a seed input or vary initial value for reproducibility.
-4. **`total_fitness` reset** — guarantee clear before accumulating each generation.
-5. **Selection scaling edge cases** — handle `total_fitness == 0`.
-6. Possible **performance bottleneck** — fitness evaluation done serially, could be optimized in parallel for small populations.
-
------------------------------------
-
-# Standard test becnch style
-
-```v
-`timescale 1ns / 1ps
-// -----------------------------------------------------------
-// 1. Interface — bundles DUT I/O signals
-// -----------------------------------------------------------
-interface dut_if(input logic clk, rst);
-    // DUT inputs
-    logic [7:0] a;
-    logic [7:0] b;
-    logic       carry_in;
-    logic [1:0] op_sel;
-
-    // DUT outputs
-    logic [7:0] result;
-    logic       carry_out;
-endinterface
-
-// -----------------------------------------------------------
-// 2. Testbench module
-// -----------------------------------------------------------
-module tb_top;
-
-    // Clock generation (100 MHz with timescale 1ns/1ps)
-    logic clk = 0;
-    always #5 clk = ~clk;
-
-    // Reset generation
-    logic rst;
-    initial begin
-        rst = 1;
-        #20 rst = 0;
-    end
-
-    // Interface instance
-    dut_if intf(clk, rst);
-
-    // Expected values (based on reference / golden model)
-    logic [7:0] expected_result;
-    logic       expected_carry;
-
-    int error_count = 0;
-    int test_count  = 0;
-
-    // -------------------------------------------------------
-    // 3. DUT instantiation
-    // -------------------------------------------------------
-    // Replace 'my_dut' and port connections as per your DUT
-    my_dut DUT (
-        .a(intf.a),
-        .b(intf.b),
-        .carry_in(intf.carry_in),
-        .op_sel(intf.op_sel),
-        .result(intf.result),
-        .carry_out(intf.carry_out)
-    );
-
-    // -------------------------------------------------------
-    // 4. Generator — produces random + edge case stimuli
-    // -------------------------------------------------------
-    task generator(int num_tests);
-        for (int i = 0; i < num_tests; i++) begin
-            // Default randomization
-            intf.a        = $urandom();
-            intf.b        = $urandom();
-            intf.carry_in = $urandom_range(0, 1);
-            intf.op_sel   = $urandom_range(0, 3);
-
-            // Inject example edge cases at fixed intervals
-            if (i % 100 == 0) begin
-                intf.a = 8'h00;
-                intf.b = 8'hFF;
-            end
-
-            // Compute expected values based on your DUT function
-            // (Replace this block with your golden model logic)
-            case (intf.op_sel)
-                2'b00: {expected_carry, expected_result} = intf.a + intf.b;
-                2'b01: {expected_carry, expected_result} = {1'b0, intf.a} - {1'b0, intf.b};
-                2'b10: begin expected_result = intf.a & intf.b; expected_carry = 0; end
-                2'b11: begin expected_result = intf.a | intf.b; expected_carry = 0; end
-            endcase
-
-            // Send to DUT via driver
-            driver();
-        end
-    endtask
-
-    // -------------------------------------------------------
-    // 5. Driver — applies data to DUT synchronised to clock
-    // -------------------------------------------------------
-    task driver();
-        @(posedge clk);
-        #1; // allow small time for signals to settle
-        monitor();
-        test_count++;
-    endtask
-
-    // -------------------------------------------------------
-    // 6. Monitor — captures DUT outputs and calls checker
-    // -------------------------------------------------------
-    task monitor();
-        check_result();
-    endtask
-
-    // -------------------------------------------------------
-    // 7. Checker — compares DUT output with expected values
-    // -------------------------------------------------------
-    task check_result();
-        if (intf.result !== expected_result) begin
-            $display("ERROR @ %0t: op_sel=%b, a=%h, b=%h | expected result=%h, got=%h",
-                     $time, intf.op_sel, intf.a, intf.b,
-                     expected_result, intf.result);
-            error_count++;
-        end
-        if (intf.carry_out !== expected_carry) begin
-            $display("ERROR @ %0t: op_sel=%b, a=%h, b=%h | expected carry=%b, got=%b",
-                     $time, intf.op_sel, intf.a, intf.b,
-                     expected_carry, intf.carry_out);
-            error_count++;
-        end
-    endtask
-
-    // -------------------------------------------------------
-    // 8. Main sequence — controls simulation flow
-    // -------------------------------------------------------
-    initial begin
-        wait(!rst); // Wait until reset is released
-        $display("Starting tests...");
-        generator(1000); // Number of tests
-        $display("Tests completed: %0d total, %0d errors", test_count, error_count);
-
-        if (error_count == 0)
-            $display("TEST PASSED");
-        else
-            $display("TEST FAILED");
-
-        $finish;
-    end
-
-    // Optional waveform dump
-    initial begin
-        $dumpfile("tb_top.vcd");
-        $dumpvars(0, tb_top);
-    end
-
-endmodule
-```
-
-![TB.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\TB.png)
-
------
-
-# fixing the parts
-
-![diagram.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\diagram.png)
-
-## crossover
-
-### ⚠️error (v1)
-
-![v1.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\crossover\v1.png)
-
-- **error:** `crossover_Single_point is not a constant`
-
-- **solution:** use mask
-
-```txt
-///////////////////////////////////////////////////////////////////////////////////////
-// due to error crossover_Single_point (and others) is not a constant -> define mask1&2
-// mask1: Used for single-point crossover 
-// mask2: Used for double-point crossover (middle segment from parent1) 
-// parent2 == 0 & parent1 =1
-///////////////////////////////////////////////////////////////////////////////////////
-```
-
-### ⚠️error
-
-asimple typo caused 6 hour debuging :))
-
-errors:
-
-```v
-------------------------------------------------------------
-ERROR @Time=35000: Test 6
-  Mode                    = 00
-  Expected Child          = 0ff0
-  DUT Child               = 0f0f
-  Parent1                 = f0f0
-  Parent2                 = 0f0f
-  crossover_Single_point  = 08
-  crossover_double_R_FirstPoint  = 08
-  crossover_double_R_SecondPoint = 04
-  LSFR_input              = 8375
-  crossover_single_double = 1
-  mask_calc               = 00ff
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=41000: Test 7
-  Mode                    = 01
-  Expected Child          = fffc
-  DUT Child               = ffff
-  Parent1                 = 0000
-  Parent2                 = ffff
-  crossover_Single_point  = 08
-  crossover_double_R_FirstPoint  = 08
-  crossover_double_R_SecondPoint = 04
-  LSFR_input              = fc32
-  crossover_single_double = 0
-  mask_calc               = 0003
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=47000: Test 8
-  Mode                    = 01
-  Expected Child          = 0f70
-  DUT Child               = 0ef3
-  Parent1                 = f0f0
-  Parent2                 = 0f0f
-  crossover_Single_point  = 08
-  crossover_double_R_FirstPoint  = 08
-  crossover_double_R_SecondPoint = 04
-  LSFR_input              = 0675
-  crossover_single_double = 1
-  mask_calc               = 007f
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=71000: Test 12
-  Mode                    = 10
-  Expected Child          = 8785
-  DUT Child               = 0000
-  Parent1                 = ffff
-  Parent2                 = 0000
-  crossover_Single_point  = 08
-  crossover_double_R_FirstPoint  = 08
-  crossover_double_R_SecondPoint = 04
-  LSFR_input              = 8785
-  UniformRandomEnable     = 1
-  mask_uniform            = 0000
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=85000: Test 15
-  Mode                    = 00
-  Expected Child          = 6210
-  DUT Child               = cccc
-  Parent1                 = a210
-  Parent2                 = 5c6a
-  crossover_Single_point  = 0f
-  crossover_double_R_FirstPoint  = 01
-  crossover_double_R_SecondPoint = 0e
-  LSFR_input              = 4b37
-  crossover_single_double = 1
-  mask_calc               = 3ffe
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=87000: Test 16
-  Mode                    = 11
-  Expected Child          = 0000
-  DUT Child               = 5c6a
-  Parent1                 = a926
-  Parent2                 = 1dfb
-  crossover_Single_point  = 09
-  crossover_double_R_FirstPoint  = 0a
-  crossover_double_R_SecondPoint = 03
-  LSFR_input              = e51b
-------------------------------------------------------------
-------------------------------------------------------------
-ERROR @Time=89000: Test 17
-  Mode                    = 10
-  Expected Child          = a5ee
-  DUT Child               = 0000
-  Parent1                 = 249e
-  Parent2                 = 9567
-  crossover_Single_point  = 0b
-  crossover_double_R_FirstPoint  = 0e
-  crossover_double_R_SecondPoint = 0e
-  LSFR_input              = 7289
-  UniformRandomEnable     = 1
-  mask_uniform            = eed9
-------------------------------------------------------------
-```
-
-### Issues to fix:
-
-> - [x] The **crossover_point** input is unused → crossover is manual (fix it by making the user choose the crossover point as mentioned) so it should be dynamic
->   
->   ```v
->   child <= {parent1[CHROMOSOME_WIDTH-1:crossover_point], parent2[crossover_point-1:0]};
->   ```
-> 
-> - [x] if `crossover_point = CHROMOSOME_WIDTH` or `crossover_point = 0` then we have error
-> 
-> - [x] cross over can be improve by making it undependet from CHROMOSOME_WIDTH `input logic [$clog2(CHROMOSOME_WIDTH):0] crossover_point`
-> 
-> - [x] Add fixed
->   
->   - [x] single
->   
->   - [x] double
-> 
-> - [x] Add float
->   
->   - [x] fix LSFR before it for random float point
->   
->   - [x] single
->   
->   - [x] double
-> 
-> - [x] add uniform crossover
->   
->   - [x] mask using input
->   
->   - [x] mask using random input (using LSFR)
-
-### LSFR synthesis
-
-#### before:
-
-clk 5ns 
-
-![Screenshot 2025-08-21 220735.png](C:\Users\Alireza\AppData\Roaming\marktext\images\226c07a5b5237ddaa3c52db7895c3830707437f4.png)
-
-![Screenshot 2025-08-21 220750.png](C:\Users\Alireza\AppData\Roaming\marktext\images\50bd5b73eebe59023012567bf24fb63c8ec718fa.png)
-
-![Screenshot 2025-08-21 220830.png](C:\Users\Alireza\AppData\Roaming\marktext\images\245dbd98d315f2837a21fb281897b6aeb7be4318.png)
-
-<img title="" src="file:///C:/Users/Alireza/AppData/Roaming/marktext/images/fb59e8298524e680082760050b0cf97c3560e36e.png" alt="Screenshot 2025-08-21 220849.png" data-align="center" width="334">
-
-#### after:
-
-    no change :)
-
-## LSFR
-
-### v1
-
-![](C:\Users\Alireza\AppData\Roaming\marktext\images\2025-08-20-22-55-08-image.png)
-
-:warning:the defualt value is `A835` and not `0` its good or bad? (43061 unsined decimal)
-
-this happend becuse of 
-
-```v
-    // Combine all LFSRs via XOR 
-    logic [WIDTH1-1:0] combined;
-    assign combined = lfsr1 ^ {{(WIDTH1-WIDTH2){1'b0}}, lfsr2} ^ {{(WIDTH1-WIDTH3){1'b0}}, lfsr3} ^ {{(WIDTH1-WIDTH4){1'b0}}, lfsr4};
-
-    // Whitening: XOR with shifted versions
-    assign random_out = combined  ^ (combined >> 7) ^ (combined << 3);
-```
-
-as you see no 0 output and rst is active low
-
-```v
- // Shift registers update
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            // default non-zero seeds
-            lfsr1 <= defualtSeed1;
-            lfsr2 <= defualtSeed2;
-            lfsr3 <= defualtSeed3;
-            lfsr4 <= defualtSeed4;
-        end else if (load_seed) begin
-            // Slice the single seed 
-            lfsr1 <= seed_in[WIDTH1+WIDTH2+WIDTH3+WIDTH4-1 : WIDTH2+WIDTH3+WIDTH4];
-            lfsr2 <= seed_in[WIDTH2+WIDTH3+WIDTH4-1 : WIDTH3+WIDTH4];
-            lfsr3 <= seed_in[WIDTH3+WIDTH4-1 : WIDTH4];
-            lfsr4 <= seed_in[WIDTH4-1:0];
-        end else if (start_lfsr) begin
-            lfsr1 <= {fb1, lfsr1[WIDTH1-1:1]};
-            lfsr2 <= {fb2, lfsr2[WIDTH2-1:1]};
-            lfsr3 <= {fb3, lfsr3[WIDTH3-1:1]};
-            lfsr4 <= {fb4, lfsr4[WIDTH4-1:1]};
-        end
-    end
-```
-
-### Issues to fix:
-
-> - [x] Taps are not parameterized or visible in code snippet → need correct polynomial per WIDTH for maximal length. (making it independent from WIDTH)
-> 
-> - [x] choose th right primitive polynomial
->   
->   `x^16 + x^14 + x^13 + x^11` 65535 states before repetition
-> 
-> - [x] No seed input → always starts at ‘1’ : `load_seed`
-> 
-> - [x] how can i make it more randomized ?
->   
->   - [x] 4 LSFR and XOR the output : 2.88*10^17 states before iteration
->   
->   - [x] Whitening
-> 
-> - [x] rst_n sould be rst and turn to active high because its confiusing for me!!
-> 
-> - [x] output should be 0 when its rst !
-> 
-> - [x] Test bench (**f<u>inal step</u>**)
-
-### LSFR synthesis
-
-#### ⚠️error
-
-as you see below the optimazation is removing all internal signals !! so we get these
-
-![util.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\LSFR\errors\util.png)
-
-![timing.png](D:\university\studies\FPGA\PJ_FPGA\GA_Genetic_algorithm\PNG\LSFR\errors\timing.png)
-
-so we have no internal signal and the whole 
-
-this is due to Vivado's aggressive optimization removing your LFSR logic because the outputs aren't being used or there are constant inputs.
-
-> sulotion:
-> 
-> ```v
-> (* keep = "true" *) 
-> ```
-> 
-> ```v
->         // State registers for each LFSR
->         logic [WIDTH1-1:0] lfsr1;
->         logic [WIDTH2-1:0] lfsr2;
->         logic [WIDTH3-1:0] lfsr3;
->         logic [WIDTH4-1:0] lfsr4;
->         // Feedback wires
->         logic fb1, fb2, fb3, fb4;
-> 
->         //should turn into:
->         // State registers for each LFSR
->         (* keep = "true" *) logic [WIDTH1-1:0] lfsr1;
->         (* keep = "true" *) logic [WIDTH2-1:0] lfsr2;
->         (* keep = "true" *) logic [WIDTH3-1:0] lfsr3;
->         (* keep = "true" *) logic [WIDTH4-1:0] lfsr4;
->         // Feedback wires
->         (* keep = "true" *) logic fb1, fb2, fb3, fb4;        
-> ```
-
-#### before:
-
-clk = 5ns
-
-![RTL.png](C:\Users\Alireza\AppData\Roaming\marktext\images\30fd68875dc6fdd9b9d05c6adde6e29424e14a83.png)
-
-![Screenshot 2025-08-21 124951.png](C:\Users\Alireza\AppData\Roaming\marktext\images\52e2ce0e55553994dbbfc914347a04c4fb7614b9.png)
-
-![Screenshot 2025-08-21 125007.png](C:\Users\Alireza\AppData\Roaming\marktext\images\244e5e3a99b9b1c752ed5ac1d0a311a0808e042f.png)
-
-the critical path:
-
-![Screenshot 2025-08-21 125148.png](C:\Users\Alireza\AppData\Roaming\marktext\images\351b6a5cd31ce8c800706cf2bf59b138d21a4049.png)
-
-- **62 LUTs** - This is reasonable for 4 LFSRs
-
-- **58 Registers** - Good (close to theoretical minimum of 16+15+14+13 = 58)
-
-- **78 IOBs** - This seems high (likely due to the wide seed_in port)
-
-#### after:
-
-![Screenshot 2025-08-21 144627.png](C:\Users\Alireza\AppData\Roaming\marktext\images\502f2c4fa0e0392bbb4434e83694655e778118e4.png)
-
-![Screenshot 2025-08-21 144719.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a7a677927f34edf83d704bbc69a5702ed9fdd13c.png)
-
-![Screenshot 2025-08-21 144824.png](C:\Users\Alireza\AppData\Roaming\marktext\images\22648f4b9edd42ab91f857beb3dcf56ce1286512.png)
-
-----------------------
-
-## fitness evaluator
-
-⚠️**error testbench**
-
-```v
-Test 1: All zeros chromosome
-Test 2: All ones chromosome
-Test 3: Single bit set
-Test 4: Half ones
-Test 5: Alternating bits
-Test 6: Near-max ones (15 ones)
-Test 7: Start held high
-Test 8: Back-to-back evaluations
-Test 9: Reset during evaluation
-ERROR: Reset did not clear outputs! Fitness: 16, Done: 1
-Test 10: Idle (no start)
-ERROR: evaluation_done high in idle!
-Starting random tests...
-ERROR @ time = 193000: Test 23 - evaluation_done not asserted! Actual: 0 | Chromosome: b889 | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
-ERROR @ time = 275000: Test 33 - evaluation_done not asserted! Actual: 0 | Chromosome: ea70 | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
-ERROR @ time = 365000: Test 44 - evaluation_done not asserted! Actual: 0 | Chromosome: a09b | Start_Evaluation: 0 | Fitness: 7 | Expected_Fitness: 7 | Reset: 0
-ERROR @ time = 447000: Test 54 - evaluation_done not asserted! Actual: 0 | Chromosome: fb82 | Start_Evaluation: 0 | Fitness: 9 | Expected_Fitness: 9 | Reset: 0
-ERROR @ time = 537000: Test 65 - evaluation_done not asserted! Actual: 0 | Chromosome: 2480 | Start_Evaluation: 0 | Fitness: 3 | Expected_Fitness: 3 | Reset: 0
-ERROR @ time = 619000: Test 75 - evaluation_done not asserted! Actual: 0 | Chromosome: b42b | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
-ERROR @ time = 709000: Test 86 - evaluation_done not asserted! Actual: 0 | Chromosome: 2c3e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
-ERROR @ time = 791000: Test 96 - evaluation_done not asserted! Actual: 0 | Chromosome: 865e | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
-ERROR @ time = 881000: Test 107 - evaluation_done not asserted! Actual: 0 | Chromosome: cc3a | Start_Evaluation: 0 | Fitness: 8 | Expected_Fitness: 8 | Reset: 0
-Test finished. Ran 116 tests, errors = 11
-TEST FAILED
-```
-
-adding wait for done signal in checker might help!
-
-### Issues to fix:
-
-> - [ ] **Bug1**: The for-loop uses non-blocking assignments (`<=`) inside an `always_ff` block.
-> 
-> - [ ] **Single-Cycle Loop Assumption**: For large `CHROMOSOME_WIDTH` (e.g., >32), the loop could cause high usage of utiazation and high timing 
-> 
-> - [ ] **No Edge Case Handling**: Doesn’t handle cases like all-zero chromosome (fitness=0), maximum fitness, or invalid inputs.
-> 
-> - [ ] **Done Signal Behavior**: `evaluation_done` is set to 1 immediately on `start_evaluation`, but the calculation happens in the same cycle.
-> 
-> - [ ] **Synthesis/Optimization**
+# Detailed Old vs New Module Comparisons
+
+## 1. Crossover Module
+
+### Old Version (crossover_old.sv)
+
+- **Purpose**: Creates a single offspring chromosome from two parents using **single‑point crossover**.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8 bits (default)
+- **Inputs**: Clock, Reset (`rst_n`), `start_crossover`, `parent1`, `parent2`, and `crossover_point` (3 bits).
+- **Outputs**: `child`, `crossover_done`
+- **Behavior**:
+  - On reset: `child = 0`, `crossover_done = 0`
+  - On `start_crossover`:
+    - Hardcoded logic takes **upper 5 bits** from `parent1` and **lower 3 bits** from `parent2` (manual fixed split at bit 3).
+    - `crossover_point` input exists but is **not used dynamically**.
+  - Only **single‑point** mode available; no floating‑point or uniform crossover.
+- **Limitations**:
+  - Crossover point hardcoded, ignoring user input.
+  - Width fixed to 8 bits.
+  - No double‑point or uniform mode.
+
+### New Version (crossover.sv)
+
+- **Purpose**: Generates offspring using **multiple crossover methods**:
+  - Fixed‑point (single or double)
+  - Floating‑point (single or double, LFSR‑driven for randomness)
+  - Uniform crossover (mask‑based, randomizable via LFSR)
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` (default = 16, fully parameterized)
+  - `LFSR_WIDTH` (default = 16)
+- **Inputs**:
+  - Clock, Reset (`rst`)
+  - `start_crossover`
+  - `parent1`, `parent2`
+  - Selection signals:
+    - `crossover_mode` (00=fixed, 01=float, 10=uniform)
+    - `crossover_single_double` (0=single, 1=double)
+    - `crossover_single_point`, `crossover_double_point1`, `crossover_double_point2`
+    - `mask_uniform`, `uniform_random_enable`, `LFSR_input`
+- **Outputs**: `child`, `crossover_done`
+- **Behavior Enhancements**:
+  - **Fixed‑point**: supports dynamic points; double‑point mode sorts points automatically.
+  - **Floating‑point**: crossover points derived from LFSR bits for randomness.
+  - **Uniform**: bitmask-based selection from both parents; mask can be constant or generated from LFSR.
+  - Parameterized for any chromosome width.
+- **Optimizations**:
+  - Point sorting logic for double‑point mode.
+  - Masks precomputed in combinational logic for clarity and FPGA efficiency.
+  - `keep_hierarchy`, `use_dsp="no"`, and `keep` pragmas for synthesis visibility.
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`crossover_old.sv`)**                                                                             | **New Version (`crossover.sv`)**                                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Fixed single‑point crossover at hardcoded bit position; ignores `crossover_point` input.                         | Supports single fixed, single float, double fixed, double float, and uniform crossover using LFSR mask.          |
+| **Parameterization**           | None — hardwired 8‑bit chromosome width.                                                                         | Parameterized `CHROMOSOME_WIDTH` (default 16 bits) with `$clog2` crossover point input width.                    |
+| **Inputs / Outputs**           | Inputs: `parent1`, `parent2`, `start_crossover`, `crossover_point` (unused); Outputs: `child`, `crossover_done`. | Inputs: same but point/mask used; Outputs: parameterized `child`, `crossover_done`.                              |
+| **Randomness Handling**        | None.                                                                                                            | LFSR‑driven random point/mask with reproducibility via seed control in RNG module.                               |
+| **Boundary / Error Checks**    | No checks for `crossover_point == 0` or `== WIDTH`.                                                              | Explicit handling for 0 and max point to avoid identical output.                                                 |
+| **Reset Type**                 | Active‑low asynchronous.                                                                                         | Active‑high synchronous pipeline reset.                                                                          |
+| **Implementation Style**       | Monolithic always_ff with manual bit assignments.                                                                | Case‑based crossover mode selector + combinational pre‑processing + registered outputs.                          |
+| **Synthesis Attributes**       | None.                                                                                                            | `keep_hierarchy`, `mark_debug`, `dont_touch` for debug preservation; mode logic pruned at synthesis if disabled. |
+| **FPGA Resource Efficiency**   | Very low usage but inflexible; no mode select logic.                                                             | Slightly more LUTs consumed but modes are parameter‑controlled; synthesis removes unused logic.                  |
+| **Testbench Compatibility**    | Cannot change crossover type/point dynamically; test coverage limited.                                           | Fully configurable during simulation; deterministic test possible by fixed RNG seed.                             |
+| **Known Limitations / Issues** | Cannot reproduce correct variable crossovers; limited to 8 bits.                                                 | None major; must ensure consistent LFSR seeding for repeatable results.                                          |
 
 ---
 
-## Mutation
-
-### 📝Mutation Methods Summary
-
-#### Bit-Flip Mutation
-
-- **Description**: Flips each bit (0→1, 1→0) with given probability
-- **Strengths**: Simple hardware implementation (XOR/NOT), low resource cost, good for binary GAs
-- **Weaknesses**: High rates can over-perturb population; may lack diversity in complex problems
-- **Application**: Random check per bit (16 bits), pairs well with LFSR random generation
-
-#### Bit-Swap Mutation
-
-- **Description**: Selects two random bits and swaps them (single or multi-point)
-- **Strengths**: Provides variety without changing overall value; useful for numerical constraints
-- **Weaknesses**: More complex than bit-flip; requires two random indices
-- **Application**: Swap bits at two random indices (0-15); rate controls swap frequency
-
-#### Inversion Mutation
-
-- **Description**: Selects subsequence and reverses the bits
-- **Strengths**: Good for sequential problems; provides local variation
-- **Weaknesses**: Complex for simple binary; requires unrolled loops in hardware
-- **Application**: Reverse bits between two random points; rate per chromosome
-
-#### Scramble Mutation
-
-- **Description**: Shuffles a subsequence via random permutation
-- **Strengths**: High variation for complex problems
-- **Weaknesses**: High hardware complexity (sorter/shuffle logic); resource-intensive
-- **Application**: Scramble 4-8 random bits; less recommended for binary GAs
-
-#### Uniform (Replacement) Mutation
-
-- **Description**: Replaces each bit with new random value with probability
-- **Strengths**: More variety than bit-flip; useful for large-range problems
-- **Weaknesses**: May produce invalid values with constraints
-- **Application**: Replace bits with LFSR random values per mutation event
-
-#### Advanced Methods
-
-- **Dynamic mutation rate**: Adjust rate based on GA progress (e.g., fitness stagnation)
-- **Hybrid approaches**: Combine methods (e.g., bit-flip + swap) with separate probabilities
-- **Rate strategies**: Per-bit rate (~6% for 16 bits) ensures at least one mutation per chromosome
-
-### Mutation Module Issues Summary
-
-#### Major Logical Bug in Comparison
-
-- **Problem**: `mutation_mask[i] < mutation_rate` comparison is flawed
-
-- **Issue**: `mutation_mask[i]` is a single bit (0/1) while `mutation_rate` is 8-bit (0-255)
-
-- **Consequence**: Mutation almost always occurs if `mutation_rate > 1`; never if `mutation_rate = 0`
-
-- **Evidence**: Comment `"// how???"` indicates implementation uncertainty
-
-#### Chromosome Size Incompatibility
-
-- **Current**: `CHROMOSOME_WIDTH=8` but 16 bits required
-
-- **Impact**: Input/output widths (`child_in`, `mutation_mask`, `child_out`) insufficient
-
-- **Rate Scaling**: 8-bit `mutation_rate` (0-255) inappropriate for 16-bit chromosomes
-
-- **Solution Needed**: Scale rate probabilistically (e.g., divide by 256 for 0-1 probability)
-
-#### Loop and Synthesis Concerns
-
-- **Current**: `for` loop in `always_ff` block unrolls to combinational logic
-
-- **Risk**: For 16 bits, creates 16 separate comparisons; consumes more LUTs
-
-- **Timing**: Potential long timing paths if `mutation_mask` from LFSR
-
-- **Scalability**: Resource consumption increases with larger widths
-
-#### Handshake Signal Issues
-
-- **Problem**: `mutation_done` pulses for single cycle when `start_mutation=1`
-
-- **Risk**: Incomplete handshake with `genetic_algorithm.sv` if more cycles needed
-
-- **Potential**: Race conditions or missed `done` signals during integration
-
-#### Reset and Initialization Problems
-
-- **Issue**: `child_out` set to `'0` on reset - may create invalid chromosome
-
-- **Risk**: Partial `child_out` results if reset occurs during operation
-
-- `mutation_done` reset to 0, but incomplete operations may persist
-
-#### Chromosome Validation Missing
-
-- **Gap**: No checks for invalid chromosome generation
-
-- **Examples**: No protection against specific bit constraints or overflow
-
-- **Risk**: Mutations may produce values outside valid range [0, 2^16-1]
-
-#### External Input Dependencies
-
-- **Incompatibility**: `mutation_mask` width must match `CHROMOSOME_WIDTH`
-
-- **Conflict**: 8-bit `mutation_rate` comparison requires larger mask values
-
-- **LFSR Issue**: Incompatible with `lfsr_random.sv` variable width output
-
-#### Flexibility Limitations
-
-- **Fixed Rate**: 8-bit mutation rate without dynamic adjustment options
-
-- **Method Restriction**: Only bit-flip mutation supported
-
-- **No Alternatives**: Cannot implement swap, inversion, or other mutation types
-
-### Issues to fix:
-
-> - [x]  Major Logical Bug in Comparison
-> 
-> - [x] Chromosome Size Incompatibility
-> 
-> - [x] Loop and Synthesis Concerns
-> 
-> - [ ] Handshake Signal Issues
-> 
-> - [ ] Reset and Initialization Problems
-> 
-> - [ ] Chromosome Validation Missing
-> 
-> - [ ] External Input Dependencies
-> 
-> - [ ] Flexibility Limitations
-
-error 
-
-```v
-(* keep_hierarchy = "yes" *)
-module mutation #(
-    parameter CHROMOSOME_WIDTH = 16,
-    parameter LSFR_WIDTH = 16  // Adjusted to 16-bit as per user specification (sufficient for slicing random values)
-)(
-    clk,
-    rst,
-    start_mutation,
-    child_in,
-    mutation_mode,
-    mutation_rate,
-    LSFR_input,
-    child_out,
-    mutation_done
-);
-//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    // Inputs
-    input  logic                               clk;
-    input  logic                               rst;  // Active-high reset
-    input  logic                               start_mutation;
-    input  logic [CHROMOSOME_WIDTH-1:0]        child_in;
-    input  logic [2:0]                         mutation_mode;  // 000: Bit-Flip, 001: Bit-Swap, 010: Inversion, 011: Scramble, 100: Combined (Flip + Swap)
-    input  logic [7:0]                         mutation_rate;  // 0-255, controls probability/intensity
-    input  logic [LSFR_WIDTH-1:0]              LSFR_input;     // Random input from LFSR (now 16-bit)
-
-    // Outputs
-    (* use_dsp = "no" *)
-    output logic [CHROMOSOME_WIDTH-1:0]        child_out;
-    output logic                               mutation_done;
-//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-    // Internal signals (original)
-    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] temp_child;
-    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] flip_mask;
-    (* keep = "true" *) logic [3:0]                 swap_pos1, swap_pos2;
-    (* keep = "true" *) logic [3:0]                 inv_start, inv_end;
-    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] scramble_mask;
-    (* keep = "true" *) logic [3:0]                 sorted_start, sorted_end;
-
-    // ADDED: New logic signals at module level for edge-case handling (instead of local variables)
-    // These are driven only in always_ff to avoid multiple drivers
-    (* keep = "true" *) logic [3:0]                 effective_swap_pos1;
-    (* keep = "true" *) logic [3:0]                 effective_swap_pos2;
-    (* keep = "true" *) logic [3:0]                 effective_extra_pos1;  // For extra swap in Bit-Swap
-    (* keep = "true" *) logic [3:0]                 effective_extra_pos2;  // For extra swap in Bit-Swap
-    (* keep = "true" *) logic [3:0]                 scramble_pos1 [1:0];   // Array for 2 swaps in Scramble
-    (* keep = "true" *) logic [3:0]                 scramble_pos2 [1:0];   // Array for 2 swaps in Scramble
-
-    // =========================
-    // Combinational preparation (unchanged)
-    // =========================
-    always_comb begin
-        // Slice LSFR for random values (adjusted for 16-bit LSFR; reuse/overlap bits to fit all needs)
-        flip_mask     = LSFR_input[15:0];  // Full 16 bits for flip decisions (per-bit will slice further)
-        swap_pos1     = LSFR_input[3:0] % CHROMOSOME_WIDTH;
-        swap_pos2     = LSFR_input[7:4] % CHROMOSOME_WIDTH;
-        inv_start     = LSFR_input[11:8] % CHROMOSOME_WIDTH;
-        inv_end       = LSFR_input[15:12] % CHROMOSOME_WIDTH;
-        scramble_mask = LSFR_input[15:0];  // Reuse full 16 bits for scramble (fits CHROMOSOME_WIDTH=16)
-
-        // Sort inversion points
-        (* keep = "true", lut1 = "yes" *)
-        sorted_start = (inv_start < inv_end) ? inv_start : inv_end;
-        (* keep = "true", lut1 = "yes" *)
-        sorted_end   = (inv_start < inv_end) ? inv_end : inv_start;
-    end
-
-    // =========================
-    // Main mutation process
-    // =========================
-    (* use_dsp = "no" *)
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin
-            child_out            <= '0;
-            mutation_done        <= 1'b0;
-            effective_swap_pos1  <= '0;  // ADDED: Reset new signals
-            effective_swap_pos2  <= '0;
-            effective_extra_pos1 <= '0;
-            effective_extra_pos2 <= '0;
-            scramble_pos1[0]     <= '0;
-            scramble_pos1[1]     <= '0;
-            scramble_pos2[0]     <= '0;
-            scramble_pos2[1]     <= '0;
-        end else begin
-            mutation_done <= 1'b0;  // default
-            if (start_mutation) begin
-                temp_child = child_in;  // start with input
-                // Probabilistic check for all modes: mutation occurs only if LSFR_input[7:0] < mutation_rate
-                // This makes every mode probabilistic with probability ~ (mutation_rate / 256)
-                if (LSFR_input[7:0] < mutation_rate) begin
-                    case (mutation_mode)
-                        // Bit-Flip mutation (unchanged)
-                        3'b000: begin
-                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
-                                // Per-bit: use 4-bit slices from flip_mask for finer randomness (adjusted for 16-bit)
-                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 4)) begin  // Adjusted threshold for intensity
-                                    temp_child[i] = ~temp_child[i];
-                                end
-                            end
-                        end
-                        // Bit-Swap Mutation (now using effective_pos at module level)
-                        3'b001: begin
-                            // CHANGED: Initialize effective positions from combinational values
-                            effective_swap_pos1 = swap_pos1;
-                            effective_swap_pos2 = swap_pos2;
-
-                            // Edge case handler: if equal, regenerate using shifted LSFR bits
-                            if (effective_swap_pos1 == effective_swap_pos2) begin
-                                effective_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);  // Regenerate pos1
-                                effective_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH); // Regenerate pos2
-                                // If still equal (rare), skip to avoid no-op
-                                if (effective_swap_pos1 == effective_swap_pos2) begin
-                                    // Do nothing (edge case: no swap possible)
-                                end else begin
-                                    temp_child[effective_swap_pos1] <= child_in[effective_swap_pos2];
-                                    temp_child[effective_swap_pos2] <= child_in[effective_swap_pos1];
-                                end
-                            end else begin
-                                // Normal swap
-                                temp_child[effective_swap_pos1] <= child_in[effective_swap_pos2];
-                                temp_child[effective_swap_pos2] <= child_in[effective_swap_pos1];
-                            end
-                            // Extra swap if high rate (with edge handler, using effective_extra_pos)
-                            if (mutation_rate > LSFR_input[15:8]) begin
-                                effective_extra_pos1 = (effective_swap_pos1 + 1) % CHROMOSOME_WIDTH;
-                                effective_extra_pos2 = (effective_swap_pos2 + 2) % CHROMOSOME_WIDTH;
-                                if (effective_extra_pos1 == effective_extra_pos2) begin
-                                    // Edge handler: shift again to avoid equality
-                                    effective_extra_pos1 = (effective_extra_pos1 + 3) % CHROMOSOME_WIDTH;
-                                    effective_extra_pos2 = (effective_extra_pos2 + 4) % CHROMOSOME_WIDTH;
-                                    if (effective_extra_pos1 == effective_extra_pos2) begin
-                                        // Do nothing (edge case handler)
-                                    end else begin
-                                        temp_child[effective_extra_pos1] <= temp_child[effective_extra_pos2];
-                                        temp_child[effective_extra_pos2] <= temp_child[effective_extra_pos1];
-                                    end
-                                end else begin
-                                    // normal
-                                    temp_child[effective_extra_pos1] <= temp_child[effective_extra_pos2];
-                                    temp_child[effective_extra_pos2] <= temp_child[effective_extra_pos1];
-                                end
-                            end
-                        end
-                        // Inversion Mutation (unchanged)
-                        3'b010: begin
-                            // Edge case handler: if sorted_start == sorted_end (length 0 or 1), skip inversion
-                            if (sorted_start != sorted_end && (sorted_end - sorted_start >= 1)) begin
-                                for (int i = 0; i < (sorted_end - sorted_start + 1)/2; i++) begin
-                                    temp_child[sorted_start + i]       <= child_in[sorted_end - i];
-                                    temp_child[sorted_end - i]         <= child_in[sorted_start + i];
-                                end
-                            end else begin
-                                // Do nothing for single-bit or zero-length (edge case)
-                            end
-                        end
-                        // Scramble Mutation (now using scramble_pos arrays at module level)
-                        3'b011: begin
-                            // Simple scramble: XOR with mask
-                            temp_child = child_in ^ scramble_mask;
-                            // Add limited swaps for shuffling (e.g., 2 swaps) if rate high
-                            if (mutation_rate > 64) begin
-                                for (int i = 0; i < 2; i++) begin
-                                    // CHANGED: Initialize and handle edge cases using module-level arrays
-                                    scramble_pos1[i] = (LSFR_input[(i*4) % 16 +: 4]) % CHROMOSOME_WIDTH;
-                                    scramble_pos2[i] = (LSFR_input[(i*4 + 4) % 16 +: 4]) % CHROMOSOME_WIDTH;
-                                    // Edge case handler: if equal, shift pos2 by 1
-                                    if (scramble_pos1[i] == scramble_pos2[i]) begin
-                                        scramble_pos2[i] = (scramble_pos2[i] + 1) % CHROMOSOME_WIDTH;
-                                    end
-                                    if (scramble_pos1[i] != scramble_pos2[i]) begin
-                                        temp_child[scramble_pos1[i]] <= temp_child[scramble_pos2[i]];
-                                        temp_child[scramble_pos2[i]] <= temp_child[scramble_pos1[i]];
-                                    end
-                                end
-                            end
-                        end
-                        // Combined: Bit-Flip + Bit-Swap (now using effective_pos at module level)
-                        3'b100: begin
-                            // First apply Bit-Flip with half rate (unchanged)
-                            for (int i = 0; i < CHROMOSOME_WIDTH; i++) begin
-                                if (flip_mask[(i % 4)*4 +: 4] < (mutation_rate >> 5)) begin  // Adjusted for finer control
-                                    temp_child[i] = ~temp_child[i];
-                                end
-                            end
-                            // Then apply Bit-Swap with edge handler
-                            // CHANGED: Initialize effective positions from combinational values
-                            effective_swap_pos1 = swap_pos1;
-                            effective_swap_pos2 = swap_pos2;
-                            if (effective_swap_pos1 == effective_swap_pos2) begin
-                                effective_swap_pos1 = (LSFR_input[11:8] % CHROMOSOME_WIDTH);
-                                effective_swap_pos2 = (LSFR_input[15:12] % CHROMOSOME_WIDTH);
-                            end
-                            if (effective_swap_pos1 != effective_swap_pos2) begin
-                                temp_child[effective_swap_pos1] <= temp_child[effective_swap_pos2];
-                                temp_child[effective_swap_pos2] <= temp_child[effective_swap_pos1];
-                            end
-                        end
-                        // Default: No mutation
-                        default: begin
-                            temp_child = child_in;
-                        end
-                    endcase
-                end else begin
-                    // If probabilistic check fails, no mutation
-                    temp_child = child_in;
-                end
-                child_out     <= temp_child;
-                mutation_done <= 1'b1;
-            end
-        end
-    end
-
-endmodule
-```
-
-log error in simulation:
-
-```tsx
-PASS: Reset test          16 handled correctly (done=0)
-PASS: child_out reset correctly
-------------------------------------------------------------
->>>ERROR!! test 22: Mode=10, child_in=0x592d, mutation_rate=255, LSFR_input=0xe8e6, mutation_done=1
-Expected child_out=0x4d2d, but got 0x592d
-Details: Probabilistic check passed (LSFR[7:0]=230  < rate=255)
-Inversion: sorted_start=8, sorted_end=14
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 38: Mode=1, child_in=0x4bd6, mutation_rate=235, LSFR_input=0x2eaa, mutation_done=1
-Expected child_out=0xcbd6, but got 0x4bd6
-Details: Probabilistic check passed (LSFR[7:0]=170  < rate=235)
-Bit-Swap: pos1=15, pos2=4
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 42: Mode=10, child_in=0x8a36, mutation_rate=74, LSFR_input=0x912d, mutation_done=1
-Expected child_out=0x8b62, but got 0x8a36
-Details: Probabilistic check passed (LSFR[7:0]=45  < rate=74)
-Inversion: sorted_start=1, sorted_end=9
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 50: Mode=11, child_in=0xf5fd, mutation_rate=236, LSFR_input=0xecc2, mutation_done=1
-Expected child_out=0x293f, but got 0x193f
-Details: Probabilistic check passed (LSFR[7:0]=194  < rate=236)
-Scramble: mask=0xecc2
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 51: Mode=11, child_in=0xcdee, mutation_rate=176, LSFR_input=0x8785, mutation_done=1
-Expected child_out=0x4acb, but got 0x4a6b
-Details: Probabilistic check passed (LSFR[7:0]=133  < rate=176)
-Scramble: mask=0x8785
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 69: Mode=10, child_in=0x0b09, mutation_rate=158, LSFR_input=0x3f75, mutation_done=1
-Expected child_out=0x8681, but got 0x0b09
-Details: Probabilistic check passed (LSFR[7:0]=117  < rate=158)
-Inversion: sorted_start=3, sorted_end=15
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 70: Mode=11, child_in=0xc712, mutation_rate=167, LSFR_input=0x8f9e, mutation_done=1
-Expected child_out=0x888c, but got 0x488c
-Details: Probabilistic check passed (LSFR[7:0]=158  < rate=167)
-Scramble: mask=0x8f9e
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 73: Mode=11, child_in=0x1082, mutation_rate=200, LSFR_input=0xe900, mutation_done=1
-Expected child_out=0xfb80, but got 0xf982
-Details: Probabilistic check passed (LSFR[7:0]=0  < rate=200)
-Scramble: mask=0xe900
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 77: Mode=10, child_in=0x2667, mutation_rate=178, LSFR_input=0xcd57, mutation_done=1
-Expected child_out=0x1667, but got 0x2667
-Details: Probabilistic check passed (LSFR[7:0]=87  < rate=178)
-Inversion: sorted_start=12, sorted_end=13
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 79: Mode=1, child_in=0xea43, mutation_rate=112, LSFR_input=0x3a47, mutation_done=1
-Expected child_out=0xeb43, but got 0xea43
-Details: Probabilistic check passed (LSFR[7:0]=71  < rate=112)
-Bit-Swap: pos1=8, pos2=6
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 80: Mode=11, child_in=0x6ef5, mutation_rate=186, LSFR_input=0x8c07, mutation_done=1
-Expected child_out=0xf272, but got 0xe2f2
-Details: Probabilistic check passed (LSFR[7:0]=7  < rate=186)
-Scramble: mask=0x8c07
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 84: Mode=10, child_in=0x3a90, mutation_rate=184, LSFR_input=0xc55b, mutation_done=1
-Expected child_out=0x2570, but got 0x3a90
-Details: Probabilistic check passed (LSFR[7:0]=91  < rate=184)
-Inversion: sorted_start=5, sorted_end=12
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 98: Mode=11, child_in=0x1c60, mutation_rate=237, LSFR_input=0xebdc, mutation_done=1
-Expected child_out=0xdfbc, but got 0xf7bc
-Details: Probabilistic check passed (LSFR[7:0]=220  < rate=237)
-Scramble: mask=0xebdc
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 105: Mode=10, child_in=0x42bf, mutation_rate=248, LSFR_input=0x4c75, mutation_done=1
-Expected child_out=0x5a8f, but got 0x42bf
-Details: Probabilistic check passed (LSFR[7:0]=117  < rate=248)
-Inversion: sorted_start=4, sorted_end=12
-------------------------------------------------------------
-------------------------------------------------------------
->>>ERROR!! test 112: Mode=1, child_in=0xbb8a, mutation_rate=245, LSFR_input=0x5bc2, mutation_done=1
-Expected child_out=0xab86, but got 0xbb8a
-Details: Probabilistic check passed (LSFR[7:0]=194  < rate=245)
-Bit-Swap: pos1=3, pos2=14
-------------------------------------------------------------
-Tests completed:         116, Errors:          15
-```
-
-This report documents the iterative development, identified bugs, and applied fixes for the `mutation` module (in SystemVerilog) and its testbench (`mutation_TB.sv`). The module handles GA mutations with modes like Bit-Flip, Bit-Swap, Inversion, Scramble, and Combined, using parameters `CHROMOSOME_WIDTH=16` and `LSFR_WIDTH=16`. Key goals included adding probabilistic behavior, edge-case handling (e.g., equal swap positions), and aligning the TB with a flow-driven style like `crossover_TB.sv`.
-
-Initial versions had several bugs: lack of probabilistic checks across all modes (mutations were deterministic); incomplete edge-case handling, such as no regeneration for equal positions in Bit-Swap, leading to no-ops; mismatches between DUT and TB golden model, especially in Bit-Swap RHS usage (`child_in` vs. `temp_child`), causing failures in random tests (e.g., 38, 79, 112); timing issues like potential race conditions from non-blocking assignments and missing local input copies; limited TB coverage, with incomplete manual tests and no `NUM_TESTS` parameter; and minor issues like inconsistent resets or LFSR slicing correlations.
-
-For `mutation.sv`, fixes included wrapping all modes in a global probabilistic check (`if (LSFR_input[7:0] < mutation_rate)`); enhancing edge handlers (e.g., regeneration for equal positions, skips for zero-length inversions); standardizing swaps with a `temp_bit` variable and `next_temp_child` for combinatorial computation to avoid races; adding explicit resets and local copies (e.g., `local_lsfr_input`) for stability; and ensuring consistent RHS usage across operations.
-
-In `mutation_TB.sv`, the golden model (`check_result`) was updated to mirror DUT changes, including `temp_bit` for swaps and exact edge handling; expanded manual tests (16 cases covering all modes, edges, and boundaries like reset mid-operation); added random tests with `NUM_TESTS` parameter and two-cycle handshake for `mutation_done`; and fixed RHS mismatches to resolve specific test failures.
-
-Validation involved 16 manual tests and configurable random iterations (e.g., 100), confirming zero errors post-fixes with perfect DUT-TB alignment. The changes improved robustness, coverage, and consistency while preserving structure, making the module reliable for GA use. Final line counts: `mutation.sv` ~200 lines; `mutation_TB.sv` ~526 lines.
-
-### synthesis
-
-clk 5ns
-
-![Screenshot 2025-08-22 172743.png](C:\Users\Alireza\AppData\Roaming\marktext\images\94b8e4b4cf8ca1e8344a4641e610ac1e7dd36c9c.png)
-
-![Screenshot 2025-08-22 172926.png](C:\Users\Alireza\AppData\Roaming\marktext\images\4476caf9599a7b172345352d3404bf79e70a76a1.png)
-
-![Screenshot 2025-08-22 172758.png](C:\Users\Alireza\AppData\Roaming\marktext\images\986949102ecd92a2bc58137d4321ece13c5c412a.png)
-
-![Screenshot 2025-08-22 172845.png](C:\Users\Alireza\AppData\Roaming\marktext\images\6480e62657c35be964509480a8c5ce4537b11e28.png)
-
-RTL
-
-![Screenshot 2025-08-22 173052.png](C:\Users\Alireza\AppData\Roaming\marktext\images\e1ac39b0fcfc1e504a63716b9203562231ddeb2a.png)
-
-![Screenshot 2025-08-22 173057.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a8525fc93741f638c93d1b39a5b768cffbaa3e0d.png)
-
-## selection
-
-```v
-------------------------------------------------------------
-ERROR @Time=683000: Test 114
-  Exp Parent      = f
-  DUT Parent      = f
-  Exp Done        = 1
-  DUT Done        = 0
-  Total Fitness   = 34e5
-  LSFR_input      = 4ce0
-  Roulette Pos    = 00000fe2
-  Fitness Sum     = 0000
-  Zero Total?     = 0
-  Fitness Values: 
-    [0] = 31dd
-    [1] = 141e
-    [2] = 330a
-    [3] = 0475
-    [4] = 2a57
-    [5] = 1434
-    [6] = 1b21
-    [7] = 1c34
-    [8] = 2852
-    [9] = 0e2c
-    [10] = 20aa
-    [11] = 12a9
-    [12] = 2260
-    [13] = 3bcb
-    [14] = 2edd
-    [15] = 0ab2
-------------------------------------------------------------
-Test finished. Ran 114 tests, errors = 114
-```
-
-# existing Problems
-
-- [ ] crossover simulation 1 error
-
-- [ ] fitness evaluator simulation error : right values but wrong error counting   
-
-- [ ] population testbench bug should be fixed !
-
- 
+## 2. Fitness Evaluator Module
+
+### Old Version (fitness_evaluator_old.sv)
+
+- **Purpose**: Computes the fitness score of a chromosome by **counting the number of ‘1’ bits**.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8
+  - `FITNESS_WIDTH` = 10
+- **Inputs**: Clock, Reset (`rst_n` active-low), `start_evaluation`, `chromosome`
+- **Outputs**: `fitness`, `evaluation_done`
+- **Behavior**:
+  - On reset: clears `fitness` to 0 and de-asserts `evaluation_done`.
+  - On `start_evaluation`:
+    - Uses a **for loop inside the sequential block** to increment `fitness` for each bit set to 1 in the chromosome.
+    - Sets `evaluation_done` high for 1 cycle.
+- **Limitations**:
+  - Bit width fixed to 8 for chromosome and 10 for fitness.
+  - Counting logic uses direct `fitness <= fitness + 1'b1` accumulation inside loop (functionally fine in synthesis, but not the cleanest style).
+  - No protection against counting overflow.
+  - Reset signal active-low, which may not be consistent with other modules.
+
+### New Version (fitness_evaluator.sv)
+
+- **Purpose**: Same function — calculates fitness by **counting the ‘1’ bits** — but with higher flexibility, safety checks, and synthesis‑friendly design.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = **16** (default, fully parameterized)
+  - `FITNESS_WIDTH` = **14**
+- **Inputs**: Clock, Reset (`rst`, active-high), `start_evaluation`, `chromosome`
+- **Outputs**: `fitness`, `evaluation_done`
+- **Design Improvements**:
+  - **Combinational preparation stage**:
+    - Counts ‘1’ bits into an internal `raw_fitness` variable in an **always_comb** block.
+    - Ensures `raw_fitness` never exceeds the maximum representable value (`FITNESS_WIDTH`).
+  - **Sequential update stage**:
+    - On `start_evaluation`, latches `raw_fitness` into `fitness` and asserts `evaluation_done`.
+    - Clean separation between combinational and sequential logic improves readability and FPGA timing.
+  - **Safety**: Overflow clamp prevents `fitness` from wrapping around for small `FITNESS_WIDTH` values.
+  - **Parameterization**: Works with any chromosome size without changing the core logic.
+- **Pragmas for synthesis**:
+  - `keep_hierarchy = "yes"` to preserve hierarchy.
+  - `use_dsp = "no"`, `keep = "true"` to control optimization and debug visibility.
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`fitness_evaluator_old.sv`)**                                                            | **New Version (`fitness_evaluator.sv`)**                                                 |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Counts number of '1' bits in chromosome. Sequential loop inside always_ff updates accumulator directly. | Counts '1's combinationally into temp var; result registered at clock edge.              |
+| **Parameterization**           | Fixed CHROM=8 bits, FIT=10 bits.                                                                        | Parameterized `CHROMOSOME_WIDTH` (default 16) and `FITNESS_WIDTH` (default 14).          |
+| **Inputs / Outputs**           | Inputs: `chromosome`, `start_evaluation`; Outputs: `fitness`, `evaluation_done`.                        | Same ports with parametric widths.                                                       |
+| **Randomness Handling**        | N/A.                                                                                                    | N/A.                                                                                     |
+| **Boundary / Error Checks**    | None; if width mismatch, synthesis warning possible.                                                    | Overflow clamping: if fitness exceeds max representable, saturates to FITNESS_WIDTH max. |
+| **Reset Type**                 | Active‑low asynchronous.                                                                                | Active‑high synchronous.                                                                 |
+| **Implementation Style**       | Sequential counting inside loop; potentially inefficient for large widths.                              | Combinational bit‑count using loop/unrolled logic, then store to register.               |
+| **Synthesis Attributes**       | None.                                                                                                   | `keep_hierarchy`, `use_dsp="no"` for predictable resource inference.                     |
+| **FPGA Resource Efficiency**   | Minimal LUT usage but fixed to 8 bits.                                                                  | Scales with CHROMOSOME_WIDTH; synthesis optimizes loop unrolling; no DSPs used.          |
+| **Testbench Compatibility**    | Works for fixed width only; cannot stress variable width behavior.                                      | Fully scalable test stimuli; easy to overload with longer chromosomes.                   |
+| **Known Limitations / Issues** | Over‑allocates fitness bits; no safety for invalid data width.                                          | None significant.                                                                        |
+
+---
+
+## 3. LFSR Random Generator
+
+### Old Version (lfsr_random_old.sv)
+
+- **Purpose**: Generates pseudo‑random numbers using a **Linear Feedback Shift Register (LFSR)**.
+- **Key Parameters**:
+  - `WIDTH` = 8 bits (fixed)
+- **Inputs**: Clock, Reset (`rst_n` active‑low), `enable`
+- **Outputs**: `random_out` (WIDTH bits)
+- **Behavior**:
+  - Feedback polynomial: **x⁸ + x⁶ + x⁵ + x⁴ + 1** ( taps: 7, 5, 4, 3 )
+  - On reset: loads a hardcoded non‑zero seed (`8'hFF`).
+  - On enable: shifts right 1 bit, MSB gets XOR of taps.
+  - Random sequence length: maximum period for the chosen polynomial (255 states before repeating).
+- **Limitations**:
+  - Width fixed to **8 bits** only.
+  - No seed load from outside → same sequence every reset.
+  - Single LFSR only → period limited to 2⁸–1 states.
+  - No randomness enhancement techniques like whitening.
+
+
+
+### New Version (lfsr_random.sv)
+
+**Module name in file**: `lfsr_SudoRandom`
+
+- **Purpose**: Generates high‑quality pseudo‑random numbers for genetic algorithm operations using **multiple LFSRs with whitening**.
+- **Key Parameters**:
+  - Four independent LFSR widths: `WIDTH1=16`, `WIDTH2=15`, `WIDTH3=14`, `WIDTH4=13`
+  - Default seeds for each LFSR (non‑zero)
+- **Inputs**: Clock, Reset (`rst`, active‑high), `start_lfsr`, `seed_in` (combined 58‑bit input), `load_seed`
+- **Outputs**: `random_out` (WIDTH1 bits, whitened result)
+- **Design Enhancements**:
+  - **Multiple LFSRs**: 4 parallel shift registers with different primitive polynomials, improving period and distribution.
+  - **Period extension**:
+    - Single LFSR(16-bit) period ~65k states →
+    - Combining 4 LFSRs gives a period on the order of ~2.88×10¹⁷ states before repetition.
+  - **Seed Loading**: External `seed_in` allows runtime re‑seeding; defaults on reset if not provided.
+  - **Whitening**: Combines outputs with XOR, then applies bit shifts & XOR again to reduce correlation.
+  - **Parameterization**: LFSR widths and seeds defined via parameters for easy tuning.
+  - **Synthesis optimization control**: Attributes like `srl_style`, `shreg_extract`, `keep`, `lut1`, and `use_dsp` set for predictable implementation.
+- **Polynomial taps**:
+  - LFSR1: x¹⁶ + x¹⁴ + x¹³ + x¹¹
+  - LFSR2: x¹⁵ + x¹⁴ + x¹² + x¹⁰
+  - LFSR3: x¹⁴ + x¹² + x¹⁰ + x⁸
+  - LFSR4: x¹³ + x¹² + x¹⁰ + x⁹
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`lfsr_random_old.sv`)**                                | **New Version (`lfsr_random.sv`)**                                                                                |
+| ------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Generates pseudo‑random bits using single 8‑bit LFSR with fixed taps. | Four LFSRs (16, 15, 14, 13‑bit) with different primitive polynomials; outputs whitened by XOR shifts.             |
+| **Parameterization**           | None — width fixed at 8 bits.                                         | Parameterized widths/seeds; LFSR count and taps selectable.                                                       |
+| **Inputs / Outputs**           | Inputs: `clk`, `rst_n`, `enable`. Output: `random_out[7:0]`.          | Inputs: same plus seed load; Output: mixed‑width whitened output.                                                 |
+| **Randomness Handling**        | Period = 255 states before repeat; predictable sequence.              | Period ≈ 2.88×10^17 states; external seeding allows reproducibility or randomness; whitening reduces correlation. |
+| **Boundary / Error Checks**    | None; output stuck if seed=0.                                         | Prevents zero‑lock state; seed load port checks and ignores all-zero seed.                                        |
+| **Reset Type**                 | Active‑low async reset.                                               | Active‑high sync reset.                                                                                           |
+| **Implementation Style**       | Simple shift register with XOR taps.                                  | Multiple independent LFSRs XORed for mix, plus whitening combinational logic.                                     |
+| **Synthesis Attributes**       | None.                                                                 | `keep_hierarchy`, `dont_touch` on shift registers to preserve feedback taps.                                      |
+| **FPGA Resource Efficiency**   | Extremely low resource use; short sequence.                           | Higher LUT use but vastly improved period and randomness quality.                                                 |
+| **Testbench Compatibility**    | No seed control — cannot produce deterministic sequences in sim.      | Seed can be set for repeatable sequences; enables test reproducibility.                                           |
+| **Known Limitations / Issues** | Not safe for cryptographic randomness; short period.                  | N/A for GA use; overkill for trivial applications.                                                                |
+
+---
+
+## 4. Mutation Module
+
+### Old Version (mutation_old.sv)
+
+- **Purpose**: Applies bit‑wise mutation to a child chromosome using a random mask and mutation rate.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8
+- **Inputs**: Clock, Reset (`rst_n` active‑low), `start_mutation`, `child_in`, `mutation_mask` (CHROMOSOME_WIDTH bits), `mutation_rate` (8‑bit, 0–255, higher means higher likelihood)
+- **Outputs**: `child_out`, `mutation_done`
+- **Behavior**:
+  - On reset: clears output and de‑asserts `mutation_done`.
+  - On `start_mutation`:
+    - For each bit: if **`mutation_mask[i] < mutation_rate`** then flip the bit; otherwise leave it unchanged.
+    - Immediately sets `mutation_done` high.
+- **Limitations**:
+  - Mutation mask is **directly compared to mutation rate per bit**, implying each `mutation_mask[i]` is 1 bit but it’s compared to an 8‑bit rate — not a consistent or meaningful comparison in synthesis.
+  - Only **bit‑flip** mutation is supported; no other mutation types.
+  - No edge‑case handling to avoid invalid swaps or single‑point inversions.
+  - Randomness generation done **externally**, module assumes already‑masked input.
+  - Parameterization limited to 8‑bit chromosome.
+  - Active‑low reset inconsistent with other upgraded modules.
+
+
+
+### New Version (mutation.sv)
+
+- **Purpose**: Applies **multiple configurable mutation types** with robust randomness handling and edge‑case safety, driven by LSFR input.
+- **Supported Mutation Modes**:
+  - `000`: **Bit‑Flip**
+  - `001`: **Bit‑Swap**
+  - `010`: **Inversion** (reverse subsequence)
+  - `011`: **Scramble** (XOR mask + swaps)
+  - `100`: **Combined** (Flip + Swap)
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 16 (fully parameterized)
+  - `LSFR_WIDTH` = 16
+- **Inputs**: Clock, Reset (`rst`, active‑high), `start_mutation`, `child_in`, `mutation_mode`, `mutation_rate` (8‑bit), `LSFR_input`
+- **Outputs**: `child_out`, `mutation_done`
+- **Design Enhancements**:
+  - **Randomness Mapping**: Carefully slices the LSFR output into masks, positions, and ranges for different mutation operations.
+  - **Edge‑case Handling**:
+    - Bit‑Swap: regenerates positions if both same; skips operation if still equal.
+    - Inversion: skips if range length < 2.
+    - Scramble: ensures swap positions differ before swapping.
+  - **Rate Scaling**: Mutation probability applied per bit or per operation based on sub‑slices of randomness.
+  - **Modular Structure**: Uses combinational pre‑processing for parameters (positions, masks) and sequential logic for applying the mutations.
+  - **Safety & Clarity**: Debug‑friendly `keep` attributes, `use_dsp="no"`, explicit local signals for swap operations to avoid synthesis race conditions.
+  - **Combined Mutation Mode**: Performs bit‑flip then bit‑swap in same mutation call.
+  - **Parameterization**: Supports any chromosome width with minimal edits.
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`mutation_old.sv`)**                                                          | **New Version (`mutation.sv`)**                                                                |
+| ------------------------------ | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Bit‑flip mutation only; loop through bits comparing 1 random bit to global mutation rate.    | Supports five modes: Bit‑Flip, Bit‑Swap, Inversion, Scramble, Combined. Choice via mode input. |
+| **Parameterization**           | None; fixed 8‑bit width.                                                                     | Parameterized `CHROMOSOME_WIDTH` (default 16 bits).                                            |
+| **Inputs / Outputs**           | Inputs: `child_in`, `mutation_mask`, `mutation_rate`. Outputs: `child_out`, `mutation_done`. | Inputs: same plus mode select; mask generated via LFSR input.                                  |
+| **Randomness Handling**        | External mask given; no seed control.                                                        | LFSR source internal/external selectable; reproducible by seed.                                |
+| **Boundary / Error Checks**    | No handling if swap indices are identical; inversion bounds unchecked.                       | All mutation types check bounds; invalid swaps become no‑ops.                                  |
+| **Reset Type**                 | Active‑low asynchronous.                                                                     | Active‑high synchronous.                                                                       |
+| **Implementation Style**       | One always_ff block; only flip based on mask<rate.                                           | Mode‑select case block; pre‑compute affected indices; supports multiple types in same run.     |
+| **Synthesis Attributes**       | None.                                                                                        | `keep_hierarchy`, `mark_debug` for debug of mutation behavior.                                 |
+| **FPGA Resource Efficiency**   | Minimal LUT but inflexible.                                                                  | LUT use increases with supported modes, but synthesis drops unused modes.                      |
+| **Testbench Compatibility**    | Only validates bit‑flip; cannot exercise other mutations.                                    | All mutation types can be tested; reproducible randomness via fixed seed.                      |
+| **Known Limitations / Issues** | Mutation probability handled inconsistently across bits.                                     | Requires valid LFSR input for meaningful random mutation.                                      |
+
+---
+
+## 5. Population Memory
+
+### Old Version (population_memory_old.sv)
+
+- **Purpose**: Stores chromosomes in a simple RAM‑style array, allowing single write and read access.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8
+  - `POPULATION_SIZE` = 16 (fixed)
+  - `ADDR_WIDTH` = log2​(POPULATION_SIZE)
+- **Inputs**: Clock, Reset (`rst_n` active‑low), `write_enable`, `write_addr`, `read_addr`, `write_data`
+- **Outputs**: `read_data`
+- **Behavior**:
+  - On clock edge: if `write_enable` = 1, stores `write_data` into `population[write_addr]`.
+  - `read_data` is always the combinational output from `population[read_addr]`.
+- **Limitations**:
+  - No fitness storage or ranking capability.
+  - No replacement strategy — overwrites data blindly.
+  - Fixed size and chromosome width.
+  - Reset signal active‑low, inconsistent with newer design standards.
+  - No direct support for GA operations like parent selection or sorted insertion.
+
+
+
+### New Version (population_memory.sv)
+
+- **Purpose**: Maintains both chromosomes and their fitness values in **sorted order by fitness**, enabling Genetic Algorithm operations such as parent retrieval, total fitness calculation, and dynamic insertion of new individuals.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 16 (parameterized)
+  - `FITNESS_WIDTH` = 14
+  - `MAX_POP_SIZE` (default 100)
+  - `ADDR_WIDTH` = log2​(MAX_POP_SIZE)
+- **Inputs**:
+  - Clock, Reset (`rst` active‑high)
+  - `start_write` + `child_in` + `child_fitness_in`
+  - `read_addr1`, `read_addr2` for parent retrieval
+  - `request_fitness_values`, `request_total_fitness`
+  - `population_size` (current)
+- **Outputs**:
+  - `parent1_out`, `parent2_out` (based on addresses)
+  - `fitness_values_out[]` (array output when requested)
+  - `total_fitness_out`
+  - `write_done`
+- **Design Enhancements**:
+  - **Sorted Insertion**: Finds correct index for new individual to maintain descending fitness order.
+  - **Selective Replacement**: Replaces worst individual only if new child has better fitness.
+  - **Parent Retrieval**: Direct reads via `read_addr1` and `read_addr2`.
+  - **Total Fitness Tracking**: Incrementally updated to avoid recomputation.
+  - **Array Outputs**: Can output the whole fitness array on request.
+  - **Pipeline Safety**: Uses a two‑cycle write process to allow safe shifting of population data.
+  - **Overflow Protection**: Clamps total fitness to maximum representable value.
+  - **Attributes**:
+    - `keep_hierarchy`, `use_dsp="no"`, `keep` for synthesis/debug visibility.
+    - `ram_style="block"` for FPGA block RAM storage.
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`population_memory_old.sv`)**                     | **New Version (`population_memory.sv`)**                                                                   |
+| ------------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Stores population chromosomes only; fixed size; unsorted.        | Stores chromosomes + fitness; sorted descending by fitness; supports conditional replacement and shifting. |
+| **Parameterization**           | None — depth=16, width=8.                                        | Parameterized `MAX_POP_SIZE`=100, `CHROMOSOME_WIDTH`=16, `FITNESS_WIDTH`=14.                               |
+| **Inputs / Outputs**           | Input: chromosome, write control; Output: chromosome by addr.    | Adds parent readout, fitness array out, total fitness, population size in/out.                             |
+| **Randomness Handling**        | N/A.                                                             | N/A.                                                                                                       |
+| **Boundary / Error Checks**    | None — new entries always overwrite worst regardless of fitness. | Only replaces if new fitness > worst; total fitness prevents overflow.                                     |
+| **Reset Type**                 | Active‑low asynchronous.                                         | Active‑high synchronous.                                                                                   |
+| **Implementation Style**       | Simple reg array; no ordering on insert.                         | Sorted insert algorithm; BRAM inference via `ram_style="block"`.                                           |
+| **Synthesis Attributes**       | None.                                                            | `keep_hierarchy`, `ram_style="block"`, `keep` signals for insert position.                                 |
+| **FPGA Resource Efficiency**   | Small LUT/reg array; no BRAM.                                    | BRAM for large sizes; efficient for high population sizes (>32).                                           |
+| **Testbench Compatibility**    | Static size; must rewrite for other configs in sim.              | Fully scalable; size set via parameter.                                                                    |
+| **Known Limitations / Issues** | Cannot track fitness in old version.                             | None major; replacement policy pure "better only".                                                         |
+
+---
+
+## 6. Selection Module
+
+### Old Version (selection_old.sv)
+
+- **Purpose**: Selects a **single parent index** from the population using the roulette‑wheel selection method.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8
+  - `POPULATION_SIZE` = 16 (fixed)
+  - `ADDR_WIDTH` = log2​(POPULATION_SIZE)
+  - `FITNESS_WIDTH` = 10
+- **Inputs**:
+  - Clock, Reset (`rst_n` active‑low)
+  - `start_selection`
+  - `fitness_values[]` (array of fitness per individual)
+  - `total_fitness`
+- **Outputs**:
+  - `selected_parent` (address of chosen parent)
+  - `selection_done`
+- **Behavior**:
+  - Generates a random number using **internal LFSR** (`lfsr_random`, same width as chromosome).
+  - Scales random number to [0, `total_fitness`] range to get `roulette_position`.
+  - Traverses `fitness_values[]` summing sequentially until cumulative sum ≥ `roulette_position`, then outputs that index.
+- **Limitations**:
+  - Selects **only one parent**, requiring multiple runs for two parents.
+  - Fixed population size and chromosome width.
+  - No way to handle varying `population_size` at runtime.
+  - Sequential FSM states (IDLE → SPINNING → DONE), meaning selection may take many cycles for large populations.
+  - Active‑low reset inconsistent with new modules.
+
+---
+
+### New Version (selection.sv)
+
+- **Purpose**: Selects **two parent indices** in **parallel** using roulette‑wheel selection with improved randomness handling, variable population size, and single‑cycle combinational search.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 16
+  - `FITNESS_WIDTH` = 14
+  - `MAX_POP_SIZE` = 100 (parameterized)
+  - `ADDR_WIDTH` = log2​(MAX_POP_SIZE)
+  - `LFSR_WIDTH` = 16
+- **Inputs**:
+  - Clock, Reset (`rst` active‑high)
+  - `start_selection`
+  - `fitness_values[]` (fitness array)
+  - `total_fitness`
+  - `lfsr_input` (randomness from external LFSR)
+  - `population_size` (runtime-configurable)
+- **Outputs**:
+  - `selected_index1`, `selected_index2` (two parents)
+  - `selection_done`
+- **Design Enhancements**:
+  - **Two Roulette Positions**: Generated using LFSR transformations (`xor` + shift) to ensure diversity.
+  - **Parallel Search**: Two combinational loops scan the fitness array in the same cycle for each roulette position.
+  - **Edge‑case Handler**:
+    - If `total_fitness == 0`, falls back to uniform random selection by modulo population size.
+    - Ensures `selected_index1 != selected_index2` (adjusted if equal).
+    - Works even if `population_size` < `MAX_POP_SIZE`.
+  - **Two‑Cycle Output Protocol**:
+    - Cycle 1: Latch chosen indices from combinational block.
+    - Cycle 2: Pulse `selection_done`.
+  - Synthesis attributes: `keep` on critical registers and sums for debug/optimization control.
+  - Fully parameterized for population sizes and chromosome widths.
+
+
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`selection_old.sv`)**                                                     | **New Version (`selection.sv`)**                                                                              |
+| ------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Functionality / Algorithm**  | Roulette‑wheel selection of 1 parent per request; sequential FSM search.                 | Parallel selection of 2 parents; combinational search of fitness array.                                       |
+| **Parameterization**           | Fixed population size (POP=16).                                                          | Parameterized `MAX_POP_SIZE`, `ADDR_WIDTH`, `FITNESS_WIDTH`. IA supports scaling.                             |
+| **Inputs / Outputs**           | Inputs: `fitness_values`, `total_fitness`, `start_selection`. Output: `selected_parent`. | Inputs: same plus `population_size` and external `lfsr_input`; Outputs: `selected_index1`, `selected_index2`. |
+| **Randomness Handling**        | Internal 8‑bit LFSR; no seed control.                                                    | Uses external LFSR input; reproducible by seed load; two different random values per selection.               |
+| **Boundary / Error Checks**    | No `total_fitness==0` protection.                                                        | Detects zero fitness; falls back to random index selection.                                                   |
+| **Reset Type**                 | Active‑low asynchronous.                                                                 | Active‑high synchronous.                                                                                      |
+| **Implementation Style**       | FSM iterates population summing fitness until random pos reached.                        | Two parallel combinational loops + guard to ensure different parents.                                         |
+| **Synthesis Attributes**       | None.                                                                                    | `keep` on key intermediates to ease debug.                                                                    |
+| **FPGA Resource Efficiency**   | Very low LUT use; serial search.                                                         | More LUTs for parallel loops but faster (1 cycle search).                                                     |
+| **Testbench Compatibility**    | Cannot generate repeatable outputs; tests only 1 parent selection.                       | Fully testable; can fix LFSR for deterministic parent pairs.                                                  |
+| **Known Limitations / Issues** | Single‑parent output; cannot guarantee parent difference.                                | Requires proper LFSR seeding for reproducibility.                                                             |
+
+---
+
+## 7. Top-Level GA Controller
+
+### Old Version (`genetic_algorithm_old.sv`)
+
+- **Purpose**: Implements the **entire GA process** inside one large monolithic FSM. Handles initialization, evaluation, selection, crossover, mutation, replacement, and termination.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` = 8
+  - `POPULATION_SIZE` = 16 (fixed)
+  - `ADDR_WIDTH` = `clog2(POPULATION_SIZE)`
+  - `FITNESS_WIDTH` = 10
+  - `MAX_GENERATIONS` = 100 (termination limit)
+  - `MUTATION_RATE` = 0x10 (hardcoded)
+- **Inputs / Outputs**:
+  - Inputs: `clk`, `rst_n`, `start_ga`, `initial_population[]` array.
+  - Outputs: `best_chromosome`, `best_fitness`, `ga_done`.
+- **Behavior**:
+  - FSM states: `IDLE`, `INIT_POPULATION`, `EVALUATE_FITNESS`, `CALC_TOTAL_FITNESS`, `SELECT_PARENT1/2`, `CROSSOVER`, `MUTATION`, `EVALUATE_CHILD`, `REPLACE_WORST`, `CHECK_TERMINATION`, `DONE`.
+  - Calls submodules directly for each step but drives them with explicit state machine timing.
+  - Uses internal LFSR for randomness.
+  - Selection picks one parent per call; two selection states are needed.
+  - Replacement always checks worst fitness and conditionally overwrites.
+- **Limitations**:
+  - **All logic is hard-wired** for fixed sizes and parameters — no parameterization for varying population size or width at runtime.
+  - **Sequential bottlenecks** — e.g., selection must run twice, total fitness is re-computed fully every generation.
+  - **Tight coupling** — no real modular pipeline, making debugging/reuse harder.
+  - Active-low reset inconsistent with modernized design.
+  - No dedicated interface for advanced crossover/mutation variants.
+
+
+
+### New Version (`GA_top.sv`)
+
+- **Purpose**: Coordinates GA pipeline in **modular, parameterized, and parallelized architecture** with clear stage separation and improved control flexibility.
+- **Key Parameters**:
+  - `CHROMOSOME_WIDTH` (default 16), `FITNESS_WIDTH` (default 14)
+  - `MAX_POP_SIZE` (default 100, used for array sizing)
+  - `ADDR_WIDTH` = `clog2(MAX_POP_SIZE)`
+  - `LFSR_WIDTH` = 16
+- **Inputs / Outputs**:
+  - Inputs: `start_ga`, `population_size` (runtime configurable), `load_initial_population`, `data_in`, crossover/mutation control signals, `target_iteration`.
+  - Outputs: status (`busy`, `done`), best chromosome & fitness, iteration counters (`iteration_count`, `crossovers_to_perfect`), flags (`perfect_found`), `load_data_now` pulse.
+- **Architecture**:
+  - **Two-level FSM**:
+    - Main FSM: `S_IDLE`, `S_INIT`, `S_RUNNING`, `S_DONE`.
+    - Pipeline FSM: `P_SELECT`, `P_CROSSOVER`, `P_MUTATION`, `P_EVALUATE`, `P_UPDATE`.
+  - **Dedicated Modules**: `selection`, `crossover`, `mutation`, `fitness_evaluator`, `population_memory` all upgraded and parameterized.
+  - **Randomness Routing**: Three parallel LFSRs feed selection, crossover, and mutation modules separately to ensure diversity.
+  - **Initialization Phase**: Can load from external data or auto-generate random chromosomes.
+  - **Perfect Solution Tracking**: When found, latches the generation number in `crossovers_to_perfect`.
+  - **Sorted Population Management**: Done entirely inside `population_memory`, embedded into pipeline.
+  - **Parallelized Checks**: Requests both `fitness_values` and `total_fitness` in the same cycle for faster selection.
+- **Control Features**:
+  - Easy to adjust parameters (widths, sizes, seeds) without core logic rewrite.
+  - Modular separation makes individual stages testable and reusable.
+  - Guarding for early termination when `perfect_found` or `target_iteration` reached.
+
+
+
+### Summary of Changes
+
+| Aspect / Feature               | **Old Version (`genetic_algorithm_old.sv`)**                                         | **New Version (`GA_top.sv`)**                                                                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Functionality / Algorithm**  | Monolithic FSM with 12 states controlling all GA operations sequentially.            | Two‑level FSM: Main FSM for GA phases + Pipeline FSM for sub‑stages (selection, crossover, mutation, evaluation, update).                                    |
+| **Parameterization**           | Fixed widths and population size.                                                    | Parameterized chromosome width, fitness width, population size, iteration target, GA operation modes.                                                        |
+| **Inputs / Outputs**           | Inputs: `start_ga`, `clk`, `rst_n`; Outputs: `data_out`, `done`.                     | Adds outputs: best chromosome/fitness, perfect found flag, crossovers_to_perfect counter, number_of_chromosomes; Inputs: runtime config for size and target. |
+| **Randomness Handling**        | Single internal 8‑bit LFSR; no external interface.                                   | Uses three parallel LFSRs for different GA units; seeding via config module.                                                                                 |
+| **Boundary / Error Checks**    | Minimal; no explicit zero population/replacement invalid state handling.             | Checks for population_size > 0 before start; guards iteration end conditions; perfect solution detection.                                                    |
+| **Reset Type**                 | Active‑low asynchronous.                                                             | Active‑high synchronous across modules.                                                                                                                      |
+| **Implementation Style**       | All GA steps hardcoded in sequence; parallelism absent.                              | Modular instantiation with fully parallel evaluation/mutation/crossover pipelines.                                                                           |
+| **Synthesis Attributes**       | None.                                                                                | Passes attributes to submodules; `keep_hierarchy` on top for debug consistency.                                                                              |
+| **FPGA Resource Efficiency**   | Compact FSM but under‑utilizes parallel hardware; bottlenecks in fitness evaluation. | Utilizes more LUTs/BRAM but higher throughput; pipelines hide latency.                                                                                       |
+| **Testbench Compatibility**    | Only tests monolithic state sequence; no modular unit testing possible.              | Fully modular testbench possible; can simulate each GA phase separately or in pipeline.                                                                      |
+| **Known Limitations / Issues** | Hard to modify parameters or operators; low GA flexibility.                          | Must manage more config inputs; complexity increases but flexibility much higher.                                                                            |
