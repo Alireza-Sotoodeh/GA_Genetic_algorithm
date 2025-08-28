@@ -21,7 +21,6 @@ module fitness_evaluator #(
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     logic [FITNESS_WIDTH-1:0] raw_fitness;  // Combinational result
-    logic evaluating;  // New: Internal flag for two-cycle
 
     // Combinational fitness calculation (synthesizable popcount using loop)
     always_comb begin
@@ -35,26 +34,20 @@ module fitness_evaluator #(
         end
     end
 
-    // Sequential registration and handshaking (unchanged)
+    // Sequential registration and handshaking - Optimized to one cycle (removed evaluating flag)
     always_ff @(posedge clk or posedge rst) begin
         if (rst) begin
             fitness <= '0;
             evaluation_done <= 1'b0;
-            evaluating <= 1'b0;  // Reset the new flag
         end else begin
             // Default: Deassert done to ensure one-cycle pulse
             evaluation_done <= 1'b0;
 
-            if (start_evaluation && !evaluating) begin
-                // Cycle 1: Start evaluation, register fitness, set flag
+            if (start_evaluation) begin
+                // Set fitness and pulse done immediately
                 fitness <= raw_fitness;
-                evaluating <= 1'b1;
-            end else if (evaluating) begin
-                // Cycle 2: Pulse done and clear flag
                 evaluation_done <= 1'b1;
-                evaluating <= 1'b0;
             end
-            // Note: If start_evaluation is held high, it won't re-trigger until evaluating clears
         end
     end
     
