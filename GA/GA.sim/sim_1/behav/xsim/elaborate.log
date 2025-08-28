@@ -9,11 +9,11 @@ Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.lfsr_SudoRandom
-Compiling module xil_defaultlib.selection(POPULATION_SIZE=100)
+Compiling module xil_defaultlib.selection_default
 Compiling module xil_defaultlib.crossover_default
 Compiling module xil_defaultlib.mutation
 Compiling module xil_defaultlib.fitness_evaluator
-Compiling module xil_defaultlib.population_memory(POPULATION_SIZ...
+Compiling module xil_defaultlib.population_memory_default
 Compiling module xil_defaultlib.ga_top_default
 Compiling module xil_defaultlib.GA_top_manual_tb
 Compiling module xil_defaultlib.glbl

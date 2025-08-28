@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xc7s15cpga196-2" LaunchTime="1756415769">
+  <File Type="PA-TCL" Name="population_memory.tcl"/>
+  <File Type="RDS-PROPCONSTRS" Name="population_memory_drc_synth.rpt"/>
+  <File Type="REPORTS-TCL" Name="population_memory_reports.tcl"/>
+  <File Type="RDS-RDS" Name="population_memory.vds"/>
+  <File Type="RDS-UTIL" Name="population_memory_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="population_memory_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="population_memory.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="population_memory_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="population_memory_timing_summary_synth.pb"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/population_memory.sv">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/population_memory.sv"/>
+        <Attr Name="ImportTime" Val="1756135448"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/selection.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/selection.sv"/>
+        <Attr Name="ImportTime" Val="1756190943"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/mutation.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/mutation.sv"/>
+        <Attr Name="ImportTime" Val="1756135491"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/fitness_evaluator.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/fitness_evaluator.sv"/>
+        <Attr Name="ImportTime" Val="1756135492"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/crossover.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/crossover.sv"/>
+        <Attr Name="ImportTime" Val="1756135489"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/lfsr_random.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/lfsr_random.sv"/>
+        <Attr Name="ImportTime" Val="1756135485"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/GA_code/GA_top.sv">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/GA_code/GA_top.sv"/>
+        <Attr Name="ImportTime" Val="1756198800"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="population_memory"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/imports/Clk_costrain/CLK.xdc">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="C:/Users/Alireza/Desktop/Clk_costrain/CLK.xdc"/>
+        <Attr Name="ImportTime" Val="1756044181"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019"/>
+    <Step Id="synth_design"/>
+  </Strategy>
+</GenRun>
