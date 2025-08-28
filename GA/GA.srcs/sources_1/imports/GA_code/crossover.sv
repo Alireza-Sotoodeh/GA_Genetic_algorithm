@@ -51,8 +51,11 @@ module crossover #(
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_fixed, mask_double_fixed;
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] mask_single_float, mask_double_float;
     (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] active_uniform_mask;
-    logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_fixed; 
-    logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_double_p1, parent2_shifted_double_p2;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_fixed; 
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_double_p1, parent2_shifted_double_p2;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_float;
+    (* keep = "true" *) logic [CHROMOSOME_WIDTH-1:0] parent2_shifted_double_p1_float, parent2_shifted_double_p2_float;
+
     // =========================
     // Combinational preparation
     // =========================
@@ -100,13 +103,16 @@ module crossover #(
                             (sp_rand >= CHROMOSOME_WIDTH) ? 
                               {CHROMOSOME_WIDTH{1'b1}} :
                               ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - sp_rand));
-
+        parent2_shifted_float = (parent2 << sp_rand);
         // Float: double
         if (dp1_rand == dp2_rand) begin
             mask_double_float = mask_single_float;
         end else begin
             mask_double_float = ({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - p2_float))
                                ^({CHROMOSOME_WIDTH{1'b1}} >> (CHROMOSOME_WIDTH - p1_float));
+           parent2_shifted_double_p2_float = (parent2 << (p2_float+1));
+           parent2_shifted_double_p1_float = (parent2 >> (CHROMOSOME_WIDTH-p1_float-1));
+
         end
 
         // Uniform mask selection
@@ -129,24 +135,31 @@ module crossover #(
                     // Fixed
                     2'b00: begin
                         if (!crossover_single_double) begin
-                            child <= (parent2_shifted_fixed & ~mask_single_fixed) | (parent1 & mask_single_fixed);
+                            child <= (parent2_shifted_fixed & ~mask_single_fixed) |
+                                     (parent1 & mask_single_fixed);
                         end else begin
-                            child <= (parent1 & mask_double_fixed) | (parent2_shifted_double_p2)| (parent2_shifted_double_p1);
+                            child <= (parent1 & mask_double_fixed) |
+                                     (parent2_shifted_double_p2)|
+                                     (parent2_shifted_double_p1);
                         end
                         crossover_done <= 1'b1;
                     end
                     // Float
                     2'b01: begin
                         if (!crossover_single_double) begin
-                            child <= (parent2 & ~mask_single_float) | (parent1 & mask_single_float);
+                            child <= (parent2_shifted_float  & ~mask_single_float) |
+                                     (parent1 & mask_single_float);
                         end else begin
-                            child <= (parent1 & mask_double_float) | (parent2 & ~mask_double_float);
+                            child <= (parent1 & mask_double_float) | 
+                                     (parent2_shifted_double_p2_float) | 
+                                     (parent2_shifted_double_p1_float);
                         end
                         crossover_done <= 1'b1;
                     end
                     // Uniform
                     2'b10: begin
-                        child <= (parent1 & active_uniform_mask) | (parent2 & ~active_uniform_mask);
+                        child <= (parent1 & active_uniform_mask) |
+                                 (parent2 & ~active_uniform_mask);
                         crossover_done <= 1'b1;
                     end
                     // Default
