@@ -116,6 +116,11 @@ module ga_top #(
     // Pipeline control registers
     logic                  eval_init_pending, eval_pipe_pending;
     logic                  first_init;
+    
+    // Readout signals
+    logic [ADDR_WIDTH-1:0] read_ptr;
+    logic                  readout_active;
+    logic                  readout_done;
 
 //======================================================================
 // Module Instantiations
@@ -206,7 +211,7 @@ module ga_top #(
         .fitness(p_child_fitness),
         .evaluation_done(eval_done)
     );
-
+    (* ram_style = "block" *) 
     population_memory #(
         .CHROMOSOME_WIDTH(CHROMOSOME_WIDTH), 
         .FITNESS_WIDTH(FITNESS_WIDTH),
@@ -215,7 +220,7 @@ module ga_top #(
         .clk(clk),
         .rst(rst),
         .start_write(start_pop_write),
-        .child_in(start_eval_init ? init_chromosome_in : p_child_mutated),
+        .child_in((state == S_INIT) ? init_chromosome_in : p_child_mutated),
         .child_fitness_in(p_child_fitness),
         .read_addr1(p_selected_idx1),
         .read_addr2(p_selected_idx2),
@@ -305,7 +310,7 @@ module ga_top #(
         
         // Initialization chromosome handling
         init_chromosome_in = (load_initial_population && state == S_INIT) ? data_in : rand_mut;
-
+        
         //----------- Main FSM Logic -----------
         case(state)
             S_IDLE: begin
@@ -391,8 +396,26 @@ module ga_top #(
             end
         endcase
     end
-
-//======================================================================
+    //read out data when done!
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            read_ptr       <= 0;
+            readout_active <= 0;
+            readout_done   <= 0;
+        end else begin
+            if (state == S_DONE && !readout_active && !readout_done) begin
+                readout_active <= 1;
+                read_ptr       <= 0;
+            end else if (readout_active) begin
+                if (read_ptr < population_size - 1)
+                    read_ptr <= read_ptr + 1;
+                else
+                    readout_active <= 0;
+                    readout_done   <= 1;  
+            end
+        end
+    end
+    //======================================================================
 // Output Assignments
 //======================================================================
     assign best_chromosome = pop_mem_inst.population[0];
@@ -402,7 +425,7 @@ module ga_top #(
     assign done = (state == S_DONE);
     assign perfect_found = (best_fitness == CHROMOSOME_WIDTH);
     assign crossovers_to_perfect = perfect_found_latch ? perfect_counter_reg : 0;
-    assign data_out = best_chromosome;
+    assign data_out = readout_active ? pop_mem_inst.population[read_ptr] : best_chromosome;
     assign number_of_chromosomes = population_size;
 
 endmodule
