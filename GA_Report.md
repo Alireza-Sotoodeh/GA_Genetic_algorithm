@@ -85,6 +85,31 @@
 | **Testbench Compatibility**    | Cannot change crossover type/point dynamically; test coverage limited.                                           | Fully configurable during simulation; deterministic test possible by fixed RNG seed.                             |
 | **Known Limitations / Issues** | Cannot reproduce correct variable crossovers; limited to 8 bits.                                                 | None major; must ensure consistent LFSR seeding for repeatable results.                                          |
 
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]    
+```
+
+![Screenshot 2025-08-29 000959.png](C:\Users\Alireza\AppData\Roaming\marktext\images\7611b20bbbbd610b6434e23ad8f85d417ba204bd.png)
+
+![Screenshot 2025-08-29 001034.png](C:\Users\Alireza\AppData\Roaming\marktext\images\b47609072f65169d54602974b30bb961f56aa232.png)
+
+![Screenshot 2025-08-29 001146.png](C:\Users\Alireza\AppData\Roaming\marktext\images\bc37a19073795084b773425b8786b6bed1852635.png)
+
+![Screenshot 2025-08-29 001225.png](C:\Users\Alireza\AppData\Roaming\marktext\images\483e9433be737be60020034a46210af15040a099.png)
+
+- **error:** `crossover_Single_point is not a constant`
+
+- **solution:** use mask
+
+```txt
+///////////////////////////////////////////////////////////////////////////////////////
+// due to error crossover_Single_point (and others) is not a constant -> define mask1&2
+// mask1: Used for single-point crossover 
+// mask2: Used for double-point crossover (middle segment from parent1) 
+// parent2 == 0 & parent1 =1
+//////////////////////////////////////////////////////////////////////////
+```
+
 ---
 
 ## 2. Fitness Evaluator Module
@@ -145,6 +170,18 @@
 | **Testbench Compatibility**    | Works for fixed width only; cannot stress variable width behavior.                                      | Fully scalable test stimuli; easy to overload with longer chromosomes.                   |
 | **Known Limitations / Issues** | Over‑allocates fitness bits; no safety for invalid data width.                                          | None significant.                                                                        |
 
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]    
+```
+
+![Screenshot 2025-08-29 001428.png](C:\Users\Alireza\AppData\Roaming\marktext\images\970167e0164a43266b9d6b7e28e1912a99ffc471.png)
+
+![Screenshot 2025-08-29 001456.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a26e5146e2a869ce8efd4ea9ac225984600e451e.png)
+
+![Screenshot 2025-08-29 001557.png](C:\Users\Alireza\AppData\Roaming\marktext\images\6bdd56523e1d31e0427d88f70e13aa3c3d5d8933.png)
+
+![Screenshot 2025-08-29 001620.png](C:\Users\Alireza\AppData\Roaming\marktext\images\53c4a74e44929655b8968c4f29e955e5f6c50bf2.png)
+
 ---
 
 ## 3. LFSR Random Generator
@@ -166,8 +203,6 @@
   - No seed load from outside → same sequence every reset.
   - Single LFSR only → period limited to 2⁸–1 states.
   - No randomness enhancement techniques like whitening.
-
-
 
 ### New Version (lfsr_random.sv)
 
@@ -210,6 +245,51 @@
 | **Testbench Compatibility**    | No seed control — cannot produce deterministic sequences in sim.      | Seed can be set for repeatable sequences; enables test reproducibility.                                           |
 | **Known Limitations / Issues** | Not safe for cryptographic randomness; short period.                  | N/A for GA use; overkill for trivial applications.                                                                |
 
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]    
+```
+
+![Screenshot 2025-08-21 144627.png](C:\Users\Alireza\AppData\Roaming\marktext\images\cb04b58dcd55fda6323edbb948a606b4f37f4bc5.png)
+
+![Screenshot 2025-08-21 144719.png](C:\Users\Alireza\AppData\Roaming\marktext\images\e69cce318a0270a2cb50be027cf5606e66831bb7.png)
+
+![Screenshot 2025-08-21 144824.png](C:\Users\Alireza\AppData\Roaming\marktext\images\8dbc0cef624bdad646345ab0c3cc99c7c66ef899.png)
+
+⚠️error
+
+<img title="" src="file:///C:/Users/Alireza/AppData/Roaming/marktext/images/1f73e7ee0338e5da93234af6951fb9ca1354d534.png" alt="util.png" data-align="inline">
+
+![timing.png](C:\Users\Alireza\AppData\Roaming\marktext\images\e0ae60a2ac2dbd4b55faa4eb8672fa3380637b3a.png)
+
+this is due to Vivado's aggressive optimization removing your LFSR logic because the outputs aren't being used or there are constant inputs.
+
+> sulotion:
+> 
+> ```v
+> (* keep = "true" *) 
+> ```
+> 
+> ```v
+>         // State registers for each LFSR
+>         logic [WIDTH1-1:0] lfsr1;
+>         logic [WIDTH2-1:0] lfsr2;
+>         logic [WIDTH3-1:0] lfsr3;
+>         logic [WIDTH4-1:0] lfsr4;
+>         // Feedback wires
+>         logic fb1, fb2, fb3, fb4;
+> 
+>         //should turn into:
+>         // State registers for each LFSR
+>         (* keep = "true" *) logic [WIDTH1-1:0] lfsr1;
+>         (* keep = "true" *) logic [WIDTH2-1:0] lfsr2;
+>         (* keep = "true" *) logic [WIDTH3-1:0] lfsr3;
+>         (* keep = "true" *) logic [WIDTH4-1:0] lfsr4;
+>         // Feedback wires
+>         (* keep = "true" *) logic fb1, fb2, fb3, fb4; 
+> ```
+
+![Screenshot 2025-08-20 215454.png](C:\Users\Alireza\AppData\Roaming\marktext\images\84d83de907f1010334b088e88e791e66221c3587.png)
+
 ---
 
 ## 4. Mutation Module
@@ -233,8 +313,6 @@
   - Randomness generation done **externally**, module assumes already‑masked input.
   - Parameterization limited to 8‑bit chromosome.
   - Active‑low reset inconsistent with other upgraded modules.
-
-
 
 ### New Version (mutation.sv)
 
@@ -278,6 +356,18 @@
 | **Testbench Compatibility**    | Only validates bit‑flip; cannot exercise other mutations.                                    | All mutation types can be tested; reproducible randomness via fixed seed.                      |
 | **Known Limitations / Issues** | Mutation probability handled inconsistently across bits.                                     | Requires valid LFSR input for meaningful random mutation.                                      |
 
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]
+```
+
+![Screenshot 2025-08-29 002226.png](C:\Users\Alireza\AppData\Roaming\marktext\images\6acd29281df2f3a6a713214618e91f3ea42e689a.png)
+
+![Screenshot 2025-08-29 002305.png](C:\Users\Alireza\AppData\Roaming\marktext\images\79af9d2a463a11ca3e7fa07878443d73b1317dd9.png)
+
+![Screenshot 2025-08-29 002359.png](C:\Users\Alireza\AppData\Roaming\marktext\images\06e6dc7039242f6c5f7c172914ce5e741258d3c3.png)
+
+![Screenshot 2025-08-29 002458.png](C:\Users\Alireza\AppData\Roaming\marktext\images\6186dfd7126ffd0d4de987535e61cdf026deeb2d.png)
+
 ---
 
 ## 5. Population Memory
@@ -300,8 +390,6 @@
   - Fixed size and chromosome width.
   - Reset signal active‑low, inconsistent with newer design standards.
   - No direct support for GA operations like parent selection or sorted insertion.
-
-
 
 ### New Version (population_memory.sv)
 
@@ -350,6 +438,18 @@
 | **Testbench Compatibility**    | Static size; must rewrite for other configs in sim.              | Fully scalable; size set via parameter.                                                                    |
 | **Known Limitations / Issues** | Cannot track fitness in old version.                             | None major; replacement policy pure "better only".                                                         |
 
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]
+```
+
+![Screenshot 2025-08-29 004947.png](C:\Users\Alireza\AppData\Roaming\marktext\images\610c058e18e6098d609c58dc64c8bdf9fa25765f.png)
+
+![Screenshot 2025-08-29 005020.png](C:\Users\Alireza\AppData\Roaming\marktext\images\810e745338dd4978d76d9e05fa83a4b534619e4c.png)
+
+![Screenshot 2025-08-29 005053.png](C:\Users\Alireza\AppData\Roaming\marktext\images\9ea9bbc04f709939df04943550556c3323cfc02d.png)
+
+![Screenshot 2025-08-29 005137.png](C:\Users\Alireza\AppData\Roaming\marktext\images\15ab99558d758499d403c8c0cf29f936d9e5bfcd.png)
+
 ---
 
 ## 6. Selection Module
@@ -380,8 +480,6 @@
   - No way to handle varying `population_size` at runtime.
   - Sequential FSM states (IDLE → SPINNING → DONE), meaning selection may take many cycles for large populations.
   - Active‑low reset inconsistent with new modules.
-
----
 
 ### New Version (selection.sv)
 
@@ -415,8 +513,6 @@
   - Synthesis attributes: `keep` on critical registers and sums for debug/optimization control.
   - Fully parameterized for population sizes and chromosome widths.
 
-
-
 ### Summary of Changes
 
 | Aspect / Feature               | **Old Version (`selection_old.sv`)**                                                     | **New Version (`selection.sv`)**                                                                              |
@@ -432,6 +528,18 @@
 | **FPGA Resource Efficiency**   | Very low LUT use; serial search.                                                         | More LUTs for parallel loops but faster (1 cycle search).                                                     |
 | **Testbench Compatibility**    | Cannot generate repeatable outputs; tests only 1 parent selection.                       | Fully testable; can fix LFSR for deterministic parent pairs.                                                  |
 | **Known Limitations / Issues** | Single‑parent output; cannot guarantee parent difference.                                | Requires proper LFSR seeding for reproducibility.                                                             |
+
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]
+```
+
+![Screenshot 2025-08-29 003418.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a82ccba9ef6573428838c9656e4e558af1601b6c.png)
+
+![Screenshot 2025-08-29 003211.png](C:\Users\Alireza\AppData\Roaming\marktext\images\f84f8a97dc737c42445943ee9e3fb5ba74aebabb.png)
+
+![Screenshot 2025-08-29 003329.png](C:\Users\Alireza\AppData\Roaming\marktext\images\87c31a47975c91c4b999401fb1bf4423750b2492.png)
+
+![Screenshot 2025-08-29 003446.png](C:\Users\Alireza\AppData\Roaming\marktext\images\b28505ca433791104caacb6ab5c4409a317f9556.png)
 
 ---
 
@@ -463,8 +571,6 @@
   - Active-low reset inconsistent with modernized design.
   - No dedicated interface for advanced crossover/mutation variants.
 
-
-
 ### New Version (`GA_top.sv`)
 
 - **Purpose**: Coordinates GA pipeline in **modular, parameterized, and parallelized architecture** with clear stage separation and improved control flexibility.
@@ -491,8 +597,6 @@
   - Modular separation makes individual stages testable and reusable.
   - Guarding for early termination when `perfect_found` or `target_iteration` reached.
 
-
-
 ### Summary of Changes
 
 | Aspect / Feature               | **Old Version (`genetic_algorithm_old.sv`)**                                         | **New Version (`GA_top.sv`)**                                                                                                                                |
@@ -508,3 +612,183 @@
 | **FPGA Resource Efficiency**   | Compact FSM but under‑utilizes parallel hardware; bottlenecks in fitness evaluation. | Utilizes more LUTs/BRAM but higher throughput; pipelines hide latency.                                                                                       |
 | **Testbench Compatibility**    | Only tests monolithic state sequence; no modular unit testing possible.              | Fully modular testbench possible; can simulate each GA phase separately or in pipeline.                                                                      |
 | **Known Limitations / Issues** | Hard to modify parameters or operators; low GA flexibility.                          | Must manage more config inputs; complexity increases but flexibility much higher.                                                                            |
+
+```tsx
+create_clock -name Clock -period 90.000 [get_ports clk]
+```
+
+![report_timing.png](C:\Users\Alireza\AppData\Roaming\marktext\images\a13ef80c5776fa0f15bd8bfac6f15eb958b62dc9.png)
+
+**B-Ram style:**
+
+![Bram_util.png](C:\Users\Alireza\AppData\Roaming\marktext\images\b3f94c457969c41c9a94c536a1f16c3d6c0a5dc7.png)
+
+**LUT style:**
+
+![util1.png](C:\Users\Alireza\AppData\Roaming\marktext\images\3a1fc16ef2b4d69d9af3923e10aa0b65aa0bb7ab.png)
+
+![RTL.png](C:\Users\Alireza\AppData\Roaming\marktext\images\7f96852df5d9934d9e7c6c97dc1f1259276271f9.png)
+
+![power.png](C:\Users\Alireza\AppData\Roaming\marktext\images\105367b19f5c02f29c40f47714ae08b5894c9eb0.png)
+
+simulation:
+
+![GA_top.png](C:\Users\Alireza\AppData\Roaming\marktext\images\90db25785344a11cd707c9e0d2d52d83292b28ab.png)
+
+delay B-ram is much higher then LUT:
+
+![Bram_test bench.png](C:\Users\Alireza\AppData\Roaming\marktext\images\5eb7e1ce510f7c711c5f33923c89e3d457cfc38a.png)
+
+---
+
+# TestBench style
+
+<img title="" src="file:///C:/Users/Alireza/AppData/Roaming/marktext/images/155b22883a4c7d4c9780ae5e93866fe2d61048f7.png" alt="TB.png" width="294" data-align="center">
+
+```v
+`timescale 1ns / 1ps
+// -----------------------------------------------------------
+// 1. Interface — bundles DUT I/O signals
+// -----------------------------------------------------------
+interface dut_if(input logic clk, rst);
+    // DUT inputs
+    logic [7:0] a;
+    logic [7:0] b;
+    logic       carry_in;
+    logic [1:0] op_sel;
+
+    // DUT outputs
+    logic [7:0] result;
+    logic       carry_out;
+endinterface
+
+// -----------------------------------------------------------
+// 2. Testbench module
+// -----------------------------------------------------------
+module tb_top;
+
+    // Clock generation (100 MHz with timescale 1ns/1ps)
+    logic clk = 0;
+    always #5 clk = ~clk;
+
+    // Reset generation
+    logic rst;
+    initial begin
+        rst = 1;
+        #20 rst = 0;
+    end
+
+    // Interface instance
+    dut_if intf(clk, rst);
+
+    // Expected values (based on reference / golden model)
+    logic [7:0] expected_result;
+    logic       expected_carry;
+
+    int error_count = 0;
+    int test_count  = 0;
+
+    // -------------------------------------------------------
+    // 3. DUT instantiation
+    // -------------------------------------------------------
+    // Replace 'my_dut' and port connections as per your DUT
+    my_dut DUT (
+        .a(intf.a),
+        .b(intf.b),
+        .carry_in(intf.carry_in),
+        .op_sel(intf.op_sel),
+        .result(intf.result),
+        .carry_out(intf.carry_out)
+    );
+
+    // -------------------------------------------------------
+    // 4. Generator — produces random + edge case stimuli
+    // -------------------------------------------------------
+    task generator(int num_tests);
+        for (int i = 0; i < num_tests; i++) begin
+            // Default randomization
+            intf.a        = $urandom();
+            intf.b        = $urandom();
+            intf.carry_in = $urandom_range(0, 1);
+            intf.op_sel   = $urandom_range(0, 3);
+
+            // Inject example edge cases at fixed intervals
+            if (i % 100 == 0) begin
+                intf.a = 8'h00;
+                intf.b = 8'hFF;
+            end
+
+            // Compute expected values based on your DUT function
+            // (Replace this block with your golden model logic)
+            case (intf.op_sel)
+                2'b00: {expected_carry, expected_result} = intf.a + intf.b;
+                2'b01: {expected_carry, expected_result} = {1'b0, intf.a} - {1'b0, intf.b};
+                2'b10: begin expected_result = intf.a & intf.b; expected_carry = 0; end
+                2'b11: begin expected_result = intf.a | intf.b; expected_carry = 0; end
+            endcase
+
+            // Send to DUT via driver
+            driver();
+        end
+    endtask
+
+    // -------------------------------------------------------
+    // 5. Driver — applies data to DUT synchronised to clock
+    // -------------------------------------------------------
+    task driver();
+        @(posedge clk);
+        #1; // allow small time for signals to settle
+        monitor();
+        test_count++;
+    endtask
+
+    // -------------------------------------------------------
+    // 6. Monitor — captures DUT outputs and calls checker
+    // -------------------------------------------------------
+    task monitor();
+        check_result();
+    endtask
+
+    // -------------------------------------------------------
+    // 7. Checker — compares DUT output with expected values
+    // -------------------------------------------------------
+    task check_result();
+        if (intf.result !== expected_result) begin
+            $display("ERROR @ %0t: op_sel=%b, a=%h, b=%h | expected result=%h, got=%h",
+                     $time, intf.op_sel, intf.a, intf.b,
+                     expected_result, intf.result);
+            error_count++;
+        end
+        if (intf.carry_out !== expected_carry) begin
+            $display("ERROR @ %0t: op_sel=%b, a=%h, b=%h | expected carry=%b, got=%b",
+                     $time, intf.op_sel, intf.a, intf.b,
+                     expected_carry, intf.carry_out);
+            error_count++;
+        end
+    endtask
+
+    // -------------------------------------------------------
+    // 8. Main sequence — controls simulation flow
+    // -------------------------------------------------------
+    initial begin
+        wait(!rst); // Wait until reset is released
+        $display("Starting tests...");
+        generator(1000); // Number of tests
+        $display("Tests completed: %0d total, %0d errors", test_count, error_count);
+
+        if (error_count == 0)
+            $display("TEST PASSED");
+        else
+            $display("TEST FAILED");
+
+        $finish;
+    end
+
+    // Optional waveform dump
+    initial begin
+        $dumpfile("tb_top.vcd");
+        $dumpvars(0, tb_top);
+    end
+
+endmodule
+```
