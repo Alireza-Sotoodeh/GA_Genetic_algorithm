@@ -9,22 +9,22 @@ module population_memory #(
     clk,
     rst,
     start_write,
-    child_in,                   // Child after mutation
-    child_fitness_in,           // Fitness from fitness_evaluator
-    read_addr1,                 // For reading parent1 (from selection's output index1)
-    read_addr2,                 // For reading parent2 (from selection's output index2)
-    request_fitness_values,     // Signal to request all fitness values (for selection)
-    request_total_fitness,      // Signal to request total_fitness (for selection)
-    parent1_out,                // Direct output to crossover (chromosome for parent1)
-    parent2_out,                // Direct output to crossover (chromosome for parent2)
-    fitness_values_out,         // Array of all fitness values (pipelined output for selection)
-    total_fitness_out,          // Accumulated total fitness (pipelined output for selection)
-    write_done                  // Handshake done for write/insertion
+    child_in,                   
+    child_fitness_in,           
+    read_addr1,                 
+    read_addr2,                 
+    request_fitness_values,     
+    request_total_fitness,      
+    parent1_out,                
+    parent2_out,                
+    fitness_values_out,         
+    total_fitness_out,          
+    write_done                 
 );
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     // Inputs
     input  logic                                clk;
-    input  logic                                rst;  // Active-high like crossover
+    input  logic                                rst;  
     input  logic                                start_write;
     input  logic [CHROMOSOME_WIDTH-1:0]         child_in;
     input  logic [FITNESS_WIDTH-1:0]            child_fitness_in;
@@ -97,31 +97,17 @@ module population_memory #(
             for (int i = 0; i < POPULATION_SIZE; i++) begin
                 population[i] <= '0;
                 fitness_values[i] <= '0;
-
             end
             internal_total_fitness <= '0;
-
             write_done <= 1'b0;
             writing <= 1'b0;
         end else begin
             // Default: Deassert done for one-cycle pulse
             write_done <= 1'b0;
-
-
-
-
-
-
-
-
-
-
-
-
-            if (start_write && !writing) begin
+			if (start_write && !writing) begin
                 // Cycle 1: Start write, set flag (prep done in comb)
                 writing <= 1'b1;
-            end else if (writing) begin
+			end else if (writing) begin
                 // Cycle 2: Perform insertion, update total_fitness incrementally, pulse done
                 // Incremental update: subtract removed (worst), add new (handles overflow by widening)
                 internal_total_fitness <= (internal_total_fitness - old_fitness_remove) + child_fitness_in;
@@ -150,15 +136,4 @@ module population_memory #(
             end
         end
     end
-
-    // Notes on structure and potential issues:
-    // - Pipelined: Writes take 2 cycles (start + update), reads combinational (no stall). For full pipeline, top module can register reads.
-    // - Conflicts prevented: Writes sequential, reads comb; no simultaneous write to same addr (insertion shifts avoid it).
-    // - Ties: If child_fitness == some fitness, inserts after (stable), but doesn't insert if not > (preserves elites). Adjust comparison to >= if needed.
-    // - Zero total_fitness: Handled in selection (not here), but accumulator starts at 0; user must initialize population.
-    // - Overflow: Widened accumulator detects/saturates; for FITNESS_WIDTH=14, max sum=16*16383=262128 (fits in 18 bits, safe but handled).
-    // - Sorting: Maintains descending order after each insert (elitism: best preserved, worst discarded).
-    // - Connection to selection: Provide read_addr1/2 from selection's outputs, get parent1_out/parent2_out directly to crossover.
-    // - For larger POP_SIZE, optimize shift (e.g., use shift registers); current O(N) fine for 16.
-
 endmodule
