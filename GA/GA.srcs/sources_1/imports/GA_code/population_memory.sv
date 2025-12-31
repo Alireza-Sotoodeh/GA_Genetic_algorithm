@@ -43,10 +43,8 @@ module population_memory #(
 );
 
     // ===== Internal Block RAM storage =====
-    (* ram_style = "block" *)
-    logic [CHROMOSOME_WIDTH-1:0] population    [0:MAX_POP_SIZE-1];
-    (* ram_style = "block" *)
-    logic [FITNESS_WIDTH-1:0]    fitness_values[0:MAX_POP_SIZE-1];
+    (* ram_style = "block" *)logic [CHROMOSOME_WIDTH-1:0] population    [0:MAX_POP_SIZE-1];
+    (* ram_style = "block" *)logic [FITNESS_WIDTH-1:0]    fitness_values[0:MAX_POP_SIZE-1];
     logic [FITNESS_WIDTH:0]      internal_total_fitness;
 
     // ===== Insert position search =====

@@ -1,0 +1,4 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+** GA found perfect at t=678150000, iterations=566, best=0xffff fitness=16
+$stop called at time : 678250 ns : File "D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sim_1/imports/TB/GA_manual_test.sv" Line 314

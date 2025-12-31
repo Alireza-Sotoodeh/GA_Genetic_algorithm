@@ -307,13 +307,13 @@ module GA_top_manual_tb;
     // ============================================================
     //  Stop Simulation When Perfect Solution Found
     // ============================================================
-    /*always @(posedge clk) begin
+    always @(posedge clk) begin
         if (perfect_found) begin
             $display("** GA found perfect at t=%0t, iterations=%0d, best=0x%0h fitness=%0d",
                      $time, iteration_count, best_chromosome, best_fitness);
             repeat(2)@(posedge clk)$stop;
         end
-    end*/
+    end
     
     // ============================================================
     //  Close log file at simulation end

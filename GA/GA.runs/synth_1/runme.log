@@ -15,21 +15,21 @@ Attempting to get a license for feature 'Synthesis' and/or device 'xc7s15'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s15'
 INFO: [Device 21-403] Loading part xc7s15cpga196-2
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 22280 
+INFO: Helper process launched with PID 10472 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 932.352 ; gain = 235.289
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 933.543 ; gain = 234.910
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'population_memory' [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:15]
 	Parameter CHROMOSOME_WIDTH bound to: 16 - type: integer 
 	Parameter FITNESS_WIDTH bound to: 14 - type: integer 
 	Parameter MAX_POP_SIZE bound to: 100 - type: integer 
 	Parameter ADDR_WIDTH bound to: 7 - type: integer 
+INFO: [Synth 8-5534] Detected attribute (* ram_style = "block" *) [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:46]
 INFO: [Synth 8-5534] Detected attribute (* ram_style = "block" *) [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:47]
-INFO: [Synth 8-5534] Detected attribute (* ram_style = "block" *) [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:49]
-WARNING: [Synth 8-5788] Register shift_index_reg in module population_memory is has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:106]
+WARNING: [Synth 8-5788] Register shift_index_reg in module population_memory is has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:104]
 INFO: [Synth 8-6155] done synthesizing module 'population_memory' (1#1) [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/sources_1/imports/GA_code/population_memory.sv:15]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1027.180 ; gain = 330.117
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1028.828 ; gain = 330.195
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -42,12 +42,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1027.180 ; gain = 330.117
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1028.828 ; gain = 330.195
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1027.180 ; gain = 330.117
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1028.828 ; gain = 330.195
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.053 . Memory (MB): peak = 1027.180 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.064 . Memory (MB): peak = 1028.828 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -56,26 +56,26 @@ Parsing XDC File [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.
 Finished Parsing XDC File [D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.srcs/constrs_1/imports/Clk_costrain/CLK.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1135.621 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1140.660 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.061 . Memory (MB): peak = 1135.621 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.075 . Memory (MB): peak = 1140.660 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1135.621 ; gain = 438.559
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1140.660 ; gain = 442.027
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s15cpga196-2
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1135.621 ; gain = 438.559
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1140.660 ; gain = 442.027
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1135.621 ; gain = 438.559
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1140.660 ; gain = 442.027
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'population_memory'
 ---------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'popul
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'population_memory'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1135.621 ; gain = 438.559
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1140.660 ; gain = 442.027
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -160,7 +160,7 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:52 ; elapsed = 00:01:54 . Memory (MB): peak = 1136.441 ; gain = 439.379
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:27 ; elapsed = 00:02:31 . Memory (MB): peak = 1147.371 ; gain = 448.738
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -172,13 +172,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:58 ; elapsed = 00:02:00 . Memory (MB): peak = 1136.441 ; gain = 439.379
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:35 ; elapsed = 00:02:39 . Memory (MB): peak = 1147.371 ; gain = 448.738
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:10 ; elapsed = 00:02:12 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Timing Optimization : Time (s): cpu = 00:02:48 ; elapsed = 00:02:53 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -190,7 +190,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:16 ; elapsed = 00:02:18 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Technology Mapping : Time (s): cpu = 00:02:54 ; elapsed = 00:02:59 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -214,13 +214,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:19 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished IO Insertion : Time (s): cpu = 00:02:58 ; elapsed = 00:03:03 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:19 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:58 ; elapsed = 00:03:03 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -239,25 +239,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:20 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:58 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:20 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:58 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:20 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:59 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:20 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:59 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -296,29 +296,29 @@ Report Instance Areas:
 |1     |top      |       | 11664|
 +------+---------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:20 ; elapsed = 00:02:22 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:59 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:02:13 ; elapsed = 00:02:21 . Memory (MB): peak = 1307.402 ; gain = 501.898
-Synthesis Optimization Complete : Time (s): cpu = 00:02:20 ; elapsed = 00:02:23 . Memory (MB): peak = 1307.402 ; gain = 610.340
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:50 ; elapsed = 00:03:01 . Memory (MB): peak = 1311.941 ; gain = 501.477
+Synthesis Optimization Complete : Time (s): cpu = 00:02:59 ; elapsed = 00:03:04 . Memory (MB): peak = 1311.941 ; gain = 613.309
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.093 . Memory (MB): peak = 1307.402 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.091 . Memory (MB): peak = 1311.941 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 1430 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 WARNING: [Netlist 29-101] Netlist 'population_memory' is not ideal for floorplanning, since the cellview 'population_memory' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1307.402 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1311.941 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
 17 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:24 ; elapsed = 00:02:28 . Memory (MB): peak = 1307.402 ; gain = 867.828
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1307.402 ; gain = 0.000
+synth_design: Time (s): cpu = 00:03:04 ; elapsed = 00:03:10 . Memory (MB): peak = 1311.941 ; gain = 872.734
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 1311.941 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'D:/university/studies/FPGA/PJ_FPGA/GA_Genetic_algorithm/GA/GA.runs/synth_1/population_memory.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file population_memory_utilization_synth.rpt -pb population_memory_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Aug 29 00:48:44 2025...
+INFO: [Common 17-206] Exiting Vivado at Mon Sep  1 08:50:13 2025...
